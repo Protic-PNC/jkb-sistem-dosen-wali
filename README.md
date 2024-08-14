@@ -45,7 +45,7 @@ The system supports four distinct user roles:
 
 ## ERD
 
-![ERD SIWALI](https://github.com/user-attachments/assets/43975b35-95c2-4638-88f4-8b5aa6555451)
+![ERD SIWALI](https://github.com/user-attachments/assets/40c6870d-13cf-4278-adbc-3089686a7282)
 
 ## Entities
 
@@ -62,28 +62,51 @@ The system supports four distinct user roles:
 11. **guidance**: Manages student counseling records.
 12. **warnings**: Documents warnings issued to students.
 13. **tuition_arrears**: Manages records of unpaid tuition fees.
+13. **reports**: Likely used for academic advisor report.
 
 ## Relationships
 
+Berikut adalah daftar relasi dalam format yang Anda inginkan:
+
 1. **users - students/lecturers**: One-to-one relationship. Each user account is associated with either a student or a lecturer.
 
-2. **programs - student_classes**: One-to-many relationship. A program can have multiple student classes.
+2. **classes - programs**: One-to-many relationship. A program can have multiple classes.
 
-3. **student_classes - students**: One-to-many relationship. Each student class can have multiple students.
+3. **students - student_classes**: One-to-many relationship. Each student class can have multiple students.
 
-4. **lecturers - gpas**: One-to-many relationship. A lecturer can manage multiple student GPAs.
+4. **lecturers - positions**: One-to-many relationship. Each position can be held by multiple lecturers.
 
-5. **gpas - gpa_details**: One-to-many relationship. Each GPA record contains multiple detailed entries per semester.
+5. **classes - academic_advisors**: One-to-many relationship. Each class can have one academic advisor who is a lecturer.
 
-6. **students - achievements**: One-to-many relationship. A student can have multiple achievements.
+6. **programs - head_of_program**: One-to-many relationship. Each program can have one head of program who is a lecturer.
 
-7. **students - scholarships**: One-to-many relationship. A student can receive multiple scholarships.
+7. **gpas - students**: One-to-many relationship. Each GPA record is associated with a student.
 
-8. **students - guidance**: One-to-many relationship. A student can participate in multiple counseling sessions.
+8. **gpa_details - gpas**: One-to-many relationship. Each GPA record contains multiple detailed entries per semester.
 
-9. **students - warnings**: One-to-many relationship. A student can receive multiple warnings.
+9. **students - achievements**: One-to-many relationship. A student can have multiple achievements.
 
-10. **students - tuition_arrears**: One-to-many relationship. A student can have multiple tuition arrears records.
+10. **students - scholarships**: One-to-many relationship. A student can receive multiple scholarships.
+
+11. **students - guidance**: One-to-many relationship. A student can participate in multiple counseling sessions.
+
+12. **students - warnings**: One-to-many relationship. A student can receive multiple warnings.
+
+13. **students - tuition_arrears**: One-to-many relationship. A student can have multiple tuition arrears records.
+
+14. **students - student_withdrawals**: One-to-one or One-to-many relationship. Each student may have one or multiple withdrawal records.
+
+15. **reports - gpa_details**: One-to-many relationship. Each report can contain multiple GPA details.
+
+16. **reports - achievements**: One-to-many relationship. Each report can include multiple achievements.
+
+17. **reports - guidance**: One-to-many relationship. Each report can include multiple guidance sessions.
+
+18. **reports - scholarships**: One-to-many relationship. Each report can include multiple scholarships.
+
+19. **reports - student_withdrawals**: One-to-many relationship. Each report can include multiple student withdrawals.
+
+20. **reports - warnings**: One-to-many relationship. Each report can include multiple warnings.
 
 ## Key Features
 

@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('student_withdrawals', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('student_id')->constrained()->onDelete('cascade');
+            $table->string('withdrawal_type'); //undur diri / DO
+            $table->string('decree_number'); //surat keputusan
+            $table->text('reason');
             $table->timestamps();
         });
     }

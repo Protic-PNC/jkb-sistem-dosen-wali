@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('tuition_arrears', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('student_id')->constrained()->onDelete('cascade');
+            $table->decimal('amount', 10, 2);
             $table->timestamps();
         });
     }

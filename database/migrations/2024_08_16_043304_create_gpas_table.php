@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('gpas', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('student_id')->constrained()->onDelete('cascade');
+            $table->decimal('cumulative_gpa', 3, 2);
             $table->timestamps();
         });
     }

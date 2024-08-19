@@ -13,7 +13,10 @@ return new class extends Migration
     {
         Schema::create('study_programs', function (Blueprint $table) {
             $table->id();
+            $table->string('program_name');
+            $table->string('degree');
             $table->timestamps();
+            $table->foreignId('head_of_program_id')->nullable()->constrained()->onDelete('cascade');
         });
     }
 

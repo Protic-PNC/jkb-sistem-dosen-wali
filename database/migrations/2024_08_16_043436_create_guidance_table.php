@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('guidance', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('student_id')->constrained()->onDelete('cascade');
+            $table->text('problem');
+            $table->text('solution');
             $table->timestamps();
         });
     }

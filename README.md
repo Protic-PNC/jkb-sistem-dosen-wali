@@ -45,7 +45,8 @@ The system supports four distinct user roles:
 
 ## ERD
 
-![ERD SIWALI](https://github.com/user-attachments/assets/40c6870d-13cf-4278-adbc-3089686a7282)
+![erd siwali](https://github.com/user-attachments/assets/73a19e8a-8e43-4e8a-b297-7ffb9bd53537)
+
 
 ## Entities
 
@@ -107,6 +108,8 @@ Berikut adalah daftar relasi dalam format yang Anda inginkan:
 19. **reports - student_withdrawals**: One-to-many relationship. Each report can include multiple student withdrawals.
 
 20. **reports - warnings**: One-to-many relationship. Each report can include multiple warnings.
+21. 
+22. **reports - lecturers**: One-to-many relationship. Each report can include multiple warnings.
 
 ## Key Features
 

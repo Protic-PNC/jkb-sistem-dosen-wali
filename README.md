@@ -45,7 +45,7 @@ The system supports four distinct user roles:
 
 ## ERD
 
-![ERD SIWALI](https://github.com/user-attachments/assets/40c6870d-13cf-4278-adbc-3089686a7282)
+![erd siwali](https://github.com/user-attachments/assets/73a19e8a-8e43-4e8a-b297-7ffb9bd53537)
 
 ## Entities
 

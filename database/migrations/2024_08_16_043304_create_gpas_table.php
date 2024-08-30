@@ -12,9 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('gpas', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('student_id')->constrained()->onDelete('cascade');
-            $table->decimal('cumulative_gpa', 3, 2);
+            $table->id('gpa_id')->primary();
+            $table->foreignId('class_id');
+            $table->foreign('class_id')->references('class_id')->on('classes');
             $table->timestamps();
         });
     }

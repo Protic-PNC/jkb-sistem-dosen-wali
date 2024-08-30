@@ -12,10 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('achievements', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('student_id')->constrained()->onDelete('cascade');
-            $table->string('achievement_type'); //prestasi/keaktifan organisasi
-            $table->string('level'); //nasional, kampus, etc
+            $table->id('achievement_id')->primary();
+            $table->foreignId('class_id');
+            $table->foreign('class_id')->references('class_id')->on('classes');
             $table->timestamps();
         });
     }

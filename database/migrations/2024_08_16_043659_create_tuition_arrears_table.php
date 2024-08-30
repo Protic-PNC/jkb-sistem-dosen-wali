@@ -12,9 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('tuition_arrears', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('student_id')->constrained()->onDelete('cascade');
-            $table->decimal('amount', 10, 2);
+            $table->id('tuition_arrear_id')->primary();
+            $table->foreignId('class_id');
+            $table->foreign('class_id')->references('class_id')->on('classes');
             $table->timestamps();
         });
     }

@@ -35,8 +35,8 @@ return new class extends Migration
             $table->foreignId('scholarship_id');
             $table->foreign('scholarship_id')->references('scholarship_id')->on('scholarships');
 
-            $table->foreignId('student_withdrawal_id');
-            $table->foreign('student_withdrawal_id')->references('student_withdrawal_id')->on('student_withdrawals');
+            $table->foreignId('student_resignation_id');
+            $table->foreign('student_resignation_id')->references('student_resignation_id')->on('student_resignations');
 
             $table->foreignId('tuition_arrear_id');
             $table->foreign('tuition_arrear_id')->references('tuition_arrear_id')->on('tuition_arrears');

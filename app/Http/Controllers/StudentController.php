@@ -12,7 +12,11 @@ class StudentController extends Controller
      */
     public function index()
     {
-        //
+        $students = Student::with([
+            'student_classes',
+            'user'
+        ])->get();
+        return view('masterdata.students.index', compact('students'));
     }
 
     /**

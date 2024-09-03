@@ -12,7 +12,15 @@ class LecturerController extends Controller
      */
     public function index()
     {
-        //
+        $lecturers = Lecturer::with(
+            [
+                'user',
+                'program',
+                'student_classes',
+                'position'
+            ]
+        )->get();
+        return view('masterdata.lecturers.index', compact('lecturers'));
     }
 
     /**

@@ -7,12 +7,17 @@ use Illuminate\Http\Request;
 
 class ProgramController extends Controller
 {
+    
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        $program = Program::with(
+            'head_of_program'
+        )->get();
+
+        return view('masterdata.programs.index', compact('program'));
     }
 
     /**

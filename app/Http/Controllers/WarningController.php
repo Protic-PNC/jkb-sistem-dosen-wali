@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Warning;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class WarningController extends Controller
 {
@@ -12,7 +13,16 @@ class WarningController extends Controller
      */
     public function index()
     {
-        //
+        $lecturer = Auth::user()->lecturer;
+
+        $warning = Warning::with([
+            'warning_detail.student',
+            'student_class',
+        ])->whereHas('student_class', function($query) use ($lecturer){
+            $query->where('academic_advisor_id', $lecturer->lecturer_id);
+        })->get();
+
+        return view('masterdata.warning.index', compact('warning'));
     }
 
     /**

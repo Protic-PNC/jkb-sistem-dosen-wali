@@ -12,7 +12,7 @@ class PositionController extends Controller
      */
     public function index()
     {
-        //
+        return view('masterdata.positions.index');
     }
 
     /**

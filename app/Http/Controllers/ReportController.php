@@ -12,7 +12,7 @@ class ReportController extends Controller
      */
     public function index()
     {
-        //
+        return view('masterdata.reports.index');
     }
 
     /**

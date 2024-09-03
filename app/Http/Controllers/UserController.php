@@ -2,21 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\StudentClass;
 use Illuminate\Http\Request;
+use App\Models\User;
 
-class StudentClassController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $studentClass = StudentClass::with([
-            'program',
-            'academic_advisor',
-        ])->get();
-        return view('masterdata.student_classes.index', compact('studentClass'));
+        $user = User::all();
+        return view('masterdata.users.index', compact('user'));
     }
 
     /**
@@ -38,7 +35,7 @@ class StudentClassController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(StudentClass $studentClass)
+    public function show(string $id)
     {
         //
     }
@@ -46,7 +43,7 @@ class StudentClassController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(StudentClass $studentClass)
+    public function edit(string $id)
     {
         //
     }
@@ -54,7 +51,7 @@ class StudentClassController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, StudentClass $studentClass)
+    public function update(Request $request, string $id)
     {
         //
     }
@@ -62,7 +59,7 @@ class StudentClassController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(StudentClass $studentClass)
+    public function destroy(string $id)
     {
         //
     }

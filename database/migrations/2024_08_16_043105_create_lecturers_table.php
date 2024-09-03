@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('lecturer_phone_number');
             $table->text('lecturer_address');
             $table->string('lecturer_signature')->nullable();
-            $table->foreignId('position_id');
+            $table->foreignId('position_id')->nullable();
             $table->foreign('position_id')->references('position_id')->on('positions');
             $table->foreignId('user_id');
             $table->foreign('user_id')->references('id')->on('users');

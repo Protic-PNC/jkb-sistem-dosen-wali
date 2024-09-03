@@ -26,6 +26,9 @@ class RoleSeeder extends Seeder
         $kaprodiRole = Role::create([
             'name' => 'kaprodi',
         ]);
+        $kajurRole = Role::create([
+            'name' => 'kajur',
+        ]);
         $mahasiswaRole = Role::create([
             'name' => 'mahasiswa',
         ]);

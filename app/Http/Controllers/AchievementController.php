@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Achievement;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AchievementController extends Controller
 {
@@ -12,7 +13,16 @@ class AchievementController extends Controller
      */
     public function index()
     {
-        //
+        $lecturer = Auth::user()->lecturer;
+
+        $achievement = Achievement::with([
+            'student_class',
+            'achievement_detail.student'
+        ])->whereHas('student_class', function($query) use ($lecturer) {
+            $query->where('academic_advisor_id', $lecturer->lecturer_id);
+        })->get();
+
+        return view('masterdata.achievement.index', compact('achievement'));
     }
 
     /**

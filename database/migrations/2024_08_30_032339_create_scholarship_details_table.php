@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('scholarship_details', function (Blueprint $table) {
             $table->id('scholarship_detail_id')->primary();
+            $table->foreignId('scholarship_id');
+            $table->foreign('scholarship_id')->references('scholarship_id')->on('scholarships');
             $table->foreignId('student_id');
             $table->foreign('student_id')->references('student_id')->on('students');
             $table->string('scholarship_type');

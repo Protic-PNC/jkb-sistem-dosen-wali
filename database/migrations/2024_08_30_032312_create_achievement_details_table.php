@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('achievement_details', function (Blueprint $table) {
             $table->id('achievement_detail_id')->primary();
+            $table->foreignId('achievement_id');
+            $table->foreign('achievement_id')->references('achievement_id')->on('achievements');
             $table->foreignId('student_id');
             $table->foreign('student_id')->references('student_id')->on('students');
             $table->string('achievement_type'); //prestasi/keaktifan organisasi

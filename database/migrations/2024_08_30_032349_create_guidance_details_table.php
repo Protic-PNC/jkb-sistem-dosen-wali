@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('guidance_details', function (Blueprint $table) {
             $table->id('guidance_detail_id')->primary();
+            $table->foreignId('guidance_id');
+            $table->foreign('guidance_id')->references('guidance_id')->on('guidances');
             $table->foreignId('student_id');
             $table->foreign('student_id')->references('student_id')->on('students');
             $table->text('problem')->nullable();

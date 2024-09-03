@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('warning_details', function (Blueprint $table) {
             $table->id('warning_detail_id')->primary();
+            $table->foreignId('warning_id');
+            $table->foreign('warning_id')->references('warning_id')->on('warnings');
             $table->foreignId('student_id');
             $table->foreign('student_id')->references('student_id')->on('students');
             $table->string('warning_type'); //sp 1, 2 etc

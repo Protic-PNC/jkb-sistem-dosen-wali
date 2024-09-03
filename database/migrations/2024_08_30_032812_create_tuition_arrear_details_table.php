@@ -12,7 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('tuition_arrear_details', function (Blueprint $table) {
-            $table->id('tuition_arrear_id')->primary();
+            $table->id('tuition_arrear_details_id')->primary();
+            $table->foreignId('tuition_arrear_id');
+            $table->foreign('tuition_arrear_id')->references('tuition_arrear_id')->on('tuition_arrears');
             $table->foreignId('student_id');
             $table->foreign('student_id')->references('student_id')->on('students');
             $table->decimal('amount', 10, 2);

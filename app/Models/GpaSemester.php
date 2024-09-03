@@ -8,4 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class GpaSemester extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'gpa_cumulative_id',
+        'semester',
+        'semester_gpa',
+    ];
+
+    public function gpa_cumulative()
+    {
+        return $this->belongsTo(GpaCumulative::class, 'gpa_cumulative_id', 'gpa_cumulative_id');
+    }
 }

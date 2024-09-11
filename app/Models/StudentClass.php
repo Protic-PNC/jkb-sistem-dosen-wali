@@ -10,6 +10,7 @@ class StudentClass extends Model
     use HasFactory;
 
     protected $table = 'classes';
+    protected $primaryKey = 'class_id';
     protected $fillable = [
         'program_id',
         'academic_advisor_id',

@@ -13,14 +13,33 @@ class AchievementController extends Controller
      */
     public function index()
     {
-        $lecturer = Auth::user()->lecturer;
+        /** @var App\Model\User */
 
-        $achievement = Achievement::with([
-            'student_class',
-            'achievement_detail.student'
-        ])->whereHas('student_class', function($query) use ($lecturer) {
-            $query->where('academic_advisor_id', $lecturer->lecturer_id);
-        })->get();
+        $user = Auth::user();
+
+        if($user->hasRole('dosenWali'))
+        {
+            $lecturer = $user->lecturer;
+    
+            $achievement = Achievement::with([
+                'student_class',
+                'achievement_detail.student'
+            ])->whereHas('student_class', function($query) use ($lecturer) {
+                $query->where('academic_advisor_id', $lecturer->lecturer_id);
+            })->get();
+        }
+        else if($user->hasRole('mahasiswa'))
+        {
+            $student = $user->student;
+
+            $achievement = Achievement::with([
+                'student_class',
+                'achievement_detail.student'
+            ])->whereHas('achievement_detail.student', function($query) use ($student) {
+                $query->where('student_id', $student->student_id);
+            })->get();
+        }
+
 
         return view('masterdata.achievement.index', compact('achievement'));
     }

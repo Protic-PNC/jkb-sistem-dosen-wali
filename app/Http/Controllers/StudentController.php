@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Student;
 use Illuminate\Http\Request;
+use App\Models\User;
+use App\Models\StudentClass;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rule;
 
 class StudentController extends Controller
 {
@@ -22,9 +26,18 @@ class StudentController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create($userId)
     {
-        //
+        $students = Student::all();
+        $student_class = StudentClass::all();
+        $user = User::find($userId);
+
+        $existingStudent = Student::where('user_id', $userId)->first();
+        if ($existingStudent) {
+            return redirect()->route('masterdata.students.show', $existingStudent->student_id);
+        } else {
+            return view('masterdata.students.create', compact('student_class', 'user', 'students'));
+        }
     }
 
     /**
@@ -32,31 +45,140 @@ class StudentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            if ($request->input('is_new_student') == 1) {
+                try{
+                        // Buat mahasiswa baru
+                    $student = new Student();
+                    $student->student_name = $request->input('student_name');
+                    $student->nim = $request->input('nim');
+                    $student->student_address = $request->input('student_address');
+                    $student->student_phone_number = $request->input('student_phone_number');
+                    $student->user_id = $request->input('user_id');
+                    $student->class_id = $request->input('class_id');
+                    // Jika ada file tanda tangan diunggah
+                    if ($request->hasFile('student_signature')) {
+                        $signaturePath = $request->file('student_signature')->store('signatures', 'public');
+                        $student->student_signature = $signaturePath;
+                    }
+                    
+                    $student->save();
+                    // Redirect atau response setelah berhasil
+                    return redirect()->route('masterdata.students.index')->with('success', 'Data mahasiswa berhasil disimpan.');
+                } catch (\Exception $e) {
+                    return back()->withErrors(['student_id' => 'Mahasiswa tidak valid.']);
+                }
+            }
+            else
+            {
+                // Cari mahasiswa berdasarkan student_id
+                    $student = Student::where('student_id', $request->input('student_id'))->first();
+                    // dd($student);
+                if ($student) {
+                    $student->update(['user_id' => $request->input('user_id')]);
+                    // Redirect atau response setelah berhasil
+                    return redirect()->route('masterdata.students.index')->with('success', 'Data mahasiswa berhasil disimpan.');
+                }
+                else
+                {
+                    return back()->withErrors(['student_id' => 'Mahasiswa tidak valid.']);
+                }
+            }
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()
+                ->back()
+                ->withInput()
+                ->with('error', 'System error: ' . $e->getMessage());
+        }
+
+        // // //jika input is_new_student == 1
+        // // if ($request->input('is_new_student') == 1) {
+        // //      // Buat mahasiswa baru
+        //     $student = new Student();
+        //     $student->student_name = $request->input('student_name');
+        //     $student->nim = $request->input('nim');
+        //     $student->student_address = $request->input('student_address');
+        //     $student->student_phone_number = $request->input('student_phone_number');
+        //     $student->user_id = $request->input('user_id');
+            
+        //     // Jika ada file tanda tangan diunggah
+        //     if ($request->hasFile('student_signature')) {
+        //         $signaturePath = $request->file('student_signature')->store('signatures', 'public');
+        //         $student->student_signature = $signaturePath;
+        //     }
+            
+        //     $student->save();
+        // }
+        // else
+        // {
+        //     // Cari mahasiswa berdasarkan student_id
+        //      $student = Student::where('student_id', $request->input('student_id'))->first();
+        //     if ($student) {
+        //         $student->update(['user_id', $request->input('user_id')]);
+        //     }
+        //     else
+        //     {
+        //         return back()->withErrors(['student_id' => 'Mahasiswa tidak valid.']);
+        //     }
+        // }
+        
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Student $student)
+    public function show(Student $student, $id)
     {
-        //
+        $student_class = StudentClass::all();
+        $student = Student::find($id);
+        return view('masterdata.students.show', compact('student_class', 'student'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Student $student)
+    public function edit(Student $student, $id)
     {
-        //
+        $student_class = StudentClass::all();
+        $student = Student::find($id);
+
+        return view('masterdata.students.edit', compact('student_class', 'student'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Student $student)
+    public function update(Request $request, $id)
     {
-        //
+        $student = Student::findOrFail($id);
+
+        $validated = $request->validate([
+            'student_name' => 'required|string',
+            'nim' => ['required', 'string', Rule::unique('students', 'nim')->ignore($student->student_id, 'student_id')],
+            'student_address' => 'required|string',
+            'student_phone_number' => 'required|string',
+            'class_id' => 'required|exists:classes,class_id',
+            'user_id' => ['nullable', Rule::exists('users', 'id')],
+            'student_signature' => 'nullable|image|mimes:png,jpg,jpeg',
+        ]);
+        if ($request->hasFile('student_signature')) {
+            $signaturePath = $request->file('student_signature')->store('signatures', 'public');
+            $validated['student_signature'] = $signaturePath;
+        }
+        DB::beginTransaction();
+        try {
+            $student->update($validated);
+
+            DB::commit();
+            return redirect()->route('masterdata.students.index')->with('success', 'User Mahasiswa berhasil Diedit');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()
+                ->back()
+                ->withInput()
+                ->with('error', 'System error: ' . $e->getMessage());
+        }
     }
 
     /**

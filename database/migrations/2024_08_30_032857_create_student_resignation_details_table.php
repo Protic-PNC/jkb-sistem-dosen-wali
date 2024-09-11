@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     /**
-     * Run the migrations.
+ * Run the migrations.
      */
     public function up(): void
     {
@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreign('student_resignation_id')->references('student_resignation_id')->on('student_resignations');
             $table->foreignId('student_id');
             $table->foreign('student_id')->references('student_id')->on('students');
-            $table->string('withdrawal_type'); //undur diri / DO
+            $table->string('resignation_type'); //undur diri / DO
             $table->string('decree_number'); //surat keputusan
             $table->text('reason');
             $table->timestamps();

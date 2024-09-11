@@ -17,4 +17,9 @@ class TuitionArrear extends Model
     {
         return $this->belongsTo(StudentClass::class, 'class_id', 'class_id');
     }
+
+    public function tuition_arrear_detail()
+    {
+        return $this->hasMany(TuitionArrearDetail::class, 'tuition_arrear_id', 'tuition_arrear_id');
+    }
 }

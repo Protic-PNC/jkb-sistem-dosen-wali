@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\StudentResignation;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class StudentResignationController extends Controller
 {
@@ -12,7 +13,16 @@ class StudentResignationController extends Controller
      */
     public function index()
     {
-        //
+        $lecturer = Auth::user()->lecturer;
+
+        $resignation = StudentResignation::with([
+            'student_class',
+            'student_resignation_detail.student'
+        ])->whereHas('student_class', function ($query) use($lecturer) {
+            $query->where('academic_advisor_id', $lecturer->lecturer_id);
+        })->get();
+
+        return view('masterdata.student_resignation.index', compact('resignation'));
     }
 
     /**

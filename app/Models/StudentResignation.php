@@ -17,4 +17,9 @@ class StudentResignation extends Model
     {
         return $this->belongsTo(StudentClass::class, 'class_id', 'class_id');
     }
+
+    public function student_resignation_detail()
+    {
+        return $this->hasMany(StudentResignationDetail::class, 'student_resignation_id', 'student_resignation_id');
+    }
 }

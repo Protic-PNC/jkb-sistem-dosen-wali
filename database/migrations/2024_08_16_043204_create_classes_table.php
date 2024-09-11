@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id('class_id')->primary();
             $table->foreignId('program_id');
             $table->foreign('program_id')->references('program_id')->on('programs');
-            $table->foreignId('academic_advisor_id');
+            $table->foreignId('academic_advisor_id')->nullable();
             $table->foreign('academic_advisor_id')->references('lecturer_id')->on('lecturers');
             $table->string('class_name');
             $table->integer('academic_year');

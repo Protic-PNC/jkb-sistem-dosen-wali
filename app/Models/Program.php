@@ -9,6 +9,8 @@ class Program extends Model
 {
     use HasFactory;
 
+    protected $primaryKey = 'program_id';
+
     protected $fillable = [
         'program_name',
         'degree',
@@ -17,7 +19,7 @@ class Program extends Model
 
     public function head_of_program()
     {
-        return $this->belongsTo(Lecturer::class, 'lecturer_id', 'head_of_program_id');
+        return $this->belongsTo(Lecturer::class, 'head_of_program_id', 'lecturer_id');
     }
 
     public function classes()

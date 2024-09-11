@@ -1,7 +1,58 @@
 <x-app-layout>
     @section('content')
+    <style>
+        #success-message {
+            transition: opacity 0.2s ease-out;
+        }
+        #errors-message {
+            transition: opacity 0.2s ease-out;
+        }
+    
+        .close-btn {
+            cursor: pointer;
+            float: right;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: black;
+        }
+    
+        .close-btn:hover {
+            color: black;
+        }
+    </style>
 
-    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+<div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+        
+        @if ($errors->any())
+            <div id="error-message" class="p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800"
+                role="alert">
+                <span class="font-medium">Whoops!</span> There were some problems with your input.
+                <span class="close-btn" onclick="closeAlert('error-message')">&times;</span>
+                <ul class="mt-2 list-disc pl-5">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+        @if (session('success'))
+            <div id="success-message"
+                class="p-4 mb-4 text-sm text-green-700 bg-green-100 rounded-lg dark:bg-green-200 dark:text-green-800"
+                role="alert">
+                <span class="font-medium">Success!</span> {{ session('success') }}
+                <span class="close-btn" onclick="closeAlert('success-message')">&times;</span>
+            </div>
+        @endif
+
+        <script>
+            function closeAlert(id) {
+                var alert = document.getElementById(id);
+                alert.style.opacity = '0';
+                setTimeout(function() {
+                    alert.style.display = 'none';
+                }, 200); // Menunggu transisi opacity selesai
+            }
+        </script>
         <div class="flex flex-column sm:flex-row flex-wrap space-y-4 sm:space-y-0 items-center justify-between pb-4">
             <div>
                 <button id="dropdownRadioButton" data-dropdown-toggle="dropdownRadio" class="inline-flex items-center text-gray-500 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-3 py-1.5 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700" type="button">
@@ -78,6 +129,9 @@
                     <th scope="col" class="px-6 py-3">
                         Username
                     </th>
+                    <th scope="col" class="px-6 py-3">
+                        Aksi
+                    </th>
                 </tr>
             </thead>
             <tbody>
@@ -92,7 +146,7 @@
                                 {{ $data->student_name }}
                             </td>
                             <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white text-center">
-                                {{ $data->student_classes->class_name }}
+                                {{ $data->student_classes->class_name ?? '-' }}
                             </td>
                             <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white text-center">
                                 {{ $data->student_phone_number }}
@@ -104,10 +158,10 @@
                                 {{ $data->student_address }}
                             </td>
                             <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white text-center">
-                                {{ $data->user->name }}
+                                {{ $data->user->email ?? '-' }}
                             </td>
                             <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white text-center">
-                                <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                                <a href="{{ route('masterdata.students.edit', $data->student_id) }}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
                             </td>
                         </tr>
                     @endforeach

@@ -9,6 +9,7 @@ class Lecturer extends Model
 {
     use HasFactory;
     
+    protected $primaryKey = 'lecturer_id';
     protected $fillable = [
         'nidn',
         'nip',
@@ -22,7 +23,7 @@ class Lecturer extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
     public function position()

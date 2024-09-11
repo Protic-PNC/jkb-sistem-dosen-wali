@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\TuitionArrear;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TuitionArrearController extends Controller
 {
@@ -12,7 +13,16 @@ class TuitionArrearController extends Controller
      */
     public function index()
     {
-        //
+        $lecturer = Auth::user()->lecturer;
+
+        $tuition = TuitionArrear::with([
+            'student_class',
+            'tuition_arrear_detail.student'
+        ])->whereHas('student_class', function ($query) use($lecturer) {
+            $query->where('academic_advisor_id', $lecturer->lecturer_id);
+        })->get();
+
+        return view('masterdata.tuition_arrears.index', compact('tuition'));
     }
 
     /**

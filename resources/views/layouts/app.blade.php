@@ -10,7 +10,6 @@
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-
         
         {{-- Tailwind --}}
         <link href="https://cdn.tailwindcss.com" rel="stylesheet">
@@ -109,9 +108,18 @@
                             <div x-data="{ dropdownOpen: false }" class="relative">
                                 <button @click="dropdownOpen = ! dropdownOpen"
                                     class="relative block w-8 h-8 overflow-hidden rounded-full shadow focus:outline-none">
-                                    <img class="object-cover w-full h-full"
-                                        src="https://images.unsplash.com/photo-1528892952291-009c663ce843?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=296&amp;q=80"
-                                        alt="Your avatar">
+                                    @if (Auth::user()->avatar)
+                                    
+                                        <img class="object-cover w-full h-full"
+                                            src="{{ Storage::url(Auth::user()->avatar)}}"
+                                            alt="Your avatar">
+                                    @else
+                                            
+                                        <img class="object-cover w-full h-full"
+                                            src="{{ asset('images/avatar-default.svg') }}"
+                                            alt="Your avatar">
+                                            
+                                    @endif
                                 </button>
     
                                 <div x-show="dropdownOpen" @click="dropdownOpen = false"

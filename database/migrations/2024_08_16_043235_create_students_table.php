@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('students', function (Blueprint $table) {
             $table->id('student_id')->primary();
-            $table->foreignId('user_id');
+            $table->foreignId('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users');
-            $table->foreignId('class_id');
+            $table->foreignId('class_id')->nullable();
             $table->foreign('class_id')->references('class_id')->on('classes');
             $table->string('student_phone_number');
             $table->char('nim');

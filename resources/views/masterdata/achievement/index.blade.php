@@ -11,8 +11,10 @@
                         <th scope="col" class="px-6 py-3 border-b">Jenis Prestasi atau Organisasi</th>
                         <th scope="col" class="px-6 py-3 border-b">Tingkat</th>
                         <th scope="col" class="px-6 py-3 border-b">Aksi</th>
-                </thead>
+</thead>
                 <tbody>
+                    @if ($achievement)
+
                     @foreach ($achievement as $data)
 
                         @foreach ($data->achievement_detail as $detail)
@@ -31,6 +33,16 @@
                         @endforeach
                         
                     @endforeach
+
+                    @else
+
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <td colspan="6" scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white border-b">{{ $detail->student->nim }}</td>
+                            Tidak ada prestasi/keaktifan organisasi
+                        </td>
+                    </tr>
+                        
+                    @endif
                 </tbody>
             </table>
 

@@ -28,7 +28,16 @@ class ProgramController extends Controller
      */
     public function create()
     {
-        //
+        $kaprodis = Lecturer::with([
+            'position',
+            'program'
+        ])->whereHas('position', function($query) {
+            $query->where('position_name', 'kaprodi');
+        })
+        ->whereDoesntHave('program')
+        ->get();
+
+        return view('masterdata.programs.create', compact('kaprodis'));
     }
 
     /**
@@ -36,7 +45,18 @@ class ProgramController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try{
+            $program = new Program();
+            $program->program_name = $request->program_name;
+            $program->degree = $request->degree;
+            $program->head_of_program_id = $request->head_of_program_id;
+            $program->save();
+
+            return redirect()->route('masterdata.programs.index')->with('success', 'Data prodi berhasil disimpan.');
+        }catch(\Exception $e)
+        {
+            return back()->withErrors('Data gagal');
+        }
     }
 
     /**
@@ -57,7 +77,9 @@ class ProgramController extends Controller
             'program'
         ])->whereHas('position', function($query) {
             $query->where('position_name', 'kaprodi');
-        })->whereDoesntHave('program')->get();
+        })
+        // ->whereDoesntHave('program')
+        ->get();
 
         return view('masterdata.programs.edit', compact('kaprodis', 'program'));
     }
@@ -66,31 +88,31 @@ class ProgramController extends Controller
      * Update the specified resource in storage.
      */
     public function update(Request $request, $id)
-{
-    $program = Program::findOrFail($id); // Cari program berdasarkan ID
+    {
+        $program = Program::findOrFail($id); // Cari program berdasarkan ID
 
-    // Validasi input
-    $validated = $request->validate([
-        'program_name' => 'required|string',
-        'degree' => 'required|string|in:D3,D4',  // Validasi jenjang (D3 atau D4)
-        'head_of_program_id' => ['nullable', Rule::exists('lecturers', 'lecturer_id')],  // Pastikan kaprodi valid
-    ]);
+        // Validasi input
+        $validated = $request->validate([
+            'program_name' => 'required|string',
+            'degree' => 'required|string|in:D3,D4',  // Validasi jenjang (D3 atau D4)
+            'head_of_program_id' => ['nullable', Rule::exists('lecturers', 'lecturer_id')],  // Pastikan kaprodi valid
+        ]);
 
-    DB::beginTransaction(); // Mulai transaksi database
-    try {
-        // Update data program dengan data yang sudah divalidasi
-        $program->update($validated);
+        DB::beginTransaction(); // Mulai transaksi database
+        try {
+            // Update data program dengan data yang sudah divalidasi
+            $program->update($validated);
 
-        DB::commit(); // Commit transaksi jika sukses
-        return redirect()->route('masterdata.programs.index')->with('success', 'Program berhasil diedit');
-    } catch (\Exception $e) {
-        DB::rollBack(); // Rollback jika terjadi kesalahan
-        return redirect()
-            ->back()
-            ->withInput()
-            ->with('error', 'System error: ' . $e->getMessage());
+            DB::commit(); // Commit transaksi jika sukses
+            return redirect()->route('masterdata.programs.index')->with('success', 'Program berhasil diedit');
+        } catch (\Exception $e) {
+            DB::rollBack(); // Rollback jika terjadi kesalahan
+            return redirect()
+                ->back()
+                ->withInput()
+                ->with('error', 'System error: ' . $e->getMessage());
+        }
     }
-}
 
 
     /**

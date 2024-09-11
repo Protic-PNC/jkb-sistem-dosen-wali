@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Student extends Model
 {
     use HasFactory;
+    protected $primaryKey = 'student_id';
+    protected $table = 'students';
 
     protected $fillable=[
         'user_id',
@@ -22,15 +24,13 @@ class Student extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class);
-    }
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }    
 
     public function student_classes()
     {
         return $this->belongsTo(StudentClass::class, 'class_id', 'class_id');
     }
-
-
 
     public function gpa_cumulative()
     {

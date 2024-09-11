@@ -38,15 +38,28 @@ Route::middleware('auth')->group(function () {
         Route::resource('positions', PositionController::class)->middleware('role:admin');
 
         Route::get('/students/index', [StudentController::class, 'index'])->name('students.index');
+        Route::get('/students/show/{userId}', [StudentController::class, 'show'])->name('students.show');
+        Route::get('/students/create/{userId}', [StudentController::class, 'create'])->name('students.create');
+        Route::post('/students/store/{id}', [StudentController::class, 'store'])->name('students.store');
+        Route::get('/students/edit/{id}', [StudentController::class, 'edit'])->name('students.edit');
+        Route::put('/students/update/{id}', [StudentController::class, 'update'])->name('students.update');
+        Route::delete('/students/destroy/{id}', [StudentController::class, 'destroy'])->name('students.destroy');
         
         
         Route::get('/lecturers/index', [LecturerController::class, 'index'])->name('lecturers.index');
+        Route::get('/lecturers/show/{userId}', [LecturerController::class, 'show'])->name('lecturers.show');
+        Route::get('/lecturers/create/{userId}', [LecturerController::class, 'create'])->name('lecturers.create');
+        Route::post('/lecturers/store/{id}', [LecturerController::class, 'store'])->name('lecturers.store');
+        Route::get('/lecturers/edit/{id}', [LecturerController::class, 'edit'])->name('lecturers.edit');
+        Route::put('/lecturers/update/{id}', [LecturerController::class, 'update'])->name('lecturers.update');
+        Route::delete('/lecturers/destroy/{id}', [LecturerController::class, 'destroy'])->name('lecturers.destroy');
 
 
         Route::get('/gpas/index', [GpaController::class, 'index'])->name('gpas.index');
         
 
-        Route::get('/guidance/index', [GuidanceController::class, 'index'])->name('guidances.index');
+        Route::get('/guidance/index/{id}', [GuidanceController::class, 'index'])->name('guidances.index');
+        Route::get('/guidance/create/{id}', [GuidanceController::class, 'create'])->name('guidances.create');
         
         
         Route::get('/achievement/index', [AchievementController::class, 'index'])->name('achievements.index');

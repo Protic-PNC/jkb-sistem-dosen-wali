@@ -80,8 +80,11 @@ class ProgramController extends Controller
         })
         // ->whereDoesntHave('program')
         ->get();
+        
 
-        return view('masterdata.programs.edit', compact('kaprodis', 'program'));
+        return view('masterdata.programs.edit', compact('kaprodis'), [
+            'program'=> $program
+        ]);
     }
 
     /**

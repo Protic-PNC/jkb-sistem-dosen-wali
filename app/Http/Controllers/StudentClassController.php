@@ -165,7 +165,15 @@ class StudentClassController extends Controller
      */
     public function edit(StudentClass $studentClass)
     {
-        //
+        $lecturers = Lecturer::whereHas('position', function($query) {
+            $query->where('position_name', 'Dosen Wali');
+        })
+        ->whereDoesntHave('student_classes')
+        ->get();
+
+        $programs = Program::all();
+
+        return view('masterdata.student_classes.edit', compact('studentClass', 'lecturers', 'programs'));
     }
 
     /**
@@ -173,7 +181,7 @@ class StudentClassController extends Controller
      */
     public function update(Request $request, StudentClass $studentClass)
     {
-        //
+        dd($studentClass->class_id);
     }
 
     /**

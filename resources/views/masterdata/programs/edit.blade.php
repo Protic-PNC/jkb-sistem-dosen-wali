@@ -1,5 +1,12 @@
 <x-app-layout>
 
+    @section('main_folder', '/ Master Data')
+    @section('href_descendant_folder', route('masterdata.programs.index')) 
+    @section('descendant_folder', '/ Programs')
+    @section('href_breadcrumb_extra', route('masterdata.programs.edit', $program->program_id))
+    @section('breadcrumb_extra', '/ Modify Program')
+    @section('content')
+
     @section('content')
 
     <section class="bg-white dark:bg-gray-900">

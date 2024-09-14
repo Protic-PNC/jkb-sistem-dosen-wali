@@ -1,4 +1,11 @@
 <x-app-layout>
+
+    @section('main_folder', '/ Master Data')
+    @section('href_descendant_folder', route('masterdata.users.index')) 
+    @section('descendant_folder', '/ Users')
+    @section('href_breadcrumb_extra', route('masterdata.users.create'))
+    @section('breadcrumb_extra', '/ Add New User')
+
     @section('content')
         <div class="py-12">
             <div class="max-w-7xl sm:px-6 lg:px-8">

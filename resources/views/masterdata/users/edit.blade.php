@@ -1,4 +1,10 @@
 <x-app-layout>
+    
+    @section('main_folder', '/ Master Data')
+    @section('href_descendant_folder', route('masterdata.users.index')) 
+    @section('descendant_folder', '/ Users')
+    @section('href_breadcrumb_extra', route('masterdata.users.edit', $user->id))
+    @section('breadcrumb_extra', '/ Modify User')
     @section('content')
 
     <style>

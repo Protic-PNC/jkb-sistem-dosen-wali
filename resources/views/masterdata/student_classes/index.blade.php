@@ -1,4 +1,9 @@
 <x-app-layout>
+
+    @section('main_folder', '/ Master Data')
+    @section('href_descendant_folder', route('masterdata.student_classes.index')) 
+    @section('descendant_folder', '/ Classes')
+
     @section('content')
     <style>
         #success-message {
@@ -104,7 +109,7 @@
                             {{ $data->academic_advisor->lecturer_name ?? '-' }}
                         </td>
                         <td class="px-6 py-4">
-                            <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                            <a href="{{ route('masterdata.student_classes.edit', $data->class_id) }}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
                         </td>
                     </tr>
                 @endforeach

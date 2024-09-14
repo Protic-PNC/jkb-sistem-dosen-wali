@@ -1,4 +1,10 @@
 <x-app-layout>
+
+    @section('main_folder', '/ Master Data')
+    @section('href_descendant_folder', route('masterdata.student_classes.index')) 
+    @section('descendant_folder', '/ Classes')
+    @section('href_breadcrumb_extra', route('masterdata.student_classes.create'))
+    @section('breadcrumb_extra', '/ Add New Class')
     @section('content')
     <style>
         .eye-icon {

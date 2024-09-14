@@ -145,28 +145,33 @@
                     <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100">
                         <div class="container px-6 pt-6 mx-auto">
                             <div class="page-header mb-4 flex justify-between items-center ">
-                                <div class="page-header-breadcrumb">
-                                    <ul class="breadcrumb flex space-x-2">
-                                        <li class="breadcrumb-item">
-                                            <a href="{{ route('dashboard.index') }}" class="text-blue-500 hover:text-blue-700">
-                                                <i>
-                                                    <img src="{{ asset('images/siwali_logo_logo_fill.png') }}" class="w-8 h-8" viewBox="0 0 512 512" fill="none" fill="white">
-                                                </i>
+                                <nav class="flex" aria-label="Breadcrumb">
+                                    <ol class="inline-flex items-center ">
+                                        <li class="inline-flex items-center">
+                                            <a href="{{ route('dashboard.index') }}" class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-blue-600 dark:text-gray-400 dark:hover:text-white">
+                                            <svg class="w-3 h-3 me-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                                <path d="m19.707 9.293-2-2-7-7a1 1 0 0 0-1.414 0l-7 7-2 2a1 1 0 0 0 1.414 1.414L2 10.414V18a2 2 0 0 0 2 2h3a1 1 0 0 0 1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 0 1 1h3a2 2 0 0 0 2-2v-7.586l.293.293a1 1 0 0 0 1.414-1.414Z"/>
+                                            </svg>
                                             </a>
                                         </li>
-                                        <li class="breadcrumb-item">
-                                            <span class="text-slate-900">@yield('main_folder')</span>
+                                        <li aria-current="page">
+                                            <div class="flex items-center">
+                                            <span class=" text-sm font-medium text-gray-500 dark:text-gray-400">@yield('main_folder')</span>
+                                            </div>
                                         </li>
-                                        <li class="breadcrumb-item">
-                                            <span class="text-slate-900">@yield('descendant_folder')</span>
+                                        <li>
+                                            <div class="flex items-center">
+                                            <a href="@yield('href_descendant_folder')" class=" text-sm font-medium text-gray-700 hover:text-blue-600 md:ms-2 dark:text-gray-400 dark:hover:text-white">@yield('descendant_folder')</a>
+                                            </div>
                                         </li>
-                                    </ul>
-                                </div>
-                                
+                                        <li>
+                                            <div class="flex items-center">
+                                            <a href="@yield('href_breadcrumb_extra')" class=" text-sm font-medium text-gray-700 hover:text-blue-600 md:ms-2 dark:text-gray-400 dark:hover:text-white">@yield('breadcrumb_extra')</a>
+                                            </div>
+                                        </li>
+                                    </ol>
+                                </nav>
                             </div>
-                            
-    
-    
                             @yield('content')
                         </div>
                     </main>

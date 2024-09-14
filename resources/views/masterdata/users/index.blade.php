@@ -1,4 +1,9 @@
 <x-app-layout>
+
+    @section('main_folder', '/ Master Data')
+    @section('href_descendant_folder', route('masterdata.users.index')) 
+    @section('descendant_folder', '/ Users')
+
     @section('content')
     <style>
         #success-message {

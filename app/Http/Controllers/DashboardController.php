@@ -2,7 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Lecturer;
 use Illuminate\Http\Request;
+use App\Models\User;
+use App\Models\Student;
+use App\Models\StudentClass;
+use App\Models\Program;
+use App\Models\Report;
 
 class DashboardController extends Controller
 {
@@ -11,7 +17,14 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        return view('masterdata.dashboard');
+        $usersCount = User::count();
+        $studentsCount = Student::count();
+        $student_classesCount = StudentClass::count();
+        $programsCount = Program::count();
+        $lecturersCount = Lecturer::count();
+        $reportsCount = Report::count();
+
+        return view('masterdata.dashboard', compact('usersCount', 'studentsCount', 'student_classesCount', 'lecturersCount', 'programsCount', 'reportsCount'));
     }
 
     /**

@@ -20,9 +20,14 @@ class StudentClassController extends Controller
             'program',
             'academic_advisor',
         ])
-        // ->orderBy('class_name', 'asc')
+        ->orderBy('status', 'asc')
+        ->orderBy('program_id', 'asc')
+        ->orderBy('class_name', 'asc')
         ->get();
-        return view('masterdata.student_classes.index', compact('studentClass'));
+
+        $yearHasChanged = $this->checkAcademicYearChange();
+
+        return view('masterdata.student_classes.index', compact('studentClass', 'yearHasChanged'));
     }
 
     /**
@@ -58,10 +63,6 @@ class StudentClassController extends Controller
             ]);
 
         } else {
-            // Validasi untuk generate otomatis
-            // $request->validate([
-            //     'total_classes' => 'required|integer|min:1',
-            // ]);
 
             // Ambil prodi berdasarkan id
             $program = Program::find($request->program_id);
@@ -84,9 +85,15 @@ class StudentClassController extends Controller
             {
                 // Cek batas maksimal untuk jenjang D3 atau D4
                 if ($program->degree == 'D3' && $year_diff > 3) {
-                    return back()->withErrors('Tahun akademik tidak valid untuk D3, year_diff: '.$year_diff . ' academic_year_select: '. $academic_year_select . ' current_year: '. $current_year. ' current_month: '. $current_month);
+                    $status = 'graduated';
+                    $graduated_at = now();
+                    $year_diff = 3;
+                    // return back()->withErrors('Tahun akademik tidak valid untuk D3, year_diff: '.$year_diff . ' academic_year_select: '. $academic_year_select . ' current_year: '. $current_year. ' current_month: '. $current_month);
                 } elseif ($program->degree == 'D4' && $year_diff > 4) {
-                    return back()->withErrors('Tahun akademik tidak valid untuk D4');
+                    // return back()->withErrors('Tahun akademik tidak valid untuk D4');
+                    $status = 'graduated';
+                    $graduated_at = now();
+                    $year_diff = 4;
                 }
             }
             else
@@ -124,6 +131,8 @@ class StudentClassController extends Controller
                     'program_id' => $program->program_id,
                     'class_name' => $class_name,
                     'academic_year' => $academic_year_select,
+                    'status' => $status,
+                    'graduated_at' => $graduated_at,
                     'created_at' => now(),
                     'updated_at' => now(),
                 ];
@@ -136,6 +145,7 @@ class StudentClassController extends Controller
         return redirect()->route('masterdata.student_classes.index')->with('success', 'Data kelas berhasil disimpan.');
     }
 
+    //untuk generate nama prodi menjadi kode prodi
     private function generateProgramCode($program_name)
     {
         $words = explode(' ', $program_name);
@@ -149,6 +159,51 @@ class StudentClassController extends Controller
         }
     
         return $code;
+    }
+
+    private function checkAcademicYearChange()
+    {
+            $currentYear = Carbon::now()->year;
+            $currentMonth = Carbon::now()->month;
+
+            $lastAcademicYear = StudentClass::latest('academic_year')->first()->academic_year;
+
+            if($currentMonth >= 8 && $currentYear > $lastAcademicYear)
+            {
+                return true;
+            }
+
+            return false;
+    }
+
+    public function updateClassAutomatic()
+    {
+        //Ambil kelas  yang belum lulus
+        $classes = StudentClass::where('status', 'active')->get();
+
+        foreach($classes as $class)
+        {
+            //ambil kode prodi dan tingkat
+            $program_code = substr($class->class_name, 0, strpos($class->class_name, '-'));
+            $level = (int)substr($class->class_name, strpos($class->class_name, '-') + 1, 1);
+
+            //cek prodi dan tingkat maksimal
+            $max_level = $class->program->degree == 'D3' ? 3 : 4;
+
+            if ($level < $max_level)
+            {
+                $new_class_name = $program_code . '-' . ($level + 1) . substr($class->class_name, -1);
+                $class->class_name = $new_class_name;
+                $class->save(); 
+            }
+            else
+            {
+                $class->status = 'graduated';
+                $class->graduated_at = now();
+                $class->save();
+            }
+        }
+
     }
     
 
@@ -181,7 +236,31 @@ class StudentClassController extends Controller
      */
     public function update(Request $request, StudentClass $studentClass)
     {
-        dd($studentClass->class_id);
+        //Ambil kelas  yang belum lulus
+        $classes = StudentClass::where('status', 'active')->get();
+
+        foreach($classes as $class)
+        {
+            //ambil kode prodi dan tingkat
+            $program_code = substr($class->class_name, 0, strpos($class->class_name, '-'));
+            $level = (int)substr($class->class_name, strpos($class->class_name, '-') + 1, 1);
+
+            //cek prodi dan tingkat maksimal
+            $max_level = $class->program->degree == 'D3' ? 3 : 4;
+
+            if ($level < $max_level)
+            {
+                $new_class_name = $program_code . '-' . ($level + 1) . substr($class->class_name, -1);
+                $class->class_name = $new_class_name;
+                $class->save(); 
+            }
+            else
+            {
+                $class->status = 'graduated';
+                $class->graduated_at = now();
+                $class->save();
+            }
+        }
     }
 
     /**

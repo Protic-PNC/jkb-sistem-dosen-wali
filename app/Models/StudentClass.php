@@ -16,6 +16,8 @@ class StudentClass extends Model
         'academic_advisor_id',
         'class_name',
         'academic_year',
+        'status',
+        'graduated_at',
     ];
 
     public function program()

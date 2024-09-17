@@ -35,6 +35,8 @@ Route::middleware('auth')->group(function () {
         Route::resource('users', UserController::class)->middleware('role:admin');
         Route::resource('programs', ProgramController::class)->middleware('role:admin');
         Route::resource('student_classes', StudentClassController::class)->middleware('role:admin');
+
+        Route::get('update/classes', [StudentClassController::class, 'updateClassAutomatic'])->name('student_classes.updateautomatic');
         Route::resource('positions', PositionController::class)->middleware('role:admin');
 
         Route::get('/students/index', [StudentController::class, 'index'])->name('students.index');

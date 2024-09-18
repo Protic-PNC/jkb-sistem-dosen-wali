@@ -87,12 +87,16 @@
                     Semua kelas akan menyesuaikan dengan tahun terbaru, dan Lorem ipsum dolor sit amet consectetur, adipisicing elit. Totam eveniet at fuga qui expedita similique blanditiis atque ad. Veritatis, facilis!
                 </div>
                 <div class="flex">
-                    <a href="{{ route('masterdata.student_classes.updateautomatic') }}" type="button" class="text-white bg-yellow-800 hover:bg-yellow-900 focus:ring-4 focus:outline-none focus:ring-yellow-300 font-medium rounded-lg text-xs px-3 py-1.5 me-2 text-center inline-flex items-center dark:bg-yellow-300 dark:text-gray-800 dark:hover:bg-yellow-400 dark:focus:ring-yellow-800">
-                    <svg class="me-2 h-3 w-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 14">
-                        <path d="M10 0C4.612 0 0 5.336 0 7c0 1.742 3.546 7 10 7 6.454 0 10-5.258 10-7 0-1.664-4.612-7-10-7Zm0 10a3 3 0 1 1 0-6 3 3 0 0 1 0 6Z"/>
-                    </svg>
-                    Update
-                    </a>
+                    <form action="{{ route('masterdata.student_classes.updateautomatic') }}" method="post">
+                        @csrf
+                        <button type="submit" class="text-white bg-yellow-800 hover:bg-yellow-900 focus:ring-4 focus:outline-none focus:ring-yellow-300 font-medium rounded-lg text-xs px-3 py-1.5 me-2 text-center inline-flex items-center dark:bg-yellow-300 dark:text-gray-800 dark:hover:bg-yellow-400 dark:focus:ring-yellow-800">
+                        <svg class="me-2 h-3 w-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 14">
+                            <path d="M10 0C4.612 0 0 5.336 0 7c0 1.742 3.546 7 10 7 6.454 0 10-5.258 10-7 0-1.664-4.612-7-10-7Zm0 10a3 3 0 1 1 0-6 3 3 0 0 1 0 6Z"/>
+                        </svg>
+                        Update
+                        </button>
+
+                    </form>
                     <button type="button" class="text-yellow-800 bg-transparent border border-yellow-800 hover:bg-yellow-900 hover:text-white focus:ring-4 focus:outline-none focus:ring-yellow-300 font-medium rounded-lg text-xs px-3 py-1.5 text-center dark:hover:bg-yellow-300 dark:border-yellow-300 dark:text-yellow-300 dark:hover:text-gray-800 dark:focus:ring-yellow-800" data-dismiss-target="#alert-additional-content-4" aria-label="Close">
                     Dismiss
                     </button>
@@ -123,32 +127,40 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($studentClass as $data)
-                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            {{ $data->class_name }}
-                        </th>
-                        <td class="px-6 py-4">
-                            @if ($data->status == 'active')
-                                <span class="bg-green-100 text-green-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">Aktif</span>
-                            @else
-                                <span class="bg-red-100 text-red-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded dark:bg-red-900 dark:text-red-300">Lulus</span>
-                            @endif
-                        </td>
-                        <td class="px-6 py-4">
-                            {{ $data->program->program_name }}
-                        </td>
-                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            {{ $data->academic_year }}
-                        </th>
-                        <td class="px-6 py-4">
-                            {{ $data->academic_advisor->lecturer_name ?? '-' }}
-                        </td>
-                        <td class="px-6 py-4">
-                            <a href="{{ route('masterdata.student_classes.edit', $data->class_id) }}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-                        </td>
-                    </tr>
-                @endforeach
+                @if ($studentClass)
+                    @foreach ($studentClass as $data)
+                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                {{ $data->class_name }}
+                            </th>
+                            <td class="px-6 py-4">
+                                @if ($data->status == 'active')
+                                    <span class="bg-green-100 text-green-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">Aktif</span>
+                                @else
+                                    <span class="bg-red-100 text-red-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded dark:bg-red-900 dark:text-red-300">Lulus</span>
+                                @endif
+                            </td>
+                            <td class="px-6 py-4">
+                                {{ $data->program->program_name }}
+                            </td>
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                {{ $data->academic_year }}
+                            </th>
+                            <td class="px-6 py-4">
+                                {{ $data->academic_advisor->lecturer_name ?? '-' }}
+                            </td>
+                            <td class="px-6 py-4">
+                                <a href="{{ route('masterdata.student_classes.edit', $data->class_id) }}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                            </td>
+                        </tr>
+                    @endforeach
+                @else
+                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                            <td scope="row" class="px-6 py-4">
+                                Tidak ada kelas
+                            </td>
+                        </tr>
+                @endif
             </tbody>
         </table>
     </div>

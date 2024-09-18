@@ -83,6 +83,8 @@ class StudentClassController extends Controller
 
             if($year_diff > 0)
             {
+                $status = 'active';
+                $graduated_at = null;
                 // Cek batas maksimal untuk jenjang D3 atau D4
                 if ($program->degree == 'D3' && $year_diff > 3) {
                     $status = 'graduated';
@@ -163,17 +165,27 @@ class StudentClassController extends Controller
 
     private function checkAcademicYearChange()
     {
-            $currentYear = Carbon::now()->year;
-            $currentMonth = Carbon::now()->month;
-
-            $lastAcademicYear = StudentClass::latest('academic_year')->first()->academic_year;
-
-            if($currentMonth >= 8 && $currentYear > $lastAcademicYear)
+        if(StudentClass::exists())
             {
-                return true;
-            }
+                $currentYear = Carbon::now()->year;
+                $currentMonth = Carbon::now()->month;
 
-            return false;
+                $lastUpdated = StudentClass::latest('updated_at')->first()->updated_at;
+                $lastAcademicYear = Carbon::parse($lastUpdated)->year;
+
+                if($currentMonth >= 8 && $currentYear > $lastAcademicYear)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
     }
 
     public function updateClassAutomatic()
@@ -181,27 +193,35 @@ class StudentClassController extends Controller
         //Ambil kelas  yang belum lulus
         $classes = StudentClass::where('status', 'active')->get();
 
-        foreach($classes as $class)
+        try
         {
-            //ambil kode prodi dan tingkat
-            $program_code = substr($class->class_name, 0, strpos($class->class_name, '-'));
-            $level = (int)substr($class->class_name, strpos($class->class_name, '-') + 1, 1);
-
-            //cek prodi dan tingkat maksimal
-            $max_level = $class->program->degree == 'D3' ? 3 : 4;
-
-            if ($level < $max_level)
+            foreach($classes as $class)
             {
-                $new_class_name = $program_code . '-' . ($level + 1) . substr($class->class_name, -1);
-                $class->class_name = $new_class_name;
-                $class->save(); 
+                //ambil kode prodi dan tingkat
+                $program_code = substr($class->class_name, 0, strpos($class->class_name, '-'));
+                $level = (int)substr($class->class_name, strpos($class->class_name, '-') + 1, 1);
+
+                //cek prodi dan tingkat maksimal
+                $max_level = $class->program->degree == 'D3' ? 3 : 4;
+
+                if ($level < $max_level)
+                {
+                    $new_class_name = $program_code . '-' . ($level + 1) . substr($class->class_name, -1);
+                    $class->class_name = $new_class_name;
+                    $class->save(); 
+                }
+                else
+                {
+                    $class->status = 'graduated';
+                    $class->graduated_at = now();
+                    $class->save();
+                }
             }
-            else
-            {
-                $class->status = 'graduated';
-                $class->graduated_at = now();
-                $class->save();
-            }
+            return redirect()->route('masterdata.student_classes.index')->with('success', 'Data kelas berhasil diupdate otomatis.');
+        }catch(\Exception $e) {
+            return redirect()
+            ->route('masterdata.student_classes.index')
+            ->with('error', 'System error: ' . $e->getMessage());
         }
 
     }
@@ -236,31 +256,7 @@ class StudentClassController extends Controller
      */
     public function update(Request $request, StudentClass $studentClass)
     {
-        //Ambil kelas  yang belum lulus
-        $classes = StudentClass::where('status', 'active')->get();
-
-        foreach($classes as $class)
-        {
-            //ambil kode prodi dan tingkat
-            $program_code = substr($class->class_name, 0, strpos($class->class_name, '-'));
-            $level = (int)substr($class->class_name, strpos($class->class_name, '-') + 1, 1);
-
-            //cek prodi dan tingkat maksimal
-            $max_level = $class->program->degree == 'D3' ? 3 : 4;
-
-            if ($level < $max_level)
-            {
-                $new_class_name = $program_code . '-' . ($level + 1) . substr($class->class_name, -1);
-                $class->class_name = $new_class_name;
-                $class->save(); 
-            }
-            else
-            {
-                $class->status = 'graduated';
-                $class->graduated_at = now();
-                $class->save();
-            }
-        }
+        
     }
 
     /**

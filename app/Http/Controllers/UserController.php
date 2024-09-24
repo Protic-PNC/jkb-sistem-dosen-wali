@@ -68,12 +68,12 @@ class UserController extends Controller
 
             DB::commit();
 
-            return redirect()->route('masterdata.users.index')->with('success', 'Semua user berhasil disimpan');
+            return redirect()->route('masterdata.users.index')->with('success', 'Semua user berhasil disimpan :)');
         } catch (\Exception $e) {
             DB::rollBack();
             return redirect()
                 ->route('masterdata.users.index')
-                ->with('error', 'System error: ' . $e->getMessage());
+                ->with('error', 'System error : ' . $e->getMessage());
         }
     }
 
@@ -140,7 +140,7 @@ class UserController extends Controller
 
             DB::commit();
 
-            return redirect()->route('masterdata.users.index')->with('success', 'User berhasil diperbarui');
+            return redirect()->route('masterdata.users.index')->with('success', 'User berhasil diperbarui :)');
         } catch (\Exception $e) {
             DB::rollBack();
             return redirect()
@@ -166,7 +166,7 @@ class UserController extends Controller
 
 
             $user->delete();
-            return redirect()->back()->with('success','Users deleted sussesfully');
+            return redirect()->back()->with('success','User berhasil dihapus :)');
         }
         catch(\Exception $e){
             DB::rollBack();

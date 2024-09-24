@@ -17,6 +17,8 @@
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
         
     </head>
     <body class="font-sans antialiased min-h-screen bg-gray-100" style="background: #edf2f7;">
@@ -35,9 +37,13 @@
                                         stroke-linecap="round" stroke-linejoin="round">X</path>
                                 </svg>
                             </button>
+                            
                         </div>
 
-                        <div class="flex items-center">
+                        <div class="flex">
+                            <div class="flex">
+                                <span class="text-lg font-regular text-gray-500 dark:text-gray-400">Selamat datang, <b>{{ Auth::user()->name }}!</b></span>
+                            </div>
                             <div x-data="{notificationOpen: false} " class="relative">
                                 <button @click="notificationOpen = ! notificationOpen"
                                     class="flex mx-4 text-gray-600 focus:outline-none">
@@ -156,17 +162,17 @@
                                         </li>
                                         <li aria-current="page">
                                             <div class="flex items-center">
-                                            <span class=" text-sm font-medium text-gray-500 dark:text-gray-400">@yield('main_folder')</span>
+                                            <a href="{{ route('dashboard.index') }}" class="hover:text-blue-600 hover:text-blue-600 text-sm font-medium text-gray-500 dark:text-gray-400">Master Data</a>
                                             </div>
                                         </li>
                                         <li>
                                             <div class="flex items-center">
-                                            <a href="@yield('href_descendant_folder')" class=" text-sm font-medium text-gray-700 hover:text-blue-600 md:ms-2 dark:text-gray-400 dark:hover:text-white">@yield('descendant_folder')</a>
+                                            <span class=" text-sm font-medium text-gray-700 md:ms-2 dark:text-gray-400 dark:hover:text-white">@yield('descendant_folder')</span>
                                             </div>
                                         </li>
                                         <li>
                                             <div class="flex items-center">
-                                            <a href="@yield('href_breadcrumb_extra')" class=" text-sm font-medium text-gray-700 hover:text-blue-600 md:ms-2 dark:text-gray-400 dark:hover:text-white">@yield('breadcrumb_extra')</a>
+                                            <span class=" text-sm font-medium text-gray-700 md:ms-2 dark:text-gray-400 dark:hover:text-white">@yield('breadcrumb_extra')</span>
                                             </div>
                                         </li>
                                     </ol>

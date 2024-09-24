@@ -1,5 +1,25 @@
 <x-app-layout>
     @section('content')
+    <style>
+        #success-message {
+            transition: opacity 0.2s ease-out;
+        }
+        #errors-message {
+            transition: opacity 0.2s ease-out;
+        }
+    
+        .close-btn {
+            cursor: pointer;
+            float: right;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: black;
+        }
+    
+        .close-btn:hover {
+            color: black;
+        }
+    </style>
 
         <section class="bg-white dark:bg-gray-900">
             <div class="py-12">
@@ -7,26 +27,53 @@
                     <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                         <div class="p-6 text-gray-900">
                             @role('admin')
-                                <h2 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">Pilih atau Tambah Dosen Wali
+                            @if ($errors->any())
+                            <div id="error-message" class="p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800"
+                                role="alert">
+                                <span class="font-medium">Whoops!</span> There were some problems with your input.
+                                <span class="close-btn" onclick="closeAlert('error-message')">&times;</span>
+                                <ul class="mt-2 list-disc pl-5">
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+                        @if (session('success'))
+                            <div id="success-message"
+                                class="p-4 mb-4 text-sm text-green-700 bg-green-100 rounded-lg dark:bg-green-200 dark:text-green-800"
+                                role="alert">
+                                <span class="font-medium">Success!</span> {{ session('success') }}
+                                <span class="close-btn" onclick="closeAlert('success-message')">&times;</span>
+                            </div>
+                        @endif
+                            @php
+                            $userId = $user;
+                            $isNewLecturer = !$user ? 1 : 0; // Jika user null, maka default ke form tambah mahasiswa
+                            @endphp
+                                <h2 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">
+                                    @if (!$isNewLecturer)
+                                    Pilih atau
+                                    @endif Tambah Dosen Wali
                                 </h2>
-                                <form action="{{ route('masterdata.lecturers.store', $user->id) }}" method="POST"
+                                <form action="{{ route('masterdata.lecturers.store', $user->id ?? 'null') }}" method="POST"
                                     enctype="multipart/form-data">
                                     @csrf
                                     <div class="grid gap-4 sm:grid-cols-2 sm:gap-6">
 
                                         {{-- Input untuk cek apakah tambah mhs baru atau tidak --}}
-                                        <input type="hidden" name="is_new_lecturer" id="is_new_lecturer" value="0">
-                                        <input type="hidden" name="user_id" id="user_id" value="{{ $user->id }}">
+                                        <input type="hidden" name="is_new_lecturer" id="is_new_lecturer" value="{{ $isNewLecturer }}">
+                                        <input type="hidden" name="user_id" id="user_id" value="{{ $user->id ?? 'null'}}">
 
                                         <!-- Dropdown Dosen Wali dengan Pencarian -->
-                                        <div id="select_lecturer_container" style="display: block">
+                                        <div id="select_lecturer_container" @if($isNewLecturer) style="display:none;" @else style="display:block;" @endif>
                                             <label for="select_lecturer"
                                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Pilih Dosen
                                                 Wali</label>
                                             <div class="w-full">
                                                 <label for="name"
                                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nama</label>
-                                                <input type="text" name="name" id="name" value="{{ $user->name }}"
+                                                <input type="text" name="name" id="name" value="{{ $user->name ?? '' }}"
                                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" disabled>
                                             </div>
 
@@ -46,9 +93,12 @@
 
 
                                         <!-- Tambah Dosen Wali -->
-                                        <div id="add-lecturer-form" style="display:none;">
-                                            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tambah
-                                                Dosen Wali</label>
+                                        <div id="add-lecturer-form"  @if(!$isNewLecturer) style="display:none;" @endif>
+                                            @if (!$isNewLecturer)
+                                                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                                    Tambah
+                                                    Dosen Wali</label>
+                                            @endif
 
                                             <div class="w-full">
                                                 <label for="name"
@@ -107,12 +157,12 @@
                                         </div>
 
                                         <!-- Checkbox untuk menambah Dosen Wali baru dengan onchange langsung -->
-                                        <div class="w-full">
+                                        <div @if($isNewLecturer) hidden @endif class="w-full">
                                             <label for="add_new_lecturer"
                                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                                                 <input type="checkbox" id="add_new_lecturer"
-                                                    onchange="toggleAddlecturerForm(this)" class="mr-2"> Tambah Dosen Wali
-                                                Baru
+                                                    onchange="toggleAddlecturerForm(this)" class="mr-2" @if($isNewLecturer) checked @endif>
+                                                    Tambah Dosen Wali 
                                             </label>
                                         </div>
 

@@ -1,9 +1,7 @@
 <x-app-layout>
 
-    @section('main_folder', '/ Master Data')
     @section('href_descendant_folder', route('masterdata.student_classes.index')) 
     @section('descendant_folder', '/ Classes')
-    @section('href_breadcrumb_extra', route('masterdata.student_classes.create'))
     @section('breadcrumb_extra', '/ Add New Class')
     @section('content')
     <style>
@@ -88,7 +86,7 @@
 
                                         <div class="w-full">
                                             <label for="select_program" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Pilih Prodi</label>
-                                            <select id="select_program" name="program_id" class="select2 g-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                                            <select id="select_program" name="program_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
                                                 <option value="" disabled selected>Pilih Prodi</option>
                                                 @foreach ($programs as $program)
                                                     <option value="{{ $program->program_id }}">{{ $program->program_name }}</option>
@@ -175,18 +173,18 @@
         }
 
     
-        $(document).ready(function() {
-            // Aktifkan select2 untuk dropdown Kelas
-            $('#select_program').select2({
-                placeholder: "Pilih Kelas",
-                allowClear: true
-            });
+        // $(document).ready(function() {
+        //     // Aktifkan select2 untuk dropdown Kelas
+        //     $('#select_program').select2({
+        //         placeholder: "Pilih Kelas",
+        //         allowClear: true
+        //     });
             
-            // Tambahkan validasi jika diperlukan
-            $('#select_program').on('select2:select', function (e) {
-                $(this).valid();
-            });
-        });
+        //     // Tambahkan validasi jika diperlukan
+        //     $('#select_program').on('select2:select', function (e) {
+        //         $(this).valid();
+        //     });
+        // });
 
     </script>
 

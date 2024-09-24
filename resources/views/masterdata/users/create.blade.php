@@ -3,7 +3,6 @@
     @section('main_folder', '/ Master Data')
     @section('href_descendant_folder', route('masterdata.users.index')) 
     @section('descendant_folder', '/ Users')
-    @section('href_breadcrumb_extra', route('masterdata.users.create'))
     @section('breadcrumb_extra', '/ Add New User')
 
     @section('content')

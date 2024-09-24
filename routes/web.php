@@ -36,7 +36,7 @@ Route::middleware('auth')->group(function () {
         Route::resource('programs', ProgramController::class)->middleware('role:admin');
         Route::resource('student_classes', StudentClassController::class)->middleware('role:admin');
 
-        Route::post('student_classes/update', [StudentClassController::class, 'updateClassAutomatic'])->name('student_classes.updateautomatic');
+        //Route::post('student_classes/update', [StudentClassController::class, 'updateClassAutomatic'])->name('student_classes.updateautomatic');
         Route::resource('positions', PositionController::class)->middleware('role:admin');
 
         Route::get('/students/index', [StudentController::class, 'index'])->name('students.index');
@@ -46,7 +46,9 @@ Route::middleware('auth')->group(function () {
         Route::get('/students/edit/{id}', [StudentController::class, 'edit'])->name('students.edit');
         Route::put('/students/update/{id}', [StudentController::class, 'update'])->name('students.update');
         Route::delete('/students/destroy/{id}', [StudentController::class, 'destroy'])->name('students.destroy');
+        Route::post('/students/import', [StudentController::class, 'import'])->name('students.import');
         
+        Route::post('/student_classes/destroy', [StudentClassController::class, 'deleteAll'])->name('student_classes.destroy.selected');
         
         Route::get('/lecturers/index', [LecturerController::class, 'index'])->name('lecturers.index');
         Route::get('/lecturers/show/{userId}', [LecturerController::class, 'show'])->name('lecturers.show');

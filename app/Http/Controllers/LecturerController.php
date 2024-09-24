@@ -23,7 +23,10 @@ class LecturerController extends Controller
                 'student_classes',
                 'position'
             ]
-        )->get();
+        )
+        ->orderBy('position_id', 'desc')
+        ->orderBy('created_at', 'desc')
+        ->get();
         return view('masterdata.lecturers.index', compact('lecturers'));
     }
 
@@ -69,7 +72,10 @@ class LecturerController extends Controller
                     $lecturer->nip = $request->input('nip');
                     $lecturer->lecturer_address = $request->input('lecturer_address');
                     $lecturer->lecturer_phone_number = $request->input('lecturer_phone_number');
-                    $lecturer->user_id = $request->input('user_id');
+                    if($request->input('user_id') != 'null')
+                    {
+                        $lecturer->user_id = $request->input('user_id');
+                    }
                     $lecturer->position_id = $request->input('position_id');
 
                     // Jika ada file tanda tangan yang diunggah
@@ -84,7 +90,10 @@ class LecturerController extends Controller
                     // Redirect setelah berhasil menyimpan data
                     return redirect()->route('masterdata.lecturers.index')->with('success', 'Data dosen wali berhasil disimpan.');
                 } catch (\Exception $e) {
-                    return back()->withErrors(['lecturer_id' => 'Dosen wali tidak valid: ' . $e->getMessage()]);
+                    return redirect()
+                    ->back()
+                    ->withInput()
+                    ->with('error', 'System error: ' . $e->getMessage());
                 }
             } else {
                 // Jika memilih dosen wali yang sudah ada dari dropdown
@@ -174,8 +183,22 @@ class LecturerController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Lecturer $lecturer)
+    public function destroy($id)
     {
-        //
+        $lecturer = Lecturer::find($id);
+
+        //dd($lecturer->lecturer_name);
+
+        try
+        {
+            $lecturer->delete();
+
+            return redirect()->route('masterdata.lecturers.index')->with('success', 'Lecturer deleted successfully');
+        } catch (\Exception $e)
+        {
+            return redirect()
+            ->route('masterdata.lecturers.index')
+            ->with('error', 'System error: ' . $e->getMessage());
+        }
     }
 }

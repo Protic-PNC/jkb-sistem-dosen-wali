@@ -109,7 +109,7 @@
         @role('dosenWali')
 
             <a class="flex items-center px-6 py-2 mt-4 {{ setActive('masterdata.gpas.*') }}"
-                href="{{ route('masterdata.gpas.index', Auth::user()->id) }}">
+                href="{{ route('masterdata.gpas.index') }}">
                 <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                     stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"

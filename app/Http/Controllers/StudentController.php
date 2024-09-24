@@ -8,6 +8,9 @@ use App\Models\User;
 use App\Models\StudentClass;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\StudentImport;
+use App\Imports\StudentsImport;
 
 class StudentController extends Controller
 {
@@ -40,6 +43,27 @@ class StudentController extends Controller
         }
     }
 
+    public function import(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx,csv'
+        ]);
+
+        try
+        {
+            Excel::import(new StudentsImport, $request->file('file'));
+            return redirect()->route('masterdata.students.index')->with('success', 'Mahasiswa berhasil diimport');
+
+        } catch (\Exception $e)
+        {
+            return redirect()
+                ->back()
+                ->withInput()
+                ->with('error', 'System error: ' . $e->getMessage());
+        }
+        
+    }
+
     /**
      * Store a newly created resource in storage.
      */
@@ -54,7 +78,10 @@ class StudentController extends Controller
                     $student->nim = $request->input('nim');
                     $student->student_address = $request->input('student_address');
                     $student->student_phone_number = $request->input('student_phone_number');
-                    $student->user_id = $request->input('user_id');
+                    if($request->input('user_id') != 'null')
+                    {
+                        $student->user_id = $request->input('user_id');
+                    }
                     $student->class_id = $request->input('class_id');
                     // Jika ada file tanda tangan diunggah
                     if ($request->hasFile('student_signature')) {
@@ -184,8 +211,19 @@ class StudentController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Student $student)
+    public function destroy($id)
     {
-        //
+        $student = Student::find($id);
+
+        try
+        {
+            $student->delete();
+            return redirect()->route('masterdata.students.index')->with('success', 'Student deleted successfully');
+        } catch (\Exception $e)
+        {
+            return redirect()
+            ->back()
+            ->with('error', 'System error: ' . $e->getMessage());
+        }
     }
 }

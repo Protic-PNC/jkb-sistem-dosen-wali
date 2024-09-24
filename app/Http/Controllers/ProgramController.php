@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Lecturer;
 use App\Models\Program;
+use App\Models\StudentClass;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
@@ -18,7 +19,9 @@ class ProgramController extends Controller
     {
         $program = Program::with(
             'head_of_program'
-        )->get();
+        )
+        ->orderBy('created_at', 'desc')
+        ->get();
 
         return view('masterdata.programs.index', compact('program'));
     }
@@ -75,10 +78,18 @@ class ProgramController extends Controller
         $kaprodis = Lecturer::with([
             'position',
             'program'
-        ])->whereHas('position', function($query) {
+        ])
+        ->whereHas('position', function($query) {
             $query->where('position_name', 'kaprodi');
         })
-        // ->whereDoesntHave('program')
+        // Filter agar dosen tidak memiliki relasi dengan program lain kecuali program yang sedang diedit
+        ->whereDoesntHave('program', function($query) use ($program) {
+            $query->where('program_id', '!=', $program->program_id);
+        })
+        ->orWhereHas('program', function($query) use ($program) {
+            // Allow the kaprodi if they are only related to the current program
+            $query->where('program_id', $program->program_id);
+        })
         ->get();
         
 
@@ -123,6 +134,27 @@ class ProgramController extends Controller
      */
     public function destroy(Program $program)
     {
-        //
+        try
+        {
+            DB::beginTransaction();
+
+            if($program->classes()->exists())
+            {
+                $classes = StudentClass::where('program_id', $program->program_id)->get();
+                foreach($classes as $class)
+                {
+                    $class->delete();
+                }
+            }
+            $program->delete();
+
+            DB::commit();
+            return redirect()->back()->with('success','Prodi berhasil dihapus :)');
+        }catch(\Exception $e)
+        {
+            DB::rollBack();
+
+            return redirect()->back()->withErrors('System error: ' . $e->getMessage());
+        }
     }
 }

@@ -6,6 +6,7 @@ use App\Models\Lecturer;
 use App\Models\StudentClass;
 use Illuminate\Http\Request;
 use App\Models\Program;
+use Illuminate\Support\Facades\DB;
 
 use Illuminate\Support\Carbon;
 
@@ -251,19 +252,174 @@ class StudentClassController extends Controller
         return view('masterdata.student_classes.edit', compact('studentClass', 'lecturers', 'programs'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, StudentClass $studentClass)
-    {
-        
-    }
+        /**
+         * Update the specified resource in storage.
+         */
+        public function update(Request $request, StudentClass $studentClass)
+        {
+            $program = Program::find($request->input('program_id'));
+
+            $program_code = $this->generateProgramCode($program->program_name);
+
+            // dd($program_code);
+
+            // Hitung perbedaan tahun (tahun sekarang - tahun akademik yang diinput)
+            $new_academic_year = $request->academic_year;
+            $current_year = Carbon::now()->year;
+            $current_month = Carbon::now()->month;
+
+            $year_diff = $current_year - $new_academic_year;
+            if ($current_month >= 8) {
+                $year_diff += 1;
+            }
+
+            if ($year_diff > 0) {
+                $status = 'active';
+                $graduated_at = null;
+
+                // Cek batas maksimal untuk D3 atau D4
+                if ($program->degree == 'D3' && $year_diff > 3) {
+                    $status = 'graduated';
+                    $graduated_at = now();
+                    $year_diff = 3;
+                } elseif ($program->degree == 'D4' && $year_diff > 4) {
+                    $status = 'graduated';
+                    $graduated_at = now();
+                    $year_diff = 4;
+                }
+            } else {
+                return back()->withErrors('Tahun akademik tidak valid, harus kurang dari ' . $current_year);
+            }
+
+            // Update data kelas
+            try {
+                DB::beginTransaction();
+
+                // Generate kode kelas baru jika prodi atau tahun akademik berubah
+                if ($studentClass->academic_year != $new_academic_year || $studentClass->program_id != $request->program_id) {
+                    // Tentukan huruf kelas
+                    $existingClasses = StudentClass::where('program_id', $request->program_id)
+                        ->where('academic_year', $new_academic_year)
+                        ->orderBy('class_name', 'desc')
+                        ->first();
+
+                    $lastClassLetter = 'A'; // Default jika tidak ada kelas sebelumnya
+                    if ($existingClasses) {
+                        $lastClassLetter = substr($existingClasses->class_name, -1);
+                        $lastClassLetter = chr(ord($lastClassLetter) + 1);
+                    }
+
+                    // Generate nama kelas baru
+                    $class_name = "{$program_code}-{$year_diff}{$lastClassLetter}";
+
+                    $studentClass->update([
+                        'program_id' => $request->program_id,
+                        'academic_year' => $new_academic_year,
+                        'class_name' => $class_name,
+                        'academic_advisor_id' => $request->academic_advisor_id,
+                        'status' => $status,
+                        'graduated_at' => $graduated_at,
+                        'updated_at' => now(),
+                    ]);
+                } else {
+                    // Update hanya untuk nama kelas atau advisor jika prodi dan tahun tidak berubah
+                    $studentClass->update([
+                        'class_name' => $request->class_name,
+                        'academic_advisor_id' => $request->academic_advisor_id,
+                        'status' => $status,
+                        'graduated_at' => $graduated_at,
+                        'updated_at' => now(),
+                    ]);
+                }
+
+                DB::commit();
+                return redirect()->route('masterdata.student_classes.index')->with('success', 'Data kelas berhasil diperbarui.');
+            } catch (\Exception $e) {
+                DB::rollBack();
+                return redirect()->back()->withInput()->with('error', 'System error: ' . $e->getMessage());
+            }
+            
+        }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(StudentClass $studentClass)
+
+     public function destroy(StudentClass $studentClass)
+     {
+         // Kumpulkan semua relasi yang ada
+         $relatedEntities = [];
+     
+         if ($studentClass->student()->exists()) {
+             $relatedEntities[] = 'students';
+         }
+         if ($studentClass->gpa()->exists()) {
+             $relatedEntities[] = 'GPA records';
+         }
+         if ($studentClass->guidance()->exists()) {
+             $relatedEntities[] = 'guidance records';
+         }
+         if ($studentClass->warning()->exists()) {
+             $relatedEntities[] = 'warnings';
+         }
+         if ($studentClass->scholarship()->exists()) {
+             $relatedEntities[] = 'scholarships';
+         }
+         if ($studentClass->tuition_arrear()->exists()) {
+             $relatedEntities[] = 'tuition arrears';
+         }
+         if ($studentClass->student_resignation()->exists()) {
+             $relatedEntities[] = 'student resignations';
+         }
+         if ($studentClass->achievement()->exists()) {
+             $relatedEntities[] = 'achievements';
+         }
+         if ($studentClass->report()->exists()) {
+             $relatedEntities[] = 'reports';
+         }
+     
+         // Jika ada relasi yang ditemukan, kembalikan error
+         if (!empty($relatedEntities)) {
+             $relations = implode(', ', $relatedEntities);
+             return back()->withErrors(['error' => "Cannot delete the class because it has related records: {$relations}."]);
+         }
+         else
+         {
+            try
+            {
+                // Jika tidak ada relasi, hapus kelas
+                $studentClass->delete();
+            
+                return redirect()->route('masterdata.student_classes.index')->with('success', 'Class deleted successfully.');
+            } catch (\Exception $e) {
+                return redirect()
+                    ->back()
+                    ->with('error', 'System error: ' . $e->getMessage());
+            }
+         } 
+     }
+     
+
+
+    public function deleteAll(Request $request)
     {
-        //
+            // Dapatkan semua ID yang dipilih
+            $classIds = $request->input('ids');
+
+            try {
+                // Lakukan penghapusan
+                StudentClass::whereIn('class_id', $classIds)->delete();
+
+                // Jika berhasil, kirim respon sukses
+                return redirect()->route('masterdata.student_classes.index')
+                    ->with('success', 'Kelas yang dipilih berhasil dihapus.');
+
+            } catch (\Illuminate\Database\QueryException $e) {
+
+                // Tangkap error lainnya dan tampilkan pesan default
+                return redirect()
+                ->route('masterdata.student_classes.index')
+                ->with('error', 'System error : ' . $e->getMessage());
+            }
     }
 }

@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\Lecturer;
 use App\Models\StudentClass;
+use App\Models\Student;
 
 class GpaController extends Controller
 {
@@ -19,38 +20,26 @@ class GpaController extends Controller
         $user_login = Auth::user();
         $lecturer = $user_login->lecturer;
 
-        
-        $gpa = Gpa::with([
+        $students = Student::with([
+            'student_classes.program',
+            'gpa_cumulative.gpa',
             'gpa_cumulative.gpa_semester',
-            'gpa_cumulative.student',
-            'student_class.program',
-            ])->whereHas('student_class', function($query) use ($lecturer) {
-                $query->where('academic_advisor_id', $lecturer->lecturer_id);
-            })->get();
-
-        // $gpaTest = Gpa::with([
-        //     'gpa_cumulative.gpa_semester',
-        //     'gpa_cumulative.student',
-        //     'student_class.program',
-        // ])->whereHas('student_class', function($query) use ($lecturer) {
-        //     $query->where('academic_advisor_id', $lecturer->lecturer_id);
-        // })->first();
+        ])->whereHas('student_classes', function($query) use ($lecturer) {
+            $query->where('academic_advisor_id', $lecturer->lecturer_id);
+        })->get();
 
 
-        if ($gpa->isEmpty()) {
-            // Koleksi kosong, tidak ada data GPA yang ditemukan
-            $jumlahSemester = 0;
-        } else {
-            foreach ($gpa as $item) {
-                $jumlahSemester = 0;
-                if ($item->student_class && $item->student_class->program) {
-                    $jumlahSemester = $item->student_class->program->degree == 'D-3' ? 6 : 8;
-                }
-            }
+        if($lecturer->student_classes->program->degree == 'D3')
+        {
+            $jumlahSemester = 6;
+        }
+        else
+        {
+            $jumlahSemester = 8;
         }
         
 
-        return view('masterdata.gpas.index', compact('gpa', 'jumlahSemester'));
+         return view('masterdata.gpas.index', compact( 'jumlahSemester', 'students'));
     }
 
     /**

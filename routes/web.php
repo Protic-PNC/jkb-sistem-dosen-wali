@@ -60,10 +60,16 @@ Route::middleware('auth')->group(function () {
 
 
         Route::get('/gpas/index', [GpaController::class, 'index'])->name('gpas.index');
+        Route::get('/gpas/edit/{classId}', [GpaController::class, 'edit'])->name('gpas.edit');
+        Route::put('/gpas/update/{id}', [GpaController::class, 'update'])->name('gpas.update');
         
 
-        Route::get('/guidance/index/{id}', [GuidanceController::class, 'index'])->name('guidances.index');
-        Route::get('/guidance/create/{id}', [GuidanceController::class, 'create'])->name('guidances.create');
+        Route::get('/guidances/index/{id}', [GuidanceController::class, 'index'])->name('guidances.index');
+        Route::get('/guidances/create/{id}', [GuidanceController::class, 'create'])->name('guidances.create');
+        Route::post('/guidances/store/{classId}', [GuidanceController::class, 'store'])->name('guidances.store');
+        Route::put('/guidances/update/{id}', [GuidanceController::class, 'update'])->name('guidances.update');
+        Route::get('/guidances/edit/{id}', [GuidanceController::class, 'edit'])->name('guidances.edit');
+        Route::delete('/guidances/destroy/{id}', [GuidanceController::class, 'destroy'])->name('guidances.destroy');
         
         
         Route::get('/achievement/index', [AchievementController::class, 'index'])->name('achievements.index');

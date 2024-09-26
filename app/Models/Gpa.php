@@ -9,6 +9,8 @@ class Gpa extends Model
 {
     use HasFactory;
 
+    protected $primaryKey = 'gpa_id';
+
     protected $fillable = [
         'class_id'
     ];

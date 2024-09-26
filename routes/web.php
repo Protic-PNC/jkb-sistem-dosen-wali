@@ -73,9 +73,19 @@ Route::middleware('auth')->group(function () {
         
         
         Route::get('/achievement/index', [AchievementController::class, 'index'])->name('achievements.index');
+        Route::get('/achievement/create/{id}', [AchievementController::class, 'create'])->name('achievements.create');
+        Route::post('/achievement/store', [AchievementController::class, 'store'])->name('achievements.store');
+        Route::get('/achievement/edit/{id}', [AchievementController::class, 'edit'])->name('achievements.edit');
+        Route::put('/achievement/update/{id}', [AchievementController::class, 'update'])->name('achievements.update');
+        Route::delete('/achievement/destroy/{id}', [AchievementController::class, 'destroy'])->name('achievements.destroy');
         
         
         Route::get('/warning/index', [WarningController::class, 'index'])->name('warnings.index');
+        Route::get('/warning/create', [WarningController::class, 'create'])->name('warnings.create');
+        Route::post('/warning/store', [WarningController::class, 'store'])->name('warnings.store');
+        Route::get('/warning/edit/{id}', [WarningController::class, 'edit'])->name('warnings.edit');
+        Route::put('/warning/update/{id}', [WarningController::class, 'update'])->name('warnings.update');
+        Route::delete('/warning/destroy/{id}', [WarningController::class, 'destroy'])->name('warnings.destroy');
         
         
         Route::get('/scholarship/index', [ScholarshipController::class, 'index'])->name('scholarships.index');

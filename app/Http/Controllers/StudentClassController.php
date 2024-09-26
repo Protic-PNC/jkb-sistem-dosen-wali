@@ -101,7 +101,7 @@ class StudentClassController extends Controller
             }
             else
             {
-                return back()->withErrors('Tahun akademik tidak valid, harus kurang dari ' . $current_year);
+                return back()->withErrors('Tahun akademik tidak valid');
             }
 
             // Ambil kelas yang sudah ada di program dan tahun akademik yang sama

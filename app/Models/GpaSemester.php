@@ -9,6 +9,7 @@ class GpaSemester extends Model
 {
     use HasFactory;
 
+    protected $primaryKey = 'gpa_semesters_id';
     protected $fillable = [
         'gpa_cumulative_id',
         'semester',

@@ -9,6 +9,7 @@ class GuidanceDetail extends Model
 {
     use HasFactory;
 
+    protected $primaryKey = 'guidance_detail_id';
     protected $fillable = [
         'guidance_id',
         'student_id',

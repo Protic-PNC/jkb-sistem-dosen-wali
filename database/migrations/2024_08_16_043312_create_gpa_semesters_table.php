@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('gpa_cumulative_id');
             $table->foreign('gpa_cumulative_id')->references('gpa_cumulative_id')->on('gpa_cumulatives');
             $table->integer('semester');
-            $table->decimal('semester_gpa', 3, 2);
+            $table->decimal('semester_gpa', 3, 2)->nullable();
             $table->timestamps();
         });
     }

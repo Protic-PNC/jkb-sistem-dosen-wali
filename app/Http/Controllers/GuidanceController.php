@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Guidance;
 use App\Models\GuidanceDetail;
+use App\Models\StudentClass;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Student;
 
 class GuidanceController extends Controller
 {
@@ -58,22 +60,48 @@ class GuidanceController extends Controller
      */
     public function create($id)
     {
-        $user_id = $id;
-        return view('masterdat  a.guidance.create', compact('user_id'));
+        $user = User::find($id);
+        $student_class = StudentClass::where('academic_advisor_id', $user->lecturer->lecturer_id)->first();
+
+        $students = Student::where('class_id', $student_class->class_id)->get();
+
+        return view('masterdata.guidance.create', compact('students', 'student_class'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request, $classId)
     {
-        //
+
+        $userId = Auth::user()->id;
+        //$student = Student::where('student_id', $request->input('student_id'))->first();
+        $guidance = Guidance::firstOrCreate(['class_id' => $classId]);
+
+        try
+        {
+            $guidanceDetail = new GuidanceDetail();
+            $guidanceDetail->guidance_id = $guidance->guidance_id;
+            $guidanceDetail->student_id = $request->input('student_id');
+            $guidanceDetail->problem = $request->input('problem');
+            $guidanceDetail->solution = $request->input('solution');
+
+            $guidanceDetail->save();
+
+            return redirect()
+                    ->route('masterdata.guidances.index', $userId)
+                    ->with('success', 'Bimbingan berhasil dibuat!');
+        } catch (\Exception $e){
+            return redirect()
+                    ->route('masterdata.guidances.index', $userId)
+                    ->with('error', 'System error: ' . $e->getMessage());
+        }
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Guidance $guidance)
+    public function show($id)
     {
         //
     }
@@ -81,24 +109,54 @@ class GuidanceController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Guidance $guidance)
+    public function edit($id)
     {
-        //
+        $guidanceDetail = GuidanceDetail::find($id);
+
+        return view('masterdata.guidance.edit', compact('guidanceDetail'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Guidance $guidance)
+    public function update(Request $request, $id)
     {
-        //
+        $guidanceDetail = GuidanceDetail::find($id);
+
+       // dd($guidanceDetail);
+
+        $validated = $request->validate([
+            'problem' => 'required',
+            'solution' => 'required',
+        ]);
+
+        try
+        {
+            $guidanceDetail->update($validated);
+            return redirect()->route('masterdata.guidances.index', Auth::user()->id)->with('success', 'Bimbingan berhasil diperbarui!');
+        }catch (\Exception $e)
+        {
+            return redirect()
+                    ->route('masterdata.guidances.index', Auth::user()->id)
+                    ->with('error', 'System error: ' . $e->getMessage());
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Guidance $guidance)
+    public function destroy($id)
     {
-        //
+       $guidanceDetail = GuidanceDetail::find($id);
+
+       try
+       {
+        $guidanceDetail->delete();
+
+        return redirect()->route('masterdata.guidances.index', Auth::user()->id)->with('success', 'Bimbingan berhasil dihapus');
+       }catch (\Exception $e)
+       {
+        return redirect()->route('masterdata.guidances.index', Auth::user()->id)->with('error', 'System error: '.$e->getMessage());
+       }
     }
 }

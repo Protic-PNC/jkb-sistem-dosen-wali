@@ -9,6 +9,7 @@ class WarningDetail extends Model
 {
     use HasFactory;
 
+    protected $primaryKey = 'warning_detail_id';
     protected $fillable = [
         'warning_id',
         'student_id',

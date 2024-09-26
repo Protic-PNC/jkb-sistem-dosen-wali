@@ -3,8 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Achievement;
+use App\Models\AchievementDetail;
+use App\Models\StudentClass;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+
+use App\Models\User;
+use App\Models\Student;
 
 class AchievementController extends Controller
 {
@@ -47,9 +52,13 @@ class AchievementController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create($id)
     {
-        //
+        $user = User::find($id);
+
+        $students = Student::where('class_id', $user->lecturer->student_classes->class_id)->get();
+        
+        return view('masterdata.achievement.create', compact('students'));
     }
 
     /**
@@ -57,7 +66,28 @@ class AchievementController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $user = Auth::user();
+        //$student = Student::where('student_id', $request->input('student_id'))->first();
+        $achievement = Achievement::firstOrCreate(['class_id' => $user->lecturer->student_classes->class_id]);
+
+        try
+        {
+            $achievementDetail = new AchievementDetail();
+            $achievementDetail->achievement_id = $achievement->achievement_id;
+            $achievementDetail->student_id = $request->input('student_id');
+            $achievementDetail->achievement_type = $request->input('achievement_type');
+            $achievementDetail->level = $request->input('level');
+
+            $achievementDetail->save();
+
+            return redirect()
+                    ->route('masterdata.achievements.index', $user->id)
+                    ->with('success', 'Pencapaian berhasil ditambah!');
+        } catch (\Exception $e){
+            return redirect()
+                    ->route('masterdata.achievements.index', $user->id)
+                    ->with('error', 'System error: ' . $e->getMessage());
+        }
     }
 
     /**

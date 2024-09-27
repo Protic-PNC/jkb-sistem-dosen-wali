@@ -21,11 +21,11 @@ class WarningController extends Controller
         $warning = Warning::with([
             'warning_detail.student',
             'student_class',
-        ])->whereHas('student_class', function($query) use ($lecturer){
+        ])->whereHas('student_class', function ($query) use ($lecturer) {
             $query->where('academic_advisor_id', $lecturer->lecturer_id);
         })->get();
 
-        return view('masterdata.warning.index', compact('warning'));
+        return view('masterdata.warnings.index', compact('warning'));
     }
 
     /**
@@ -37,7 +37,7 @@ class WarningController extends Controller
 
         $students = Student::where('class_id', $user->lecturer->student_classes->class_id)->get();
 
-        return view('masterdata.warning.create', compact('students'));
+        return view('masterdata.warnings.create', compact('students'));
     }
 
     /**
@@ -49,8 +49,7 @@ class WarningController extends Controller
 
         $warning = Warning::firstOrCreate(['class_id' => $user->lecturer->student_classes->class_id]);
 
-        try
-        {
+        try {
             $warningDetail = new WarningDetail();
 
             $warningDetail->warning_id = $warning->warning_id;
@@ -59,13 +58,12 @@ class WarningController extends Controller
             $warningDetail->reason = $request->input('reason');
 
             $warningDetail->save();
-            
+
             return redirect()->route('masterdata.warnings.index')->with('success', 'Peringatan berhasil ditambahkan');
-        }catch(\Exception $e)
-        {
+        } catch (\Exception $e) {
             return redirect()
-                    ->route('masterdata.warnings.index')
-                    ->with('error', 'System error: ' . $e->getMessage());
+                ->route('masterdata.warnings.index')
+                ->with('error', 'System error: ' . $e->getMessage());
         }
     }
 
@@ -84,7 +82,7 @@ class WarningController extends Controller
     {
         $warningDetail = WarningDetail::find($id);
 
-        return view('masterdata.warning.edit', compact('warningDetail'));
+        return view('masterdata.warnings.edit', compact('warningDetail'));
     }
 
     /**
@@ -95,20 +93,18 @@ class WarningController extends Controller
         $warningDetail = WarningDetail::find($id);
 
         $validated = $request->validate([
-                        'warning_type' => 'required',
-                        'reason' => 'required',
-                    ]);
+            'warning_type' => 'required',
+            'reason' => 'required',
+        ]);
 
-        try
-        {
+        try {
             $warningDetail->update($validated);
 
-            return redirect()->route('masterdata.warnings.index')->with('success', 'Peringatan '. $warningDetail->student->student_name .' berhasil diperbarui!');
-        }catch(\Exception $e)
-        {
+            return redirect()->route('masterdata.warnings.index')->with('success', 'Peringatan ' . $warningDetail->student->student_name . ' berhasil diperbarui!');
+        } catch (\Exception $e) {
             return redirect()
-                    ->route('masterdata.warnings.index')
-                    ->with('error', 'System error: ' . $e->getMessage());
+                ->route('masterdata.warnings.index')
+                ->with('error', 'System error: ' . $e->getMessage());
         }
     }
 
@@ -119,13 +115,11 @@ class WarningController extends Controller
     {
         $warningDetail = WarningDetail::find($id);
 
-        try
-        {
+        try {
             $warningDetail->delete();
-            
+
             return redirect()->route('masterdata.warnings.index')->with('success', 'Peringatan berhasil dihapus');
-        } catch (\Exception $e)
-        {
+        } catch (\Exception $e) {
             return redirect()->route('masterdata.warnings.index')->with('error', ' System error: ' . $e->getMessage());
         }
     }

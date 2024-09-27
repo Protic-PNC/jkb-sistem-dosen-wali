@@ -52,7 +52,7 @@ class GuidanceController extends Controller
         }
         
 
-        return view('masterdata.guidance.index', compact('guidance'));
+        return view('masterdata.guidances.index', compact('guidance'));
     }
 
     /**
@@ -65,7 +65,7 @@ class GuidanceController extends Controller
 
         $students = Student::where('class_id', $student_class->class_id)->get();
 
-        return view('masterdata.guidance.create', compact('students', 'student_class'));
+        return view('masterdata.guidances.create', compact('students', 'student_class'));
     }
 
     /**
@@ -113,7 +113,7 @@ class GuidanceController extends Controller
     {
         $guidanceDetail = GuidanceDetail::find($id);
 
-        return view('masterdata.guidance.edit', compact('guidanceDetail'));
+        return view('masterdata.guidances.edit', compact('guidanceDetail'));
     }
 
     /**

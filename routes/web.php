@@ -89,12 +89,27 @@ Route::middleware('auth')->group(function () {
         
         
         Route::get('/scholarship/index', [ScholarshipController::class, 'index'])->name('scholarships.index');
+        Route::get('/scholarship/create', [ScholarshipController::class, 'create'])->name('scholarships.create');
+        Route::post('/scholarship/store', [ScholarshipController::class, 'store'])->name('scholarships.store');
+        Route::get('/scholarship/edit/{id}', [ScholarshipController::class, 'edit'])->name('scholarships.edit');
+        Route::put('/scholarship/update/{id}', [ScholarshipController::class, 'update'])->name('scholarships.update');
+        Route::delete('/scholarship/destroy{id}', [ScholarshipController::class, 'destroy'])->name('scholarships.destroy');
         
         
         Route::get('/tuition_arrears/index', [TuitionArrearController::class, 'index'])->name('tuition_arrears.index');
+        Route::get('/tuition_arrears/create', [TuitionArrearController::class, 'create'])->name('tuition_arrears.create');
+        Route::post('/tuition_arrears/store', [TuitionArrearController::class, 'store'])->name('tuition_arrears.store');
+        Route::get('/tuition_arrears/edit/{id}', [TuitionArrearController::class, 'edit'])->name('tuition_arrears.edit');
+        Route::put('/tuition_arrears/update/{id}', [TuitionArrearController::class, 'update'])->name('tuition_arrears.update');
+        Route::delete('/tuition_arrears/destroy/{id}', [TuitionArrearController::class, 'destroy'])->name('tuition_arrears.destroy');
         
         
         Route::get('/student_resignation/index', [StudentResignationController::class, 'index'])->name('student_resignations.index');
+        Route::get('/student_resignation/create', [StudentResignationController::class, 'create'])->name('student_resignations.create');
+        Route::post('/student_resignation/store', [StudentResignationController::class, 'store'])->name('student_resignations.store');
+        Route::get('/student_resignation/edit/{id}', [StudentResignationController::class, 'edit'])->name('student_resignations.edit');
+        Route::put('/student_resignation/update{id}', [StudentResignationController::class, 'update'])->name('student_resignations.update');
+        Route::delete('/student_resignation/destroy/{id}', [StudentResignationController::class, 'destroy'])->name('student_resignations.destroy');
 
         
         Route::get('/reports/index', [ReportController::class, 'index'])->name('reports.index');

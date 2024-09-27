@@ -9,6 +9,7 @@ class StudentResignationDetail extends Model
 {
     use HasFactory;
 
+    protected $primaryKey = 'student_resignation_detail_id';
     protected $fillable = [
         'student_resignation_id',
         'student_id',

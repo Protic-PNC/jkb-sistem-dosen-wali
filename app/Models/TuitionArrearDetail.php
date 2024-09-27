@@ -9,6 +9,7 @@ class TuitionArrearDetail extends Model
 {
     use HasFactory;
 
+    protected $primaryKey = 'tuition_arrear_details_id';
     protected $fillable = [
         'tuition_arrear_id',
         'student_id',

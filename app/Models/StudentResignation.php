@@ -9,6 +9,7 @@ class StudentResignation extends Model
 {
     use HasFactory;
 
+    protected $primaryKey = 'student_resignation_id';
     protected $fillable = [
         'class_id'
     ];

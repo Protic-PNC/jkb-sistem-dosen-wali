@@ -46,7 +46,7 @@ class AchievementController extends Controller
         }
 
 
-        return view('masterdata.achievement.index', compact('achievement'));
+        return view('masterdata.achievements.index', compact('achievement'));
     }
 
     /**
@@ -58,7 +58,7 @@ class AchievementController extends Controller
 
         $students = Student::where('class_id', $user->lecturer->student_classes->class_id)->get();
         
-        return view('masterdata.achievement.create', compact('students'));
+        return view('masterdata.achievements.create', compact('students'));
     }
 
     /**

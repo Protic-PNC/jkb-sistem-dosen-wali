@@ -1,6 +1,8 @@
 <x-app-layout>
 
-    @section('descendant_folder', '/ Users')
+    @section('descendant_folder')
+     > &nbsp;&nbsp;User
+    @endsection
 
     @section('content')
     <style>

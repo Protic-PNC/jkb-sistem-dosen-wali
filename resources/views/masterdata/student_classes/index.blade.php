@@ -1,6 +1,8 @@
 <x-app-layout>
 
-    @section('descendant_folder', '/ Classes')
+    @section('descendant_folder')
+    > &nbsp;&nbsp;Kelas
+    @endsection
 
     @section('content')
     <style>

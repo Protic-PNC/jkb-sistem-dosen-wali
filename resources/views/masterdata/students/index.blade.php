@@ -1,6 +1,8 @@
 <x-app-layout>
 
-    @section('descendant_folder', '/ Students')
+    @section('descendant_folder')
+    > &nbsp;&nbsp;Mahasiswa
+    @endsection
     @section('content')
     <style>
         #success-message {

@@ -1,8 +1,7 @@
 <x-app-layout>
-
-    @section('main_folder', '/ Master Data')
-    @section('href_descendant_folder', route('masterdata.programs.index')) 
-    @section('descendant_folder', '/ Programs')
+    @section('descendant_folder')
+    > &nbsp;&nbsp;Prodi
+    @endsection
 
     @section('content')
     <style>

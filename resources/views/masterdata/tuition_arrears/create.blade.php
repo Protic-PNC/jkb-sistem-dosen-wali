@@ -6,7 +6,8 @@
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="p-6 text-gray-900">
                         <h2 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">Tambah Tunggakan UKT</h2>
-                        <form method="POST" action="{{ route('masterdata.tuition_arrears.store') }}" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('masterdata.tuition_arrears.store') }}" id="arrearsForm"
+                            enctype="multipart/form-data">
                             @csrf
                             <div class="guidanceForm">
                                 <div class="guidance-entry">
@@ -29,8 +30,9 @@
 
                                         <div class="w-full">
                                             <label for="name"
-                                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Jumlah Tunggakan</label>
-                                            <input type="number" name="amount" id="name"
+                                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Jumlah
+                                                Tunggakan</label>
+                                            <input type="text" name="amount" id="amount" oninput="formatAmount(this)"
                                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                                 placeholder="" required="">
                                         </div>
@@ -49,6 +51,29 @@
             </div>
         </div>
         </form>
+
+        <script>
+            function formatAmount(input) {
+                // Menghapus semua karakter non-digit kecuali titik
+                let value = input.value.replace(/\D/g, '');
+
+                // Memformat angka menjadi format harga
+                if (value) {
+                    value = Number(value).toLocaleString('id-ID'); // Menggunakan 'id-ID' untuk format Indonesia
+                }
+
+                // Menetapkan nilai terformat ke input
+                input.value = value;
+            }
+
+            // Menghapus titik sebelum mengirim data
+            document.getElementById('arrearsForm').addEventListener('submit', function(event) {
+                const amountInput = document.getElementById('amount');
+                const numericValue = amountInput.value.replace(/\./g,
+                ''); // Menghapus titik untuk mendapatkan angka asli
+                amountInput.value = numericValue; // Menyimpan nilai numerik asli
+            });
+        </script>
     @endsection
 
 </x-app-layout>

@@ -98,10 +98,13 @@
                                             class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white border-b">
                                             {{-- Cek apakah ada nilai semester GPA untuk semester ini --}}
                                             @php
-                                                $semesterGpa = $student->gpa_cumulative
+                                                if($student->gpa_cumulative)
+                                                {
+                                                    $semesterGpa = $student->gpa_cumulative
                                                     ->gpa_semester
                                                     ->where('semester', $i)
                                                     ->first();
+                                                }
                                             @endphp
                                             {{ $semesterGpa->semester_gpa ?? '-' }}
                                         </td>

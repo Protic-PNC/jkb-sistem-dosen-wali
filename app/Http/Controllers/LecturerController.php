@@ -2,12 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\LecturerImport;
 use App\Models\Lecturer;
 use App\Models\Position;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
+use App\Models\StudentClass;
+
+use App\Models\Program;
+
+use Maatwebsite\Excel\Facades\Excel;
 
 class LecturerController extends Controller
 {
@@ -48,11 +54,13 @@ class LecturerController extends Controller
         $positions = Position::all();
         $user = User::find($userId);
 
+        $student_class = StudentClass::all();
+
         $existinglecturer = Lecturer::where('user_id', $userId)->first();
         if ($existinglecturer) {
             return redirect()->route('masterdata.lecturers.show', $existinglecturer->lecturer_id);
         } else {
-            return view('masterdata.lecturers.create', compact('positions', 'user', 'lecturers'));
+            return view('masterdata.lecturers.create', compact('positions', 'student_class', 'user', 'lecturers'));
         }
     }
 
@@ -72,7 +80,7 @@ class LecturerController extends Controller
                     $lecturer->nip = $request->input('nip');
                     $lecturer->lecturer_address = $request->input('lecturer_address');
                     $lecturer->lecturer_phone_number = $request->input('lecturer_phone_number');
-                    if($request->input('user_id') != 'null')
+                    if($request->input('user_id') != null)
                     {
                         $lecturer->user_id = $request->input('user_id');
                     }
@@ -84,6 +92,7 @@ class LecturerController extends Controller
                         $lecturer->lecturer_signature = $signaturePath;
                     }
 
+                    //dd($lecturer);
                     // Simpan data dosen wali baru ke database
                     $lecturer->save();
 
@@ -91,7 +100,7 @@ class LecturerController extends Controller
                     return redirect()->route('masterdata.lecturers.index')->with('success', 'Data dosen wali berhasil disimpan.');
                 } catch (\Exception $e) {
                     return redirect()
-                    ->back()
+                    ->route('masterdata.lecturers.create', 'null')
                     ->withInput()
                     ->with('error', 'System error: ' . $e->getMessage());
                 }
@@ -112,6 +121,26 @@ class LecturerController extends Controller
             }
         } catch (\Exception $e) {
             return redirect()->back()->withInput()->with('error', 'System error: ' . $e->getMessage());
+        }
+    }
+
+    public function import(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx,csv'
+        ]);
+
+        try
+        {
+            Excel::import(new LecturerImport, $request->file('file'));
+            return redirect()->route('masterdata.lecturers.index')->with('success', 'Dosen berhasil diimport');
+
+        } catch (\Exception $e)
+        {
+            return redirect()
+                ->route('masterdata.lecturers.index')
+                ->withInput()
+                ->with('error', 'System error: ' . $e->getMessage());
         }
     }
 
@@ -186,12 +215,27 @@ class LecturerController extends Controller
     public function destroy($id)
     {
         $lecturer = Lecturer::find($id);
-
-        //dd($lecturer->lecturer_name);
-
+        
         try
         {
-            $lecturer->delete();
+            if($lecturer->program())
+            {
+                $lecturer->program()->update(['head_of_program_id' => null]);
+            }
+            if($lecturer->student_classes())
+            {
+                $lecturer->student_classes()->update(['academic_advisor_id' => null]);
+            }
+
+            if($lecturer->user())
+            {
+                $lecturer->delete();
+                $lecturer->user()->delete();
+            }
+            else
+            {
+                $lecturer->delete();
+            }
 
             return redirect()->route('masterdata.lecturers.index')->with('success', 'Lecturer deleted successfully');
         } catch (\Exception $e)

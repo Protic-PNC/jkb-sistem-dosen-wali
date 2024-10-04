@@ -52,13 +52,13 @@ class ProgramController extends Controller
             $program = new Program();
             $program->program_name = $request->program_name;
             $program->degree = $request->degree;
-            $program->head_of_program_id = $request->head_of_program_id;
+            $program->head_of_program_id = $request->head_of_program_id ?? null;
             $program->save();
 
             return redirect()->route('masterdata.programs.index')->with('success', 'Data prodi berhasil disimpan.');
         }catch(\Exception $e)
         {
-            return back()->withErrors('Data gagal');
+            return back()->withErrors('Data gagal, error :' . $e->getMessage());
         }
     }
 

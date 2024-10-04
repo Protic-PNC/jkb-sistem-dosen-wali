@@ -53,10 +53,11 @@ Route::middleware('auth')->group(function () {
         Route::get('/lecturers/index', [LecturerController::class, 'index'])->name('lecturers.index');
         Route::get('/lecturers/show/{userId}', [LecturerController::class, 'show'])->name('lecturers.show');
         Route::get('/lecturers/create/{userId}', [LecturerController::class, 'create'])->name('lecturers.create');
-        Route::post('/lecturers/store/{id}', [LecturerController::class, 'store'])->name('lecturers.store');
+        Route::post('/lecturers/store', [LecturerController::class, 'store'])->name('lecturers.store');
         Route::get('/lecturers/edit/{id}', [LecturerController::class, 'edit'])->name('lecturers.edit');
         Route::put('/lecturers/update/{id}', [LecturerController::class, 'update'])->name('lecturers.update');
         Route::delete('/lecturers/destroy/{id}', [LecturerController::class, 'destroy'])->name('lecturers.destroy');
+        Route::post('/lecturers/import', [LecturerController::class, 'import'])->name('lecturers.import');
 
 
         Route::get('/gpas/index', [GpaController::class, 'index'])->name('gpas.index');
@@ -73,6 +74,7 @@ Route::middleware('auth')->group(function () {
         
         
         Route::get('/achievement/index', [AchievementController::class, 'index'])->name('achievements.index');
+        Route::get('/achievement/show/{id}', [AchievementController::class, 'show'])->name('achievements.show');
         Route::get('/achievement/create/{id}', [AchievementController::class, 'create'])->name('achievements.create');
         Route::post('/achievement/store', [AchievementController::class, 'store'])->name('achievements.store');
         Route::get('/achievement/edit/{id}', [AchievementController::class, 'edit'])->name('achievements.edit');
@@ -113,6 +115,7 @@ Route::middleware('auth')->group(function () {
 
         
         Route::get('/reports/index', [ReportController::class, 'index'])->name('reports.index');
+
     });
 });
 

@@ -21,6 +21,7 @@ class AchievementController extends Controller
         /** @var App\Model\User */
 
         $user = Auth::user();
+        //$achievement = [];
 
         if($user->hasRole('dosenWali'))
         {
@@ -29,9 +30,17 @@ class AchievementController extends Controller
             $achievement = Achievement::with([
                 'student_class',
                 'achievement_detail.student'
-            ])->whereHas('student_class', function($query) use ($lecturer) {
+            ])
+            ->whereHas('student_class', function($query) use ($lecturer) {
                 $query->where('academic_advisor_id', $lecturer->lecturer_id);
-            })->get();
+            })
+            ->join('achievement_details', 'achievements.achievement_id', '=', 'achievement_details.achievement_id')
+            ->join('students', 'achievement_details.student_id', '=', 'students.student_id')
+            ->select('students.nim','students.student_name', 'students.student_id')
+            ->selectRaw("GROUP_CONCAT(achievement_details.achievement_type SEPARATOR ', ') as achievement_types")
+            ->groupBy('students.student_id')
+            ->get();
+        
         }
         else if($user->hasRole('mahasiswa'))
         {
@@ -70,6 +79,7 @@ class AchievementController extends Controller
         //$student = Student::where('student_id', $request->input('student_id'))->first();
         $achievement = Achievement::firstOrCreate(['class_id' => $user->lecturer->student_classes->class_id]);
 
+
         try
         {
             $achievementDetail = new AchievementDetail();
@@ -93,9 +103,11 @@ class AchievementController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Achievement $achievement)
+    public function show($id)
     {
-        //
+        $student = Student::find($id);
+
+        return view('masterdata.achievements.show', compact('student'));
     }
 
     /**

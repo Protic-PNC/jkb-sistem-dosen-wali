@@ -54,16 +54,16 @@
                                 <h2 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">
                                     @if (!$isNewLecturer)
                                     Pilih atau
-                                    @endif Tambah Dosen Wali
+                                    @endif Tambah Dosen
                                 </h2>
-                                <form action="{{ route('masterdata.lecturers.store', $user->id ?? 'null') }}" method="POST"
+                                <form action="{{ route('masterdata.lecturers.store') }}" method="POST"
                                     enctype="multipart/form-data">
                                     @csrf
                                     <div class="grid gap-4 sm:grid-cols-2 sm:gap-6">
 
                                         {{-- Input untuk cek apakah tambah mhs baru atau tidak --}}
                                         <input type="hidden" name="is_new_lecturer" id="is_new_lecturer" value="{{ $isNewLecturer }}">
-                                        <input type="hidden" name="user_id" id="user_id" value="{{ $user->id ?? 'null'}}">
+                                        <input type="hidden" name="user_id" id="user_id" value="{{ $user->id ?? ''}}">
 
                                         <!-- Dropdown Dosen Wali dengan Pencarian -->
                                         <div id="select_lecturer_container" @if($isNewLecturer) style="display:none;" @else style="display:block;" @endif>
@@ -97,7 +97,7 @@
                                             @if (!$isNewLecturer)
                                                 <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                                                     Tambah
-                                                    Dosen Wali</label>
+                                                    Dosen</label>
                                             @endif
 
                                             <div class="w-full">
@@ -119,9 +119,10 @@
                                                 <input type="text" name="nip" id="nip"
                                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
                                             </div>
+
                                             <div class="w-full">
                                                 <label for="nim"
-                                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Kelas</label>
+                                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Jabatan</label>
                                                 <select id="select_position" name="position_id"
                                                     class="select2 g-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
                                                     <option value="" disabled selected>Pilih Jabatan</option>

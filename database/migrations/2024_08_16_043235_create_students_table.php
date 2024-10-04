@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('student_name');
             $table->string('student_address')->nullable();
             $table->string('student_signature')->nullable();
+            $table->enum('status', ['active', 'non-active'])->default('active');
             $table->timestamps();
         });
     }

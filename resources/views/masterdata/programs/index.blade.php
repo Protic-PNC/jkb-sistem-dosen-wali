@@ -124,7 +124,7 @@
                 Apakah Anda yakin ingin menghapus Prodi ini? Tindakan ini tidak dapat diurungkan.
             </div>
             <div class="flex">
-                <form id="deleteForm" method="post" action="{{ route('masterdata.programs.destroy', $data->program_id) }}">
+                <form id="deleteForm" method="post" action="{{ route('masterdata.programs.destroy', $data->program_id ?? '') }}">
                     @csrf
                     @method('DELETE')
                     <button type="submit" class="text-white bg-red-800 hover:bg-red-900 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-xs px-3 py-1.5 me-2 text-center inline-flex items-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">

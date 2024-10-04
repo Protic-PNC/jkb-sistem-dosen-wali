@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('program_name');
             $table->string('degree');
             $table->timestamps();
-            $table->foreignId('head_of_program_id');
+            $table->foreignId('head_of_program_id')->nullable();
             $table->foreign('head_of_program_id')->references('lecturer_id')->on('lecturers');
         });
     }

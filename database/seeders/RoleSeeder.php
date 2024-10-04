@@ -37,31 +37,31 @@ class RoleSeeder extends Seeder
 
         //insert into user
         $userAdmin = User::create([
-            'name' => 'rayhan',
-            'email' => 'rayhan@gmail.com',
+            'name' => 'admin',
+            'email' => 'admin@gmail.com',
             'avatar' => 'images/avatar-default.svg',
             'password' => bcrypt('12345678'),
         ]);
 
         $userMahasiswa = User::create([
-            'name' => 'mahasiswa',
-            'email' => 'mahasiswa@gmail.com',
+            'name' => 'Rayhan Afrizal Fajri',
+            'email' => 'rayhan@gmail.com',
             'avatar' => 'images/avatar-default.svg',
-            'password' => bcrypt('12345678'),
+            'password' => bcrypt('123'),
         ]);
 
         $userDosenWali = User::create([
-            'name' => 'Dosen Wali',
-            'email' => 'dosenWali@gmail.com',
+            'name' => 'Bulianto Denis Notokusumo',
+            'email' => 'bul@gmail.com',
             'avatar' => 'images/avatar-default.svg',
-            'password' => bcrypt('12345678'),
+            'password' => bcrypt('123'),
         ]);
 
         $userKaprodi = User::create([
-            'name' => 'kaprodi',
-            'email' => 'kaprodi@gmail.com',
+            'name' => 'fardan',
+            'email' => 'fardan@gmail.com',
             'avatar' => 'images/avatar-default.svg',
-            'password' => bcrypt('12345678'),
+            'password' => bcrypt('123'),
         ]);
 
         //assign role each user

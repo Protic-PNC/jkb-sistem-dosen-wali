@@ -2,8 +2,7 @@
     class="fixed inset-y-0 left-0 z-30 w-64 overflow-y-auto transition duration-300 transform bg-gray-900 lg:translate-x-0 lg:static lg:inset-0">
     <div class="flex items-center justify-center mt-8">
         <div class="flex items-center">
-            <img src="{{ asset('images/siwali logo_white_text.png') }}" class="w-48 h-27" viewBox="0 0 512 512" fill="none" fill="white">
-            </path>
+            <p class="text-4xl font-black text-white dark:text-white">SIWALI <br> JKB</p>
             </img>
         </div>
         <button @click="sidebarOpen = false" class="text-gray-600 focus:outline-none lg:hidden">

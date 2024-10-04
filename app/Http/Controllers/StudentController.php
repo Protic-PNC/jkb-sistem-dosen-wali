@@ -12,6 +12,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\StudentImport;
 use App\Imports\StudentsImport;
 
+
 class StudentController extends Controller
 {
     /**
@@ -22,7 +23,9 @@ class StudentController extends Controller
         $students = Student::with([
             'student_classes',
             'user'
-        ])->get();
+        ])
+        ->orderBy('student_name', 'asc')
+        ->get();
         return view('masterdata.students.index', compact('students'));
     }
 
@@ -57,7 +60,7 @@ class StudentController extends Controller
         } catch (\Exception $e)
         {
             return redirect()
-                ->back()
+                ->route('masterdata.students.index')
                 ->withInput()
                 ->with('error', 'System error: ' . $e->getMessage());
         }
@@ -214,10 +217,19 @@ class StudentController extends Controller
     public function destroy($id)
     {
         $student = Student::find($id);
+        //$user = User::find($student->user_id);
 
         try
         {
-            $student->delete();
+            if($student->user())
+            {
+                $student->delete();
+                $student->user()->delete();
+            }
+            else
+            {
+                $student->delete();
+            }
             return redirect()->route('masterdata.students.index')->with('success', 'Student deleted successfully');
         } catch (\Exception $e)
         {

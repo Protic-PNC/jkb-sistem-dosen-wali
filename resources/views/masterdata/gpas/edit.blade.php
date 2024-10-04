@@ -46,8 +46,11 @@
                                     @for ($i = 1; $i <= $jumlahSemester; $i++)
                                         <td scope="row" class="px-4 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white border-b">
                                             @php
-                                                // Mencari nilai semester GPA untuk semester yang sesuai
-                                                $semesterGpa = $student->gpa_cumulative->gpa_semester->where('semester', $i)->first();
+                                                if($student->gpa_cumulative)
+                                                {
+                                                    // Mencari nilai semester GPA untuk semester yang sesuai
+                                                    $semesterGpa = $student->gpa_cumulative->gpa_semester->where('semester', $i)->first();
+                                                }
                                             @endphp
                                             <input value="{{ $semesterGpa->semester_gpa ?? '' }}" @disabled($i > $currentSemester) 
                                                 class="@if($i > $currentSemester) bg-gray-300 cursor-not-allowed @else bg-white @endif no-spinner w-full" 

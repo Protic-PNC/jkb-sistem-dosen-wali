@@ -52,13 +52,15 @@
                         <div x-data="{ dropdownOpen: false }" class="relative">
                             <button @click="dropdownOpen = ! dropdownOpen"
                                 class="relative block w-8 h-8 overflow-hidden rounded-full shadow focus:outline-none">
-                                @if (Auth::user()->avatar)
+                                {{-- @if (Auth::user()->avatar)
                                     <img class="object-cover w-full h-full"
                                         src="{{ Storage::url(Auth::user()->avatar) }}" alt="Your avatar">
                                 @else
                                     <img class="object-cover w-full h-full"
                                         src="{{ asset('images/avatar-default.svg') }}" alt="Your avatar">
-                                @endif
+                                        @endif --}}
+                                <img class="object-cover w-full h-full"
+                                    src="{{ asset('images/avatar-default.svg') }}" alt="Your avatar">
                             </button>
 
                             <div x-show="dropdownOpen" @click="dropdownOpen = false"
@@ -124,7 +126,7 @@
             </div>
         </div>
     </div>
-    <footer class=" mt-10 bg-gray-200 dark:bg-gray-800 w-full absolute bottom-0 ">
+    {{-- <footer class=" mt-10 bg-gray-200 dark:bg-gray-800 w-full absolute bottom-0 ">
         <div class="w-full mx-auto max-w-screen-xl p-4 flex items-center justify-end">
             <span class="text-sm text-gray-500 text-center dark:text-gray-400">
                 © 2024 <a href="https://github.com/Rayhan-Afrizal-Fajri" target="_blank" rel="noopener noreferrer"
@@ -132,7 +134,7 @@
                 Reserved.
             </span>
         </div>
-    </footer>
+    </footer> --}}
 </body>
 
 </html>

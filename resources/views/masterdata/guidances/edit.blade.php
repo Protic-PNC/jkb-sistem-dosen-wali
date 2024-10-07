@@ -13,6 +13,7 @@
                                 <div class="guidance-entry">
                                     <div class="grid gap-4 sm:grid-cols-2 sm:gap-6">
                                         <div class="w-full">
+                                            @role('dosenWali')
                                             <div class="">
                                                 <label for="brand"
                                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nama</label>
@@ -20,15 +21,25 @@
                                                     value="{{ $guidanceDetail->student->student_name }}"
                                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                                     required="">
-                                            </div>
-                                            <div class="mt-3">
-                                                <label for="message"
+                                                </div>
+                                                <div class="mt-3">
+                                                    <label for="message"
                                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Permasalahan</label>
-                                                <textarea name="problem" id="message" rows="4"
+                                                    <textarea name="problem" id="message" rows="4"
                                                     class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                                     placeholder="Tulis permasalahan mahasiswa bimbingan...">{{ old('problem', $guidanceDetail->problem ?? '') }}</textarea>
+                                                </div>
+                                                @endrole
+                                                @role('mahasiswa')
+                                                <div class="">
+                                                    <label for="message"
+                                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Permasalahan</label>
+                                                    <textarea name="problem" id="message" rows="4"
+                                                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                    placeholder="Tulis permasalahan mahasiswa bimbingan...">{{ old('problem', $guidanceDetail->problem ?? '') }}</textarea>
+                                                </div>
+                                                @endrole
                                             </div>
-                                        </div>
                                         <div class="w-full">
                                             <label for="message"
                                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Solusi</label>

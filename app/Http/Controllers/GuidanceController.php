@@ -12,6 +12,7 @@ use App\Models\Student;
 
 class GuidanceController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      */
@@ -58,12 +59,21 @@ class GuidanceController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create($id)
+    public function create()
     {
-        $user = User::find($id);
-        $student_class = StudentClass::where('academic_advisor_id', $user->lecturer->lecturer_id)->first();
+        $user = User::find(Auth::user()->id);
 
-        $students = Student::where('class_id', $student_class->class_id)->get();
+        if($user->hasRole('dosenWali'))
+        {
+            $student_class = StudentClass::where('academic_advisor_id', $user->lecturer->lecturer_id)->first();
+            $students = Student::where('class_id', $student_class->class_id)->get();
+        }
+        else if($user->hasRole('mahasiswa'))
+        {
+            $student_class = null;
+            $students = Student::where('user_id', $user->id)->first();
+        }
+
 
         return view('masterdata.guidances.create', compact('students', 'student_class'));
     }
@@ -74,7 +84,7 @@ class GuidanceController extends Controller
     public function store(Request $request, $classId)
     {
 
-        $userId = Auth::user()->id;
+        $user = Auth::user();
         //$student = Student::where('student_id', $request->input('student_id'))->first();
         $guidance = Guidance::firstOrCreate(['class_id' => $classId]);
 
@@ -82,18 +92,18 @@ class GuidanceController extends Controller
         {
             $guidanceDetail = new GuidanceDetail();
             $guidanceDetail->guidance_id = $guidance->guidance_id;
-            $guidanceDetail->student_id = $request->input('student_id');
+            $guidanceDetail->student_id = $request->input('student_id') ?? $user->student->student_id;
             $guidanceDetail->problem = $request->input('problem');
-            $guidanceDetail->solution = $request->input('solution');
+            $guidanceDetail->solution = $request->input('solution') ?? null;
 
             $guidanceDetail->save();
 
             return redirect()
-                    ->route('masterdata.guidances.index', $userId)
+                    ->route('masterdata.guidances.index', $user->id)
                     ->with('success', 'Bimbingan berhasil dibuat!');
         } catch (\Exception $e){
             return redirect()
-                    ->route('masterdata.guidances.index', $userId)
+                    ->route('masterdata.guidances.index', $user->id)
                     ->with('error', 'System error: ' . $e->getMessage());
         }
     }

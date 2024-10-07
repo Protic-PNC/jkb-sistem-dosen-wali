@@ -53,9 +53,12 @@ class StudentResignationController extends Controller
 
         try
         {
+            $student = Student::find($request->input('student_id'));
+            $student->update(['status' => 'non-active']);
+
             $studentResignationDetail = new StudentResignationDetail();
             $studentResignationDetail->student_resignation_id = $studentResignation->student_resignation_id;
-            $studentResignationDetail->student_id = $request->input('student_id');
+            $studentResignationDetail->student_id = $student->student_id;
             $studentResignationDetail->resignation_type = $request->input('resignation_type');
             $studentResignationDetail->decree_number = $request->input('decree_number');
             $studentResignationDetail->reason = $request->input('reason');
@@ -119,6 +122,9 @@ class StudentResignationController extends Controller
         $studentResignationDetail = StudentResignationDetail::find($id);
 
         try {
+            $student = Student::find($studentResignationDetail->student_id);
+
+            $student->update(['status' => 'active']);
             
             $studentResignationDetail->delete();
 

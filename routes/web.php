@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserController;
@@ -21,7 +22,10 @@ use App\Http\Controllers\StudentResignationController;
 use App\Models\StudentResignation;
 
 Route::get('/', function () {
-    return view('welcome');
+    if (Auth::check()) {
+        return redirect('/dashboard');  // Arahkan ke halaman dashboard jika sudah login
+    }
+    return redirect()->route('login'); // Arahkan ke halaman login jika belum login
 });
 
 Route::resource('/dashboard', DashboardController::class)->middleware(['auth', 'verified']);
@@ -66,7 +70,7 @@ Route::middleware('auth')->group(function () {
         
 
         Route::get('/guidances/index/{id}', [GuidanceController::class, 'index'])->name('guidances.index');
-        Route::get('/guidances/create/{id}', [GuidanceController::class, 'create'])->name('guidances.create');
+        Route::get('/guidances/create', [GuidanceController::class, 'create'])->name('guidances.create');
         Route::post('/guidances/store/{classId}', [GuidanceController::class, 'store'])->name('guidances.store');
         Route::put('/guidances/update/{id}', [GuidanceController::class, 'update'])->name('guidances.update');
         Route::get('/guidances/edit/{id}', [GuidanceController::class, 'edit'])->name('guidances.edit');

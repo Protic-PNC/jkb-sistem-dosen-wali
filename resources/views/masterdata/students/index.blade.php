@@ -1,35 +1,34 @@
 <x-app-layout>
 
     @section('descendant_folder')
-    > &nbsp;&nbsp;Mahasiswa
+        > &nbsp;&nbsp;Mahasiswa
     @endsection
     @section('content')
-    <style>
-        #success-message {
-            transition: opacity 0.2s ease-out;
-        }
-        #errors-message {
-            transition: opacity 0.2s ease-out;
-        }
-    
-        .close-btn {
-            cursor: pointer;
-            float: right;
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: black;
-        }
-    
-        .close-btn:hover {
-            color: black;
-        }
-    </style>
+        <style>
+            #success-message {
+                transition: opacity 0.2s ease-out;
+            }
 
-<div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-        
+            #errors-message {
+                transition: opacity 0.2s ease-out;
+            }
+
+            .close-btn {
+                cursor: pointer;
+                float: right;
+                font-size: 1.2rem;
+                font-weight: bold;
+                color: black;
+            }
+
+            .close-btn:hover {
+                color: black;
+            }
+        </style>
+
         @if ($errors->any())
-            <div id="error-message" class="p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800"
-                role="alert">
+            <div id="error-message"
+                class="p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800" role="alert">
                 <span class="font-medium">Whoops!</span> There were some problems with your input.
                 <span class="close-btn" onclick="closeAlert('error-message')">&times;</span>
                 <ul class="mt-2 list-disc pl-5">
@@ -58,34 +57,47 @@
             }
         </script>
         <div class="flex flex-column sm:flex-row flex-wrap space-y-4 sm:space-y-0 items-center justify-between pb-4">
-            <div class="flex">
-                <a href="{{ route('masterdata.students.create', 'null') }}" class="inline-block">
-                    <button  type="button" class="text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800">Tambah Mahasiswa</button>
-                </a>
-                <div class="inline-block">
-                    <form action="{{ route('masterdata.students.import') }}" method="post" enctype="multipart/form-data" id="uploadForm">
-                        @csrf
-                        <input type="file" id="fileInput" name="file" accept=".xlsx, .csv, .xls" style="display: none" onchange="submitForm()">
-                
-                        <button type="button" onclick="document.getElementById('fileInput').click()"
-                            class="text-white bg-green-800 hover:bg-green-900 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 inline-flex items-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
-                            <svg class="me-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="40" height="40" viewBox="0 0 48 48">
-                                <path fill="#169154" d="M29,6H15.744C14.781,6,14,6.781,14,7.744v7.259h15V6z"></path>
-                                <path fill="#18482a" d="M14,33.054v7.202C14,41.219,14.781,42,15.743,42H29v-8.946H14z"></path>
-                                <path fill="#0c8045" d="M14 15.003H29V24.005000000000003H14z"></path>
-                                <path fill="#17472a" d="M14 24.005H29V33.055H14z"></path>
-                                <g>
-                                    <path fill="#29c27f" d="M42.256,6H29v9.003h15V7.744C44,6.781,43.219,6,42.256,6z"></path>
-                                    <path fill="#27663f" d="M29,33.054V42h13.257C43.219,42,44,41.219,44,40.257v-7.202H29z"></path>
-                                    <path fill="#19ac65" d="M29 15.003H44V24.005000000000003H29z"></path>
-                                    <path fill="#129652" d="M29 24.005H44V33.055H29z"></path>
-                                </g>
-                                <path fill="#0c7238" d="M22.319,34H5.681C4.753,34,4,33.247,4,32.319V15.681C4,14.753,4.753,14,5.681,14h16.638 C23.247,14,24,14.753,24,15.681v16.638C24,33.247,23.247,34,22.319,34z"></path>
-                                <path fill="#fff" d="M9.807 19L12.193 19 14.129 22.754 16.175 19 18.404 19 15.333 24 18.474 29 16.123 29 14.013 25.07 11.912 29 9.526 29 12.719 23.982z"></path>
-                            </svg>
-                            Import Mahasiswa            
-                        </button>
-                        <a href="{{ asset('storage/exports/mahasiswa.xlsx') }}" download type="button"
+            @role('admin')
+                <div class="flex">
+                    <a href="{{ route('masterdata.students.create', 'null') }}" class="inline-block">
+                        <button type="button"
+                            class="text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800">Tambah
+                            Mahasiswa</button>
+                    </a>
+                    <div class="inline-block">
+                        <form action="{{ route('masterdata.students.import') }}" method="post" enctype="multipart/form-data"
+                            id="uploadForm">
+                            @csrf
+                            <input type="file" id="fileInput" name="file" accept=".xlsx, .csv, .xls" style="display: none"
+                                onchange="submitForm()">
+
+                            <button type="button" onclick="document.getElementById('fileInput').click()"
+                                class="text-white bg-green-800 hover:bg-green-900 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 inline-flex items-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
+                                <svg class="me-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="40"
+                                    height="40" viewBox="0 0 48 48">
+                                    <path fill="#169154" d="M29,6H15.744C14.781,6,14,6.781,14,7.744v7.259h15V6z"></path>
+                                    <path fill="#18482a" d="M14,33.054v7.202C14,41.219,14.781,42,15.743,42H29v-8.946H14z">
+                                    </path>
+                                    <path fill="#0c8045" d="M14 15.003H29V24.005000000000003H14z"></path>
+                                    <path fill="#17472a" d="M14 24.005H29V33.055H14z"></path>
+                                    <g>
+                                        <path fill="#29c27f" d="M42.256,6H29v9.003h15V7.744C44,6.781,43.219,6,42.256,6z">
+                                        </path>
+                                        <path fill="#27663f" d="M29,33.054V42h13.257C43.219,42,44,41.219,44,40.257v-7.202H29z">
+                                        </path>
+                                        <path fill="#19ac65" d="M29 15.003H44V24.005000000000003H29z"></path>
+                                        <path fill="#129652" d="M29 24.005H44V33.055H29z"></path>
+                                    </g>
+                                    <path fill="#0c7238"
+                                        d="M22.319,34H5.681C4.753,34,4,33.247,4,32.319V15.681C4,14.753,4.753,14,5.681,14h16.638 C23.247,14,24,14.753,24,15.681v16.638C24,33.247,23.247,34,22.319,34z">
+                                    </path>
+                                    <path fill="#fff"
+                                        d="M9.807 19L12.193 19 14.129 22.754 16.175 19 18.404 19 15.333 24 18.474 29 16.123 29 14.013 25.07 11.912 29 9.526 29 12.719 23.982z">
+                                    </path>
+                                </svg>
+                                Import Mahasiswa
+                            </button>
+                            <a href="{{ asset('storage/exports/mahasiswa.xlsx') }}" download type="button"
                                 class="text-green-800 bg-white hover:text-white hover:bg-green-900 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 inline-flex items-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
                                 <svg class="me-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="40"
                                     height="40" viewBox="0 0 48 48">
@@ -97,8 +109,8 @@
                                     <g>
                                         <path fill="#29c27f" d="M42.256,6H29v9.003h15V7.744C44,6.781,43.219,6,42.256,6z">
                                         </path>
-                                        <path fill="#27663f"
-                                            d="M29,33.054V42h13.257C43.219,42,44,41.219,44,40.257v-7.202H29z"></path>
+                                        <path fill="#27663f" d="M29,33.054V42h13.257C43.219,42,44,41.219,44,40.257v-7.202H29z">
+                                        </path>
                                         <path fill="#19ac65" d="M29 15.003H44V24.005000000000003H29z"></path>
                                         <path fill="#129652" d="M29 24.005H44V33.055H29z"></path>
                                     </g>
@@ -111,205 +123,200 @@
                                 </svg>
                                 Unduh template
                             </a>
-                    </form>   
-                
-                    <script>
-                        function submitForm() {
-                            document.getElementById('uploadForm').submit();
-                        }
-                    </script>
-                </div>                
-                
-            </div>
+                        </form>
+
+                        <script>
+                            function submitForm() {
+                                document.getElementById('uploadForm').submit();
+                            }
+                        </script>
+                    </div>
+                </div>
+            @endrole
             <label for="table-search" class="sr-only">Search</label>
             <div class="relative">
                 <div class="absolute inset-y-0 left-0 rtl:inset-r-0 rtl:right-0 flex items-center ps-3 pointer-events-none">
-                    <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path></svg>
+                    <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" aria-hidden="true" fill="currentColor"
+                        viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                            d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                            clip-rule="evenodd"></path>
+                    </svg>
                 </div>
-                <input type="text" id="table-search" class="block p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search for items">
+                <input type="text" id="table-search"
+                    class="block p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="Search for items">
             </div>
         </div>
-        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                <tr>
-                    <th scope="col" class="px-6 py-3">
-                        Nama
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        Status
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        Kelas
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        Nomor HP
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        NIM
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        Alamat
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        Username
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        Aksi
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                @if ($students->isEmpty())
-                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                        <td colspan="8" scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white text-center">Tidak ada data mahasiswa</td>
+        <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+
+            <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                    <tr>
+                        <th scope="col" class="px-6 text-center py-3">
+                            Nama
+                        </th>
+                        <th scope="col" class="px-6 text-center py-3">
+                            Status
+                        </th>
+                        @role('admin')
+                        <th scope="col" class="px-6 text-center py-3">
+                            Kelas
+                        </th>
+                        @endrole
+                        <th scope="col" class="px-6 text-center py-3">
+                            Nomor HP
+                        </th>
+                        <th scope="col" class="px-6 text-center py-3">
+                            NIM
+                        </th>
+                        <th scope="col" class="px-6 text-center py-3">
+                            Alamat
+                        </th>
+                        <th scope="col" class="px-6 text-center py-3">
+                            Username
+                        </th>
+                        @role('admin')
+                            <th scope="col" class="px-6 text-center py-3">
+                                Aksi
+                            </th>
+                        @endrole
                     </tr>
-                    @else
-                    @foreach ($students as $data)
-                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                            <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                {{ $data->student_name }}
-                            </td>
-                            <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                @if ($data->status == 'active')
-                                    <span class="bg-green-100 text-green-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">Aktif</span>
-                                @else
-                                    <span class="bg-red-100 text-red-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded dark:bg-red-900 dark:text-red-300">Non Aktif</span>
-                                @endif
-                            </td>
-                            <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white text-center">
-                                {{ $data->student_classes->class_name ?? '-' }}
-                            </td>
-                            <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white text-center">
-                                {{ $data->student_phone_number }}
-                            </td>
-                            <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white text-center">
-                                {{ $data->nim }}
-                            </td>
-                            <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white text-center">
-                                {{ $data->student_address }}
-                            </td>
-                            <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white text-center">
-                                {{ $data->user->email ?? '-' }}
-                            </td>
-                            <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white text-center">
-                                <button onclick="confirmDelete('{{ route('masterdata.students.destroy', $data->student_id) }}')" type="button" class="font-medium text-red-600 dark:text-blue-500 hover:underline">Hapus</button>
-                                <a href="{{ route('masterdata.students.edit', $data->student_id) }}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-                            </td>
+                </thead>
+                <tbody>
+                    @if ($students->isEmpty())
+                        <tr
+                            class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                            <td colspan="8" scope="row"
+                                class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white text-center">
+                                Tidak ada data mahasiswa</td>
                         </tr>
-                    @endforeach
-                @endif
-            </tbody>
-        </table>
-    </div>
-
-    <!-- Modal Konfirmasi Delete -->
-    <div id="deleteModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-        <div id="alert-additional-content-2" class="p-4 mb-4 text-red-800 border border-red-300 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 dark:border-red-800" role="alert">
-            <div class="flex items-center">
-              <svg class="flex-shrink-0 w-4 h-4 me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
-              </svg>
-              <span class="sr-only">Konfirmasi</span>
-              <h3 class="text-lg font-medium">Hapus mahasiswa?</h3>
-            </div>
-            <div class="mt-2 mb-4 text-sm">
-                Apakah Anda yakin ingin menghapus Mahasiswa ini? Tindakan ini tidak dapat diurungkan.
-            </div>
-            <div class="flex">
-                <form id="deleteForm" method="post" action="{{ route('masterdata.students.destroy', $data->student_id ?? 'langka datane') }}">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="text-white bg-red-800 hover:bg-red-900 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-xs px-3 py-1.5 me-2 text-center inline-flex items-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
-                        <svg class="me-2 h-3 w-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 14">
-                            <path d="M10 0C4.612 0 0 5.336 0 7c0 1.742 3.546 7 10 7 6.454 0 10-5.258 10-7 0-1.664-4.612-7-10-7Zm0 10a3 3 0 1 1 0-6 3 3 0 0 1 0 6Z"/>
-                        </svg>
-                        Delete
-                    </button>
-                </form>
-                    <button onclick="hideModal()" class="text-red-800 bg-transparent border border-red-800 hover:bg-red-900 hover:text-white focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-xs px-3 py-1.5 text-center dark:hover:bg-red-600 dark:border-red-600 dark:text-red-500 dark:hover:text-white dark:focus:ring-red-800" data-dismiss-target="#alert-additional-content-2" aria-label="Close">
-                        Dismiss
-                    </button>
-            </div>
+                    @else
+                        @foreach ($students as $data)
+                            <tr
+                            @if ($data->status == 'active')
+                                class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+                            @else
+                            class="bg-red-800 border-b hoover:bg-red-200 text-red-100 text-sm font-medium me-2 px-2.5 py-0.5 rounded dark:bg-red-900 dark:text-red-300"
+                            @endif
+                            >
+                                <td scope="row"
+                                    class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                    {{ $data->student_name }}
+                                </td>
+                                <td scope="row"
+                                    class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                    @if ($data->status == 'active')
+                                        <span
+                                            class="bg-green-100 text-green-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">Aktif</span>
+                                    @else
+                                        <span
+                                            class="text-gray-900 text-sm font-medium me-2 px-2.5 py-0.5 rounded dark:bg-red-900 dark:text-red-300">Non
+                                            Aktif</span>
+                                    @endif
+                                </td>
+                                @role('admin')
+                                <td
+                                    class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white text-center">
+                                    {{ $data->student_classes->class_name ?? '-' }}
+                                </td>
+                                @endrole
+                                <td
+                                    class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white text-center">
+                                    {{ $data->student_phone_number }}
+                                </td>
+                                <td
+                                    class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white text-center">
+                                    {{ $data->nim }}
+                                </td>
+                                <td
+                                    class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white text-center">
+                                    {{ $data->student_address }}
+                                </td>
+                                <td
+                                    class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white text-center">
+                                    {{ $data->user->email ?? '-' }}
+                                </td>
+                                @role('admin')
+                                    <td
+                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white text-center">
+                                        <button
+                                            onclick="confirmDelete('{{ route('masterdata.students.destroy', $data->student_id) }}')"
+                                            type="button"
+                                            class="font-medium text-red-600 dark:text-blue-500 hover:underline">Hapus</button>
+                                        <a href="{{ route('masterdata.students.edit', $data->student_id) }}"
+                                            class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                                    </td>
+                                @endrole
+                            </tr>
+                        @endforeach
+                    @endif
+                </tbody>
+            </table>
         </div>
-    </div>
 
-    <!-- Modal Dropzone-->
-    {{-- <div id="importModal" class="fixed inset-0 z-50 hidden overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
-        <div class="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
-            <div class="fixed inset-0 transition-opacity bg-gray-500 bg-opacity-75" aria-hidden="true">
-            </div>
-
-            <!-- Modal Content -->
-            <div class="inline-block overflow-hidden text-left align-bottom transition-all transform bg-white rounded-lg shadow-xl sm:align-middle sm:max-w-lg sm:w-full sm:my-8">
-                <div class="px-4 pt-5 pb-4 bg-white sm:p-6 sm:pb-4">
-                    <div class="sm:flex sm:items-center">
-                        <div class="flex items-center justify-center w-full">
-                            <!-- Dropzone -->
-                            <label for="dropzone-file" class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-gray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
-                            <div class="flex flex-col items-center justify-center pt-5 pb-6">
-                                <svg class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
-                                </svg>
-                                <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Click to upload</span> or drag and drop</p>
-                                <p class="text-xs text-gray-500 dark:text-gray-400">.xlsx or .csv only</p>
-                            </div>
-                            <form action="{{ route('masterdata.students.import') }}" method="POST" enctype="multipart/form-data">
-                                @csrf
-                                <input id="dropzone-file" type="file" class="hidden" accept=".xlsx, .csv" />
-                            </label>
-                        </div>
-                    </div>
+        <!-- Modal Konfirmasi Delete -->
+        <div id="deleteModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+            <div id="alert-additional-content-2"
+                class="p-4 mb-4 text-red-800 border border-red-300 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 dark:border-red-800"
+                role="alert">
+                <div class="flex items-center">
+                    <svg class="flex-shrink-0 w-4 h-4 me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                        fill="currentColor" viewBox="0 0 20 20">
+                        <path
+                            d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+                    </svg>
+                    <span class="sr-only">Konfirmasi</span>
+                    <h3 class="text-lg font-medium">Hapus mahasiswa?</h3>
                 </div>
-                <div class="px-4 py-3 bg-gray-50 sm:flex sm:flex-row-reverse sm:justify-end sm:space-x-reverse sm:space-x-2 sm:px-6">
-                        <button id="submit" type="submit" class="py-3 text-white bg-green-800 hover:bg-green-900 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 inline-flex items-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
-                            <svg class="me-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="40" height="40" viewBox="0 0 48 48">
-                                <path fill="#169154" d="M29,6H15.744C14.781,6,14,6.781,14,7.744v7.259h15V6z"></path>
-                                <path fill="#18482a" d="M14,33.054v7.202C14,41.219,14.781,42,15.743,42H29v-8.946H14z"></path>
-                                <path fill="#0c8045" d="M14 15.003H29V24.005000000000003H14z"></path>
-                                <path fill="#17472a" d="M14 24.005H29V33.055H14z"></path>
-                                <g>
-                                    <path fill="#29c27f" d="M42.256,6H29v9.003h15V7.744C44,6.781,43.219,6,42.256,6z"></path>
-                                    <path fill="#27663f" d="M29,33.054V42h13.257C43.219,42,44,41.219,44,40.257v-7.202H29z"></path>
-                                    <path fill="#19ac65" d="M29 15.003H44V24.005000000000003H29z"></path>
-                                    <path fill="#129652" d="M29 24.005H44V33.055H29z"></path>
-                                </g>
-                                <path fill="#0c7238" d="M22.319,34H5.681C4.753,34,4,33.247,4,32.319V15.681C4,14.753,4.753,14,5.681,14h16.638 C23.247,14,24,14.753,24,15.681v16.638C24,33.247,23.247,34,22.319,34z"></path>
-                                <path fill="#fff" d="M9.807 19L12.193 19 14.129 22.754 16.175 19 18.404 19 15.333 24 18.474 29 16.123 29 14.013 25.07 11.912 29 9.526 29 12.719 23.982z"></path>
+                <div class="mt-2 mb-4 text-sm">
+                    Apakah Anda yakin ingin menghapus Mahasiswa ini? Tindakan ini tidak dapat diurungkan.
+                </div>
+                <div class="flex">
+                    <form id="deleteForm" method="post"
+                        action="{{ route('masterdata.students.destroy', $data->student_id ?? 'langka datane') }}">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit"
+                            class="text-white bg-red-800 hover:bg-red-900 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-xs px-3 py-1.5 me-2 text-center inline-flex items-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
+                            <svg class="me-2 h-3 w-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                fill="currentColor" viewBox="0 0 20 14">
+                                <path
+                                    d="M10 0C4.612 0 0 5.336 0 7c0 1.742 3.546 7 10 7 6.454 0 10-5.258 10-7 0-1.664-4.612-7-10-7Zm0 10a3 3 0 1 1 0-6 3 3 0 0 1 0 6Z" />
                             </svg>
-                            Import Mahasiswa            
+                            Delete
                         </button>
                     </form>
-                    
-                    <button id="closeModal" class=" text-red-800 bg-transparent border border-red-800 hover:bg-red-900 hover:text-white focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-xs px-3 py-2.5 text-center dark:hover:bg-red-600 dark:border-red-600 dark:text-red-500 dark:hover:text-white dark:focus:ring-red-800">
+                    <button onclick="hideModal()"
+                        class="text-red-800 bg-transparent border border-red-800 hover:bg-red-900 hover:text-white focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-xs px-3 py-1.5 text-center dark:hover:bg-red-600 dark:border-red-600 dark:text-red-500 dark:hover:text-white dark:focus:ring-red-800"
+                        data-dismiss-target="#alert-additional-content-2" aria-label="Close">
                         Dismiss
                     </button>
-                </div>                
+                </div>
             </div>
         </div>
-    </div> --}}
 
+        <script>
+            function confirmDelete(actionUrl) {
+                // Tampilkan modal
+                document.getElementById('deleteModal').classList.remove('hidden');
+                // Set form action dengan URL delete
+                document.getElementById('deleteForm').setAttribute('action', actionUrl);
+            }
 
-    <script>
-        function confirmDelete(actionUrl) {
-            // Tampilkan modal
-            document.getElementById('deleteModal').classList.remove('hidden');
-            // Set form action dengan URL delete
-            document.getElementById('deleteForm').setAttribute('action', actionUrl);
-        }
+            function hideModal() {
+                // Sembunyikan modal
+                document.getElementById('deleteModal').classList.add('hidden');
+            }
 
-        function hideModal() {
-            // Sembunyikan modal
-            document.getElementById('deleteModal').classList.add('hidden');
-        }
+            // document.getElementById('importBtn').addEventListener('click', function() {
+            //     document.getElementById('importModal').classList.remove('hidden');
+            // });
 
-        // document.getElementById('importBtn').addEventListener('click', function() {
-        //     document.getElementById('importModal').classList.remove('hidden');
-        // });
-
-        // document.getElementById('closeModal').addEventListener('click', function() {
-        //     document.getElementById('importModal').classList.add('hidden');
-        // });
-    </script>
+            // document.getElementById('closeModal').addEventListener('click', function() {
+            //     document.getElementById('importModal').classList.add('hidden');
+            // });
+        </script>
 
     @endsection
 </x-app-layout>

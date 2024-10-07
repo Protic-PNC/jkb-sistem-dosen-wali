@@ -11,6 +11,7 @@ use Illuminate\Validation\Rule;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\StudentImport;
 use App\Imports\StudentsImport;
+use Illuminate\Support\Facades\Auth;
 
 
 class StudentController extends Controller
@@ -25,7 +26,16 @@ class StudentController extends Controller
             'user'
         ])
         ->orderBy('student_name', 'asc')
+        ->orderBy('class_id', 'asc')
         ->get();
+        
+        $user = Auth::user();
+        if($user->lecturer)
+        {
+            $students = Student::where('class_id', $user->lecturer->student_classes->class_id)
+            ->orderBy('student_name', 'asc')
+            ->get();
+        }
         return view('masterdata.students.index', compact('students'));
     }
 

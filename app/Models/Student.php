@@ -18,7 +18,8 @@ class Student extends Model
         'nim',
         'student_name',
         'student_address',
-        'student_signature'
+        'student_signature',
+        'status'
     ];
 
 

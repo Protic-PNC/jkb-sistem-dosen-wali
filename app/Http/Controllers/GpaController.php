@@ -110,7 +110,6 @@ class GpaController extends Controller
         {
             $currentSemester = ($year_diff * 2);
         }
-       // dd($currentSemester);
 
         return view('masterdata.gpas.edit', compact('jumlahSemester', 'students', 'currentSemester', 'studentClass'));
     }

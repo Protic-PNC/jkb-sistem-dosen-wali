@@ -19,7 +19,7 @@ use App\Http\Controllers\WarningController;
 use App\Http\Controllers\ScholarshipController;
 use App\Http\Controllers\TuitionArrearController;
 use App\Http\Controllers\StudentResignationController;
-use App\Models\StudentResignation;
+use App\Http\Controllers\ExportController;
 
 Route::get('/', function () {
     if (Auth::check()) {
@@ -119,6 +119,14 @@ Route::middleware('auth')->group(function () {
 
         
         Route::get('/reports/index', [ReportController::class, 'index'])->name('reports.index');
+        Route::get('/reports/show/{id}', [ReportController::class, 'show'])->name('reports.show');
+        Route::get('/reports/create', [ReportController::class, 'create'])->name('reports.create');
+        Route::post('/reports/store', [ReportController::class, 'store'])->name('reports.store');
+        Route::post('/reports/edit/{id}', [ReportController::class, 'edit'])->name('reports.edit');
+
+        Route::get('/reports/exportPdf/{id}', [ExportController::class, 'exportPdf'])->name('reports.exportPdf');
+        Route::get('/reports/exportWord/{id}', [ExportController::class, 'exportWord'])->name('reports.exportWord');
+        Route::post('/reports/saveChartImage/{id}', [ExportController::class, 'saveChartImage'])->name('reports.saveChartImage');
 
     });
 });

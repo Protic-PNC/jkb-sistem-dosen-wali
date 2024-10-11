@@ -19,7 +19,8 @@ class Student extends Model
         'student_name',
         'student_address',
         'student_signature',
-        'status'
+        'status',
+        'inactive_at',
     ];
 
 

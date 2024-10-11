@@ -229,17 +229,55 @@ class StudentController extends Controller
         $student = Student::find($id);
         //$user = User::find($student->user_id);
 
-        try
-        {
-            if($student->user())
-            {
+        try {
+            // Hapus data GPA Cumulative beserta GPA Semester yang terkait
+            if ($student->gpa_cumulative) {
+                // Hapus semua GPA Semester terkait dengan GPA Cumulative
+                $student->gpa_cumulative->gpa_semester()->delete();
+                // Hapus GPA Cumulative
+                $student->gpa_cumulative()->delete();
+            }
+    
+            // Hapus semua pencapaian yang terkait dengan student
+            if ($student->achievement_detail) {
+                $student->achievement_detail()->delete();
+            }
+    
+            // Hapus semua peringatan yang terkait dengan student
+            if ($student->warning_detail) {
+                $student->warning_detail()->delete();
+            }
+    
+            // Hapus semua data beasiswa yang terkait dengan student
+            if ($student->scholarship_detail) {
+                $student->scholarship_detail()->delete();
+            }
+    
+            // Hapus semua data tunggakan yang terkait dengan student
+            if ($student->tuition_arrear_detail) {
+                $student->tuition_arrear_detail()->delete();
+            }
+    
+            // Hapus semua data pengunduran diri yang terkait dengan student
+            if ($student->student_resignation_detail) {
+                $student->student_resignation_detail()->delete();
+            }
+    
+            // Hapus data bimbingan yang terkait dengan student
+            if ($student->guidance_detail) {
+                $student->guidance_detail()->delete();
+            }
+    
+            // Hapus data student dan user yang terkait
+            if ($student->user) {
                 $student->delete();
-                $student->user()->delete();
+                $student->user()->delete();  // Hapus user terkait
             }
             else
             {
                 $student->delete();
             }
+            
             return redirect()->route('masterdata.students.index')->with('success', 'Student deleted successfully');
         } catch (\Exception $e)
         {

@@ -46,9 +46,10 @@ class ScholarshipController extends Controller
     {
         $user = Auth::user();
 
-        $scholarship = Scholarship::firstOrCreate(['class_id'=> $user->lecturer->student_classes->class_id]);
-
+        
         try {
+            $scholarship = Scholarship::firstOrCreate(['class_id'=> $user->lecturer->student_classes->class_id]);
+        
             $scholarshipDetail = new ScholarshipDetail();
 
             $scholarshipDetail->scholarship_id = $scholarship->scholarship_id;

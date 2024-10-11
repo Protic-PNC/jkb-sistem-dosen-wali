@@ -46,9 +46,10 @@ class TuitionArrearController extends Controller
     {
         $user = Auth::user();
 
-        $tuitionArrear = TuitionArrear::firstOrCreate(['class_id' => $user->lecturer->student_classes->class_id]);
-
+        
         try {
+            $tuitionArrear = TuitionArrear::firstOrCreate(['class_id' => $user->lecturer->student_classes->class_id]);
+
             $tuitionArrearDetail = new TuitionArrearDetail();
             $tuitionArrearDetail->tuition_arrear_id = $tuitionArrear->tuition_arrear_id;
             $tuitionArrearDetail->student_id = $request->input('student_id');

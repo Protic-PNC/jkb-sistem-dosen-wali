@@ -27,7 +27,6 @@ class DashboardController extends Controller
         $reportsCount = Report::count();
 
        // $semester = $request->input('semester');
-
         $user = Auth::user();
         //dd($user->roles->first()->name);
         if ($user->lecturer) {
@@ -74,6 +73,15 @@ class DashboardController extends Controller
                 ];
             }
 
+            if($user->lecturer->student_classes->program->degree == 'D3')
+            {
+                $jumlahSemester = 6;
+            }
+            else
+            {
+                $jumlahSemester = 8;
+            }
+
             // Mengambil rata-rata cumulative_gpa untuk seluruh mahasiswa
             $avg_cumulative_gpa = DB::table('gpa_cumulatives')
             ->whereIn('student_id', $students->pluck('student_id'))
@@ -81,15 +89,23 @@ class DashboardController extends Controller
             ->value('avg_cumulative_gpa');
 
             $chart_data = [];
-            foreach ($semester_gpas as $gpa) {
+            for($i =1; $i <= $jumlahSemester; $i++)
+            {
+                // Search for the corresponding GPA data for the current semester
+                $gpa_for_semester = $semester_gpas->firstWhere('semester', $i);
+
+                // If GPA data is found, use it; otherwise, default to 0 for avg_gpa
+                $avg_gpa = $gpa_for_semester ? $gpa_for_semester->avg_gpa : 0;
+
+                // Add data to the chart array
                 $chart_data[] = [
-                    'x' => 'Semester ' . $gpa->semester,
-                    'y' => $gpa->avg_gpa,
+                    'x' => 'Semester ' . $i,
+                    'y' => $avg_gpa,
                 ];
             }
             // Prepare chart data
             $gpa_data = $students->map(function ($student) {
-                return $student->gpa_cumulative->cumulative_gpa;
+                return $student->gpa_cumulative->cumulative_gpa ?? 0;   
             });
 
             $categories = $students->map(function ($student) {
@@ -100,15 +116,6 @@ class DashboardController extends Controller
             $avg_gpas = DB::table('gpa_cumulatives')
                 ->select(DB::raw('ROUND(AVG(cumulative_gpa), 2) AS avg_cumulative_gpa'))
                 ->value('avg_cumulative_gpa');
-
-            if($user->lecturer->student_classes->program->degree == 'D3')
-            {
-                $jumlahSemester = 6;
-            }
-            else
-            {
-                $jumlahSemester = 8;
-            }
         } else {
             $students = [];
             $semester_gpas = [];

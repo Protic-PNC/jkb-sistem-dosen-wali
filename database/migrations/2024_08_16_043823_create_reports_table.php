@@ -14,36 +14,35 @@ return new class extends Migration
         Schema::create('reports', function (Blueprint $table) {
             $table->id('report_id')->primary();
 
-            $table->foreignId('student_id');
-            $table->foreign('student_id')->references('student_id')->on('students');
-
             $table->foreignId('class_id');
             $table->foreign('class_id')->references('class_id')->on('classes');
             
-            $table->foreignId('warning_id');
-            $table->foreign('warning_id')->references('warning_id')->on('warnings');
+            // $table->foreignId('warning_id')->nullable();
+            // $table->foreign('warning_id')->references('warning_id')->on('warnings');
 
-            $table->foreignId('gpa_id');
-            $table->foreign('gpa_id')->references('gpa_id')->on('gpas');
+            // $table->foreignId('gpa_id')->nullable();
+            // $table->foreign('gpa_id')->references('gpa_id')->on('gpas');
             
-            $table->foreignId('guidance_id');
-            $table->foreign('guidance_id')->references('guidance_id')->on('guidances');
+            // $table->foreignId('guidance_id')->nullable();
+            // $table->foreign('guidance_id')->references('guidance_id')->on('guidances');
             
-            $table->foreignId('achievement_id');
-            $table->foreign('achievement_id')->references('achievement_id')->on('achievements');
+            // $table->foreignId('achievement_id')->nullable();
+            // $table->foreign('achievement_id')->references('achievement_id')->on('achievements');
 
-            $table->foreignId('scholarship_id');
-            $table->foreign('scholarship_id')->references('scholarship_id')->on('scholarships');
+            // $table->foreignId('scholarship_id')->nullable();
+            // $table->foreign('scholarship_id')->references('scholarship_id')->on('scholarships');
 
-            $table->foreignId('student_resignation_id');
-            $table->foreign('student_resignation_id')->references('student_resignation_id')->on('student_resignations');
+            // $table->foreignId('student_resignation_id')->nullable();
+            // $table->foreign('student_resignation_id')->references('student_resignation_id')->on('student_resignations');
 
-            $table->foreignId('tuition_arrear_id');
-            $table->foreign('tuition_arrear_id')->references('tuition_arrear_id')->on('tuition_arrears');
+            // $table->foreignId('tuition_arrear_id')->nullable();
+            // $table->foreign('tuition_arrear_id')->references('tuition_arrear_id')->on('tuition_arrears');
             
+
+            $table->integer('semester');
             $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');
-            $table->boolean('has_acc_academic_advisor');
-            $table->boolean('has_acc_head_of_program');
+            $table->boolean('has_acc_academic_advisor')->default(false);
+            $table->boolean('has_acc_head_of_program')->default(false);            
             $table->timestamps();
         });
     }

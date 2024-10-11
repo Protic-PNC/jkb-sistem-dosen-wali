@@ -47,9 +47,10 @@ class WarningController extends Controller
     {
         $user = Auth::user();
 
-        $warning = Warning::firstOrCreate(['class_id' => $user->lecturer->student_classes->class_id]);
-
+        
         try {
+            $warning = Warning::firstOrCreate(['class_id' => $user->lecturer->student_classes->class_id]);
+
             $warningDetail = new WarningDetail();
 
             $warningDetail->warning_id = $warning->warning_id;

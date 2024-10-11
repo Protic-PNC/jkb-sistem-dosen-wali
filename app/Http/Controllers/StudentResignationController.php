@@ -10,6 +10,8 @@ use App\Models\Student;
 use App\Models\StudentResignationDetail;
 use App\Models\TuitionArrearDetail;
 
+use Carbon\Carbon;
+
 class StudentResignationController extends Controller
 {
     /**
@@ -45,16 +47,20 @@ class StudentResignationController extends Controller
      */
     public function store(Request $request)
     {
-
-        //dd($request);
         $user = Auth::user();
-
-        $studentResignation = StudentResignation::firstOrCreate(['class_id' => $user->lecturer->student_classes->class_id]);
-
+        
         try
         {
+            $studentResignation = StudentResignation::firstOrCreate(['class_id' => $user->lecturer->student_classes->class_id]);
+            
             $student = Student::find($request->input('student_id'));
-            $student->update(['status' => 'non-active']);
+            $student->update([
+                'status' => 'non-active',
+                'inactive_at' => Carbon::now()
+            ],
+            );
+
+            //dd($student->inactive_at);
 
             $studentResignationDetail = new StudentResignationDetail();
             $studentResignationDetail->student_resignation_id = $studentResignation->student_resignation_id;
@@ -124,7 +130,10 @@ class StudentResignationController extends Controller
         try {
             $student = Student::find($studentResignationDetail->student_id);
 
-            $student->update(['status' => 'active']);
+            $student->update(
+                ['status' => 'active'],
+                ['inactive_at' => null],
+            );
             
             $studentResignationDetail->delete();
 

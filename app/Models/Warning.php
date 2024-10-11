@@ -23,4 +23,9 @@ class Warning extends Model
     {
         return $this->hasMany(WarningDetail::class, 'warning_id', 'warning_id');
     }
+
+    // public function report()
+    // {
+    //     return $this->hasOne(Report::class);
+    // }
 }

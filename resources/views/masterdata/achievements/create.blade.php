@@ -30,14 +30,6 @@
                                                     <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Jenis Prestasi atau Keaktifan Organisasi</label>
                                                     <input type="text" name="achievement_type" id="name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Juara 1 Lomba blabla, HMTI" required>
                                                 </div>
-                                                <!-- Button Add Achievement -->
-                                                {{-- <div class="mt-3 sm:mt-0">
-                                                    <button id="addAchievement" type="button" class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-yellow-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-4 py-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
-                                                        <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14m-7 7V5"/>
-                                                        </svg>
-                                                    </button>
-                                                </div> --}}
                                             </div>
 
                                         </div>

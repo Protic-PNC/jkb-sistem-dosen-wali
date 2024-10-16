@@ -8,6 +8,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 use App\Models\Student;
+use App\Models\StudentResignationDetail;
+use App\Models\StudentResignation;
+use Carbon\Carbon;
 
 class WarningController extends Controller
 {
@@ -60,6 +63,27 @@ class WarningController extends Controller
 
             $warningDetail->save();
 
+            if($request->input('warning_type') == 'SP 3')
+            {
+
+                $studentResignation = StudentResignation::firstOrCreate(['class_id' => $user->lecturer->student_classes->class_id]);
+
+                $student = Student::find($request->input('student_id'));
+                $student->update([
+                    'status' => 'non-active',
+                    'inactive_at' => Carbon::now()
+                    ],
+                );
+
+                $studentResignationDetail = new StudentResignationDetail();
+                $studentResignationDetail->student_resignation_id = $studentResignation->student_resignation_id;
+                $studentResignationDetail->student_id = $request->input('student_id');
+                $studentResignationDetail->resignation_type = 'Drop Out';
+                $studentResignationDetail->reason = $request->input('reason');
+
+                $studentResignationDetail->save();
+            }
+
             return redirect()->route('masterdata.warnings.index')->with('success', 'Peringatan berhasil ditambahkan');
         } catch (\Exception $e) {
             return redirect()
@@ -99,7 +123,40 @@ class WarningController extends Controller
         ]);
 
         try {
+
+            if($warningDetail->warning_type == 'SP 3' && $request->input('warning_type') != 'SP 3')
+            {
+                $studentResignationDetail = StudentResignationDetail::where('student_id', $warningDetail->student_id)->first();
+
+                if($studentResignationDetail)
+                {
+                    $studentResignationDetail->delete();
+                }
+            }
+
+            if($warningDetail->warning_type != 'SP 3' && $request->input('warning_type') == 'SP 3')
+            {
+                $studentResignation = StudentResignation::firstOrCreate(['class_id' => $warningDetail->warning->class_id]);
+
+                $student = Student::find($warningDetail->student_id);
+                $student->update([
+                    'status' => 'non-active',
+                    'inactive_at' => Carbon::now()
+                    ],
+                );
+
+                $studentResignationDetail = new StudentResignationDetail();
+                $studentResignationDetail->student_resignation_id = $studentResignation->student_resignation_id;
+                $studentResignationDetail->student_id = $warningDetail->student_id;
+                $studentResignationDetail->resignation_type = 'Drop Out';
+                $studentResignationDetail->reason = $request->input('reason');
+
+                $studentResignationDetail->save();
+            }
+            
             $warningDetail->update($validated);
+
+            
 
             return redirect()->route('masterdata.warnings.index')->with('success', 'Peringatan ' . $warningDetail->student->student_name . ' berhasil diperbarui!');
         } catch (\Exception $e) {
@@ -117,6 +174,12 @@ class WarningController extends Controller
         $warningDetail = WarningDetail::find($id);
 
         try {
+            $studentResignationDetail = StudentResignationDetail::where('student_id', $warningDetail->student_id)->first();
+            if($studentResignationDetail)
+            {
+                $studentResignationDetail->delete();
+            }
+
             $warningDetail->delete();
 
             return redirect()->route('masterdata.warnings.index')->with('success', 'Peringatan berhasil dihapus');

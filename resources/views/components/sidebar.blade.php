@@ -101,12 +101,11 @@
                 </svg>
                 <span class="mx-3">Dosen</span>
             </a>
-            @endrole
-            {{-- @php
+        @endrole
+        {{-- @php
             $nidn = Auth::user()->lecturer->nidn ?? null;
             @endphp --}}
         @role('dosenWali')
-
             <a class="flex items-center px-6 py-2 mt-4 {{ setActive('masterdata.students.*') }}"
                 href="{{ route('masterdata.students.index') }}">
                 <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -159,7 +158,7 @@
                 </svg>
                 <span class="mx-3">Beasiswa</span>
             </a>
-            
+
             <a class="flex items-center px-6 py-2 mt-4 {{ setActive('masterdata.warnings.*') }}"
                 href="{{ route('masterdata.warnings.index') }}">
                 <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -170,7 +169,7 @@
                 </svg>
                 <span class="mx-3">Peringatan</span>
             </a>
-            
+
             <a class="flex items-center px-6 py-2 mt-4 {{ setActive('masterdata.tuition_arrears.*') }}"
                 href="{{ route('masterdata.tuition_arrears.index') }}">
                 <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -181,7 +180,7 @@
                 </svg>
                 <span class="mx-3">Tunggakan UKT</span>
             </a>
-            
+
             <a class="flex items-center px-6 py-2 mt-4 {{ setActive('masterdata.student_resignations.*') }}"
                 href="{{ route('masterdata.student_resignations.index') }}">
                 <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -192,7 +191,7 @@
                 </svg>
                 <span class="mx-3">Mhs Undur diri</span>
             </a>
-            
+
             <a class="flex items-center px-6 py-2 mt-4 {{ setActive('masterdata.reports.*') }}"
                 href="{{ route('masterdata.reports.index') }}">
                 <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -202,9 +201,27 @@
                     </path>
                 </svg>
                 <span class="mx-3">Laporan</span>
-            </a>    
-            
+            </a>
         @endrole
+
+        @role('kaprodi')
+
+        <a class="flex items-center px-6 py-2 mt-4 {{ setActive('masterdata.reports.*') }}"
+            href="{{ route('masterdata.reports.index') }}">
+            <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke="none" d="M0 0h24v24H0z" />
+                <path d="M14 3v4a1 1 0 0 0 1 1h4" />
+                <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" />
+                <line x1="9" y1="9" x2="10" y2="9" />
+                <line x1="9" y1="13" x2="15" y2="13" />
+                <line x1="9" y1="17" x2="15" y2="17" />
+            </svg>
+            <span class="mx-3">Laporan Perwalian</span>
+        </a>
+
+        @endrole
+
         @role('mahasiswa')
             <a class="flex items-center px-6 py-2 mt-4 {{ setActive('masterdata.guidances.*') }}"
                 href="{{ route('masterdata.guidances.index', Auth::user()->id) }}">

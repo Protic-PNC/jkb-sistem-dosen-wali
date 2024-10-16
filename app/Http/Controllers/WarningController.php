@@ -130,6 +130,12 @@ class WarningController extends Controller
 
                 if($studentResignationDetail)
                 {
+                    $student = Student::find($warningDetail->student_id);
+                    $student->update([
+                        'status' => 'active',
+                        'inactive_at' => null
+                        ],
+                    );
                     $studentResignationDetail->delete();
                 }
             }
@@ -177,6 +183,12 @@ class WarningController extends Controller
             $studentResignationDetail = StudentResignationDetail::where('student_id', $warningDetail->student_id)->first();
             if($studentResignationDetail)
             {
+                $student = Student::find($warningDetail->student_id);
+                $student->update([
+                    'status' => 'active',
+                    'inactive_at' => null
+                    ],
+                );
                 $studentResignationDetail->delete();
             }
 

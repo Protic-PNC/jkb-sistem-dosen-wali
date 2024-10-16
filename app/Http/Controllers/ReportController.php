@@ -77,6 +77,13 @@ class ReportController extends Controller
             $usedSemesters = $reports->pluck('semester')->toArray();
             //$studentClass = StudentClass::where('class_id', $user->lecturer->student_classes->class_id)->first();
         }
+        else if ($user->hasRole('kaprodi'))
+        {
+            $reports = Report::whereHas('student_class', function($query) use($user){
+                $query->where('program_id', $user->lecturer->program->program_id);
+            })->get();
+            $studentClass = StudentClass::all();
+        }
         //dd($usedSemesters);
 
         return view('masterdata.reports.index', compact('currentSemester', 'reports', 'jumlahSemester', 'usedSemesters', 'studentClass'));

@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignId('student_id');
             $table->foreign('student_id')->references('student_id')->on('students');
             $table->string('resignation_type'); //undur diri / DO
-            $table->string('decree_number'); //surat keputusan
+            $table->string('decree_number')->nullable(); //surat keputusan
             $table->text('reason');
             $table->timestamps();
         });

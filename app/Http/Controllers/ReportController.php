@@ -50,10 +50,10 @@ class ReportController extends Controller
         $user = User::find(Auth::user()->id);
 
         if ($user->hasRole('admin')) {
-            $reports = Report::all();
+            $reports = Report::orderBy('semester', 'asc')->get();
             $studentClass = StudentClass::all();
         } else if ($user->hasRole('dosenWali')) {
-            $reports = Report::where('class_id', $user->lecturer->student_classes->class_id)->get();
+            $reports = Report::where('class_id', $user->lecturer->student_classes->class_id)->orderBy('semester', 'asc')->get();
 
             if ($user->lecturer->student_classes->program->degree == 'D3') {
                 $jumlahSemester = 6;
@@ -76,12 +76,14 @@ class ReportController extends Controller
 
             $usedSemesters = $reports->pluck('semester')->toArray();
             //$studentClass = StudentClass::where('class_id', $user->lecturer->student_classes->class_id)->first();
-        }
-        else if ($user->hasRole('kaprodi'))
-        {
-            $reports = Report::whereHas('student_class', function($query) use($user){
+        } else if ($user->hasRole('kaprodi')) {
+            $reports = Report::whereHas('student_class', function ($query) use ($user) {
                 $query->where('program_id', $user->lecturer->program->program_id);
-            })->get();
+            })
+                ->orderBy('semester', 'asc')
+                ->get();
+
+            // dd($reports);
             $studentClass = StudentClass::all();
         }
         //dd($usedSemesters);
@@ -149,12 +151,9 @@ class ReportController extends Controller
         $class = StudentClass::find($report->class_id);
 
 
-        if($class->program->degree == 'D3')
-        {
+        if ($class->program->degree == 'D3') {
             $jumlahSemester = 6;
-        }
-        else
-        {
+        } else {
             $jumlahSemester = 8;
         }
 
@@ -182,76 +181,70 @@ class ReportController extends Controller
             'student_classes.program',
             'gpa_cumulative.gpa',
             'gpa_cumulative.gpa_semester' => function ($query) use ($semester) {
-                $query->whereBetween('semester', [1,$semester]);
+                $query->whereBetween('semester', [1, $semester]);
             }
-        ])->whereHas('student_classes', function($query) use ($class) {
+        ])->whereHas('student_classes', function ($query) use ($class) {
             $query->where('class_id', $class->class_id);
         })->where(function ($query) use ($tanggalAwal, $tanggalAkhir) {
             // Mahasiswa aktif atau tidak aktif setelah rentang semester
             $query->where('status', 'active')
-                  ->orWhere('inactive_at', '>', $tanggalAkhir)
-                  ->orWhereNull('inactive_at'); // Jika tidak ada tanggal inactive
+                ->orWhere('inactive_at', '>', $tanggalAkhir)
+                ->orWhereNull('inactive_at'); // Jika tidak ada tanggal inactive
         })
-        ->get();
+            ->get();
 
         //mengambil data peringatan
         $warnings = Warning::where('class_id', $class->class_id)->first();
         $warningDetail = null;
-        if($warnings)
-        {
+        if ($warnings) {
             $warningDetail = WarningDetail::where('warning_id', $warnings->warning_id)
-                                        ->whereBetween('created_at', [$tanggalAwal, $tanggalAkhir])
-                                        ->get();
+                ->whereBetween('created_at', [$tanggalAwal, $tanggalAkhir])
+                ->get();
         }
 
         $guidances = Guidance::where('class_id', $class->class_id)->first();
         $guidanceDetail = null;
-        if($guidances)
-        {
+        if ($guidances) {
             $guidanceDetail = GuidanceDetail::where('guidance_id', $guidances->guidance_id)
-                                    ->whereBetween('created_at', [$tanggalAwal, $tanggalAkhir])
-                                    ->get();
+                ->whereBetween('created_at', [$tanggalAwal, $tanggalAkhir])
+                ->get();
         }
 
 
         //mengambil data penerima beasiswa
         $scholarships = Scholarship::where('class_id', $class->class_id)->first();
         $scholarshipDetail = null;
-        if($scholarships)
-        {
+        if ($scholarships) {
             $scholarshipDetail = ScholarshipDetail::where('scholarship_id', $scholarships->scholarship_id)
-                                    ->whereBetween('created_at', [$tanggalAwal, $tanggalAkhir])
-                                    ->get();
+                ->whereBetween('created_at', [$tanggalAwal, $tanggalAkhir])
+                ->get();
         }
 
         //mengambil data tunggakan ukt
         $tuition_arrears = TuitionArrear::where('class_id', $class->class_id)->first();
         $tuition_arrearDetail = null;
-        if($tuition_arrears)
-        {
+        if ($tuition_arrears) {
             $tuition_arrearDetail = TuitionArrearDetail::where('tuition_arrear_id', $tuition_arrears->tuition_arrear_id)
-                                    ->whereBetween('created_at', [$tanggalAwal, $tanggalAkhir])
-                                    ->get();
+                ->whereBetween('created_at', [$tanggalAwal, $tanggalAkhir])
+                ->get();
         }
 
         //mengambil data siswa yang mengundurkan diri
         $student_resignations = StudentResignation::where('class_id', $class->class_id)->first();
         $student_resignationDetail = null;
-        if($student_resignations)
-        {
+        if ($student_resignations) {
             $student_resignationDetail = StudentResignationDetail::where('student_resignation_id', $student_resignations->student_resignation_id)
-                                    ->whereBetween('created_at', [$tanggalAwal, $tanggalAkhir])
-                                    ->get();
+                ->whereBetween('created_at', [$tanggalAwal, $tanggalAkhir])
+                ->get();
         }
 
         //mengambil data siswa berprestasi atau keaktifan organisasi
         $achievements = Achievement::where('class_id', $class->class_id)->first();
         $achievementDetail = null;
-        if($achievements)
-        {
+        if ($achievements) {
             $achievementDetail = AchievementDetail::where('achievement_id', $achievements->achievement_id)
-                                    ->whereBetween('created_at', [$tanggalAwal, $tanggalAkhir])
-                                    ->get();
+                ->whereBetween('created_at', [$tanggalAwal, $tanggalAkhir])
+                ->get();
         }
 
 
@@ -285,7 +278,7 @@ class ReportController extends Controller
                 ))
                 ->get();
 
-            
+
             $table_data = [];
             foreach ($semester_gpas as $gpa) {
                 $percentage_below_3 = $gpa->total_students > 0 ? round(($gpa->count_below_3 / $gpa->total_students) * 100, 2) : 0;
@@ -303,24 +296,20 @@ class ReportController extends Controller
                 ];
             }
 
-            if($lecturer->student_classes->program->degree == 'D3')
-            {
+            if ($lecturer->student_classes->program->degree == 'D3') {
                 $jumlahSemester = 6;
-            }
-            else
-            {
+            } else {
                 $jumlahSemester = 8;
             }
 
             // Mengambil rata-rata cumulative_gpa untuk seluruh mahasiswa
             $avg_cumulative_gpa = DB::table('gpa_cumulatives')
-            ->whereIn('student_id', $studentsChart->pluck('student_id'))
-            ->select(DB::raw('ROUND(AVG(cumulative_gpa), 2) AS avg_cumulative_gpa'))
-            ->value('avg_cumulative_gpa');
+                ->whereIn('student_id', $studentsChart->pluck('student_id'))
+                ->select(DB::raw('ROUND(AVG(cumulative_gpa), 2) AS avg_cumulative_gpa'))
+                ->value('avg_cumulative_gpa');
 
             $chart_data = [];
-            for($i =1; $i <= $jumlahSemester; $i++)
-            {
+            for ($i = 1; $i <= $jumlahSemester; $i++) {
                 // Search for the corresponding GPA data for the current semester
                 $gpa_for_semester = $semester_gpas->firstWhere('semester', $i);
 
@@ -335,7 +324,7 @@ class ReportController extends Controller
             }
             // Prepare chart data
             $gpa_data = $studentsChart->map(function ($student) {
-                return $student->gpa_cumulative->cumulative_gpa ?? 0;   
+                return $student->gpa_cumulative->cumulative_gpa ?? 0;
             });
 
             $categories = $studentsChart->map(function ($student) {
@@ -360,7 +349,7 @@ class ReportController extends Controller
 
 
 
-        return view('masterdata.reports.show', compact('studentsChart', 'semester_gpas', 'chart_data', 'gpa_data', 'categories', 'avg_gpas', 'table_data', 'avg_cumulative_gpa','report','students', 'jumlahSemester', 'class', 'semester', 'warningDetail', 'guidanceDetail', 'scholarshipDetail', 'tuition_arrearDetail', 'student_resignationDetail', 'achievementDetail'));
+        return view('masterdata.reports.show', compact('studentsChart', 'semester_gpas', 'chart_data', 'gpa_data', 'categories', 'avg_gpas', 'table_data', 'avg_cumulative_gpa', 'report', 'students', 'jumlahSemester', 'class', 'semester', 'warningDetail', 'guidanceDetail', 'scholarshipDetail', 'tuition_arrearDetail', 'student_resignationDetail', 'achievementDetail'));
     }
 
     /**
@@ -374,16 +363,56 @@ class ReportController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Report $report)
+    public function update(Request $request, $id)
     {
-        //
+        $report = Report::find($id);
+
+        //dd($request->update_type);
+        try {
+
+            if ($request->update_type == 'acc_academic_advisor') {
+                $report->update(
+                    ['has_acc_academic_advisor' => 1],
+                );
+            }
+            if ($request->update_type == 'reject_academic_advisor') {
+                $report->update(
+                    ['has_acc_academic_advisor' => 0],
+                );
+            }
+            else if ($request->update_type == 'acc_head_of_program') {
+                $report->update(
+                    ['has_acc_head_of_program' => 1]
+                );
+            }
+            else if ($request->update_type == 'reject_head_of_program') {
+                $report->update(
+                    ['has_acc_head_of_program' => 0]
+                );
+            }
+
+            return redirect()->route('masterdata.reports.index')
+                ->with('success', 'status dosen wali berhasil diperbarui!');
+        } catch (\Exception $e) {
+            return redirect()->route('masterdata.reports.index')
+                ->with('error', 'System error: ' . $e->getMessage());
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Report $report)
+    public function destroy($id)
     {
-        //
+        $report = Report::find($id);
+
+        try {
+            $report->delete();
+            return redirect()->route('masterdata.reports.index')
+                ->with('success', 'laporan berhasil dihapus!');
+        } catch (\Exception $e) {
+            return redirect()->route('masterdata.reports.index')
+                ->with('error', 'System error: ' . $e->getMessage());
+        }
     }
 }

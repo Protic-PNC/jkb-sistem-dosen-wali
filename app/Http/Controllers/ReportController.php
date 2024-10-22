@@ -63,7 +63,7 @@ class ReportController extends Controller
 
             $currentYear = Carbon::now()->year;
             $currentMonth = Carbon::now()->month;
-            $year_diff = $currentYear - $user->lecturer->student_classes->academic_year;
+            $year_diff = $currentYear - $user->lecturer->student_classes->entry_year;
 
             //mulai semester ganjil (tahun ajaran baru)
             if ($currentMonth >= 8) {
@@ -148,6 +148,7 @@ class ReportController extends Controller
     {
         $report = Report::find($id);
         $semester = $report->semester;
+        $entryYear = $report->student_class->entry_year;
         $class = StudentClass::find($report->class_id);
 
 
@@ -158,7 +159,7 @@ class ReportController extends Controller
         }
 
         //menentukan tahun berdasarkan $semester
-        $tahun = $report->student_class->academic_year + intdiv($semester, 2);
+        $tahun = $report->student_class->entry_year + intdiv($semester, 2);
 
         // Tentukan rentang bulan dan tahun berdasarkan ganjil/genap
         if ($semester % 2 == 1) {
@@ -172,6 +173,18 @@ class ReportController extends Controller
             $bulanAkhir = 7;
             $tahunAkhir = $tahun; // Genap ada dalam satu tahun ajaran
         }
+
+        //menentukan academic_year
+        if($semester %2 == 1) {
+            $firstYear = $entryYear + ($semester - 1) / 2; 
+        }
+        else
+        {
+            $firstYear = $entryYear + ($semester - 2) / 2;
+        }
+        $secondYear = $firstYear + 1;
+
+        $academicYear = $firstYear . '-' . $secondYear;
 
         // Tentukan tanggal awal dan akhir untuk pemfilteran berdasarkan created_at
         $tanggalAwal = Carbon::create($tahun, $bulanAwal, 1)->startOfMonth();
@@ -322,6 +335,8 @@ class ReportController extends Controller
                     'y' => $avg_gpa,
                 ];
             }
+
+            
             // Prepare chart data
             $gpa_data = $studentsChart->map(function ($student) {
                 return $student->gpa_cumulative->cumulative_gpa ?? 0;
@@ -348,8 +363,7 @@ class ReportController extends Controller
         }
 
 
-
-        return view('masterdata.reports.show', compact('studentsChart', 'semester_gpas', 'chart_data', 'gpa_data', 'categories', 'avg_gpas', 'table_data', 'avg_cumulative_gpa', 'report', 'students', 'jumlahSemester', 'class', 'semester', 'warningDetail', 'guidanceDetail', 'scholarshipDetail', 'tuition_arrearDetail', 'student_resignationDetail', 'achievementDetail'));
+        return view('masterdata.reports.show', compact('academicYear','studentsChart', 'semester_gpas', 'chart_data', 'gpa_data', 'categories', 'avg_gpas', 'table_data', 'avg_cumulative_gpa', 'report', 'students', 'jumlahSemester', 'class', 'semester', 'warningDetail', 'guidanceDetail', 'scholarshipDetail', 'tuition_arrearDetail', 'student_resignationDetail', 'achievementDetail'));
     }
 
     /**

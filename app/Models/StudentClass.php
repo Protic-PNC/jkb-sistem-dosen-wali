@@ -15,7 +15,7 @@ class StudentClass extends Model
         'program_id',
         'academic_advisor_id',
         'class_name',
-        'academic_year',
+        'entry_year',
         'status',
         'graduated_at',
     ];

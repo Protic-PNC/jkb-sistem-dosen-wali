@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignId('academic_advisor_id')->nullable();
             $table->foreign('academic_advisor_id')->references('lecturer_id')->on('lecturers');
             $table->string('class_name');
-            $table->integer('academic_year');
+            $table->integer('entry_year');
             $table->enum('status', ['active', 'graduated'])->default('active');
             $table->date('graduated_at')->nullable();
             $table->timestamps();

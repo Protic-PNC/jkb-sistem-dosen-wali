@@ -56,7 +56,7 @@ class StudentClassController extends Controller
             // Insert data manual ke database
             StudentClass::create([
                 'program_id' => $request->program_id,
-                'academic_year' => $request->academic_year_manual,
+                'entry_year' => $request->entry_year_manual,
                 'class_name' => $request->class_name, // Kode kelas dari input manual
                 'academic_advisor_id' => $request->academic_advisor_id,
                 'created_at' => now(),
@@ -74,10 +74,10 @@ class StudentClassController extends Controller
             // Hitung tahun sekarang - tahun akademik dengan penyesuaian untuk awal tahun akademik (Juli/Agustus)
             $current_year = Carbon::now()->year;
             $current_month = Carbon::now()->month;
-            $academic_year_select = $request->academic_year_select;
+            $entry_year_select = $request->entry_year_select;
 
             // Jika bulan sekarang setelah Juli, tambah 1 ke perbedaan tahun
-            $year_diff = $current_year - $academic_year_select;
+            $year_diff = $current_year - $entry_year_select;
             if ($current_month >= 8) {
                 $year_diff += 1;
             }
@@ -91,7 +91,7 @@ class StudentClassController extends Controller
                     $status = 'graduated';
                     $graduated_at = now();
                     $year_diff = 3;
-                    // return back()->withErrors('Tahun akademik tidak valid untuk D3, year_diff: '.$year_diff . ' academic_year_select: '. $academic_year_select . ' current_year: '. $current_year. ' current_month: '. $current_month);
+                    // return back()->withErrors('Tahun akademik tidak valid untuk D3, year_diff: '.$year_diff . ' entry_year_select: '. $entry_year_select . ' current_year: '. $current_year. ' current_month: '. $current_month);
                 } elseif ($program->degree == 'D4' && $year_diff > 4) {
                     // return back()->withErrors('Tahun akademik tidak valid untuk D4');
                     $status = 'graduated';
@@ -106,7 +106,7 @@ class StudentClassController extends Controller
 
             // Ambil kelas yang sudah ada di program dan tahun akademik yang sama
             $existingClasses = StudentClass::where('program_id', $request->program_id)
-            ->where('academic_year', $academic_year_select)
+            ->where('entry_year', $entry_year_select)
             ->orderBy('class_name', 'desc')
             ->first();
 
@@ -133,7 +133,7 @@ class StudentClassController extends Controller
                 $classes[] = [
                     'program_id' => $program->program_id,
                     'class_name' => $class_name,
-                    'academic_year' => $academic_year_select,
+                    'entry_year' => $entry_year_select,
                     'status' => $status,
                     'graduated_at' => $graduated_at,
                     'created_at' => now(),
@@ -264,11 +264,11 @@ class StudentClassController extends Controller
             // dd($program_code);
 
             // Hitung perbedaan tahun (tahun sekarang - tahun akademik yang diinput)
-            $new_academic_year = $request->academic_year;
+            $new_entry_year = $request->entry_year;
             $current_year = Carbon::now()->year;
             $current_month = Carbon::now()->month;
 
-            $year_diff = $current_year - $new_academic_year;
+            $year_diff = $current_year - $new_entry_year;
             if ($current_month >= 8) {
                 $year_diff += 1;
             }
@@ -296,10 +296,10 @@ class StudentClassController extends Controller
                 DB::beginTransaction();
 
                 // Generate kode kelas baru jika prodi atau tahun akademik berubah
-                if ($studentClass->academic_year != $new_academic_year || $studentClass->program_id != $request->program_id) {
+                if ($studentClass->entry_year != $new_entry_year || $studentClass->program_id != $request->program_id) {
                     // Tentukan huruf kelas
                     $existingClasses = StudentClass::where('program_id', $request->program_id)
-                        ->where('academic_year', $new_academic_year)
+                        ->where('entry_year', $new_entry_year)
                         ->orderBy('class_name', 'desc')
                         ->first();
 
@@ -314,7 +314,7 @@ class StudentClassController extends Controller
 
                     $studentClass->update([
                         'program_id' => $request->program_id,
-                        'academic_year' => $new_academic_year,
+                        'entry_year' => $new_entry_year,
                         'class_name' => $class_name,
                         'academic_advisor_id' => $request->academic_advisor_id,
                         'status' => $status,

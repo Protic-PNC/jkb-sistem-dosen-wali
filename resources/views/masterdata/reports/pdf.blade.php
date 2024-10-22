@@ -1,159 +1,3 @@
-{{-- 
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Laporan Dosen Wali</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            font-size: 12px;
-        }
-        .section-title {
-            font-size: 16px;
-            font-weight: bold;
-            margin-top: 20px;
-            text-align: left;
-        }
-        .table-container {
-            margin: 20px 0;
-            width: 100%;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 10px;
-        }
-        th, td {
-            padding: 8px;
-            border: 1px solid black;
-            text-align: left;
-        }
-        th {
-            background-color: #f0f0f0;
-            font-weight: bold;
-            text-align: center;
-        }
-        .subtitle {
-            font-size: 14px;
-            margin-top: 10px;
-        }
-        .content-text {
-            font-size: 12px;
-        }
-        .center {
-            text-align: center;
-        }
-        .bold {
-            font-weight: bold;
-        }
-    </style>
-</head>
-<body>
-
-<div class="content-text">
-    <p class="subtitle bold">LAPORAN DOSEN WALI</p>
-    <table>
-        <tr>
-            <td>Nama Dosen Wali</td>
-            <td>:</td>
-            <td>Prih Diantono Abda’u S.Kom. M.Kom.</td>
-        </tr>
-        <tr>
-            <td>Jurusan</td>
-            <td>:</td>
-            <td>Teknik Informatika</td>
-        </tr>
-        <tr>
-            <td>Nomor SK Dosen Wali</td>
-            <td>:</td>
-            <td>221/PL.43/HK.03.01/2023</td>
-        </tr>
-        <tr>
-            <td>Semester</td>
-            <td>:</td>
-            <td>IV</td>
-        </tr>
-        <tr>
-            <td>Kelas/Angkatan</td>
-            <td>:</td>
-            <td>2B / 2021</td>
-        </tr>
-        <tr>
-            <td>Semester/Tahun Akademik</td>
-            <td>:</td>
-            <td>IV / 2022-2023</td>
-        </tr>
-    </table>
-</div>
-
-<div class="table-container">
-    <p class="section-title">Perkembangan Akademis Mahasiswa Perwalian</p>
-    <table>
-        <thead>
-            <tr>
-                <th >NIM</th>
-                <th rowspan="2">Nama</th>
-                <th colspan="4">Semester</th>
-                <th rowspan="2">IPK</th>
-            </tr>
-            <tr>
-                <th>1</th>
-                <th>2</th>
-                <th>3</th>
-                <th>4</th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- Example Row -->
-            <tr>
-                <td>210202025</td>
-                <td>Adhelia Finosita Anestri</td>
-                <td>3.27</td>
-                <td>3.42</td>
-                <td>3.61</td>
-                <td>3.46</td>
-                <td>3.45</td>
-            </tr>
-        </tbody>
-    </table>
-</div>
-
-<!-- Repeat for other sections with updated structure -->
-<div class="table-container">
-    <p class="section-title">Data Mahasiswa Mengundurkan Diri/Drop Out</p>
-    <table>
-        <thead>
-            <tr>
-                <th>No</th>
-                <th>Nama Mahasiswa</th>
-                <th>UD/DO</th>
-                <th>SK Penetapan</th>
-                <th>Alasan</th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- Example Row -->
-            <tr>
-                <td>1</td>
-                <td>Alza Nurfeby Tarmiana</td>
-                <td>UD</td>
-                <td>223/PL.43/HK.03.01/2023</td>
-                <td>Alasan Pengunduran</td>
-            </tr>
-        </tbody>
-    </table>
-</div>
-
-</body>
-</html>
-
-
---}}
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -442,7 +286,12 @@
                 </tr>
             </thead>
             <tbody>
-                @if ($student_resignationDetail)
+                @if ($student_resignationDetail->isEmpty())
+                <tr>
+                    <td scope="row" colspan="5" class="td">
+                        Tidak ada data pengunduran diri mahasiswa</td>
+                </tr>
+                @else
                     @foreach ($student_resignationDetail as $detail)
                         <tr>
                             <td scope="row" class="td">
@@ -457,11 +306,6 @@
                                 {{ $detail->reason }}</td>
                         </tr>
                     @endforeach
-                @else
-                    <tr>
-                        <td scope="row" colspan="5" class="td">
-                            Tidak ada data beasiswa</td>
-                    </tr>
                 @endif
             </tbody>
         </table>
@@ -480,7 +324,12 @@
                 </tr>
             </thead>
             <tbody>
-                @if ($student_resignationDetail)
+                @if ($student_resignationDetail->isEmpty())
+                    <tr>
+                        <td scope="row" colspan="4" class="td">
+                            Tidak ada data beasiswa</td>
+                    </tr>
+                @else
                     @foreach ($scholarshipDetail as $detail)
                         <tr>
                             <td scope="row" class="td">
@@ -491,11 +340,6 @@
                                 {{ $detail->scholarship_type }}</td>
                         </tr>
                     @endforeach
-                @else
-                    <tr>
-                        <td scope="row" colspan="4" class="td">
-                            Tidak ada data beasiswa</td>
-                    </tr>
                 @endif
             </tbody>
         </table>
@@ -513,7 +357,12 @@
                 </tr>
             </thead>
             <tbody>
-                @if ($achievementDetail)
+                @if ($achievementDetail->isEmpty())
+                    <tr>
+                        <td scope="row" colspan="4" class="td">
+                            Tidak ada data prestasi</td>
+                    </tr>
+                @else
                     @foreach ($achievementDetail as $detail)
                         <tr>
                             <td scope="row" class="td">
@@ -526,11 +375,6 @@
                                 {{ $detail->level }}</td>
                         </tr>
                     @endforeach
-                @else
-                    <tr>
-                        <td scope="row" colspan="4" class="td">
-                            Tidak ada data prestasi</td>
-                    </tr>
                 @endif
             </tbody>
         </table>
@@ -548,7 +392,12 @@
                 </tr>
             </thead>
             <tbody>
-                @if ($warningDetail)
+                @if ($warningDetail->isEmpty())
+                    <tr>
+                        <td scope="row" colspan="4" class="td">
+                            Tidak ada data peringatan</td>
+                    </tr>
+                @else
                     @foreach ($warningDetail as $detail)
                         <tr>
                             <td scope="row" class="td">
@@ -561,11 +410,6 @@
                                 {{ $detail->reason }}</td>
                         </tr>
                     @endforeach
-                @else
-                    <tr>
-                        <td scope="row" colspan="4" class="td">
-                            Tidak ada data peringatan</td>
-                    </tr>
                 @endif
 
             </tbody>
@@ -583,7 +427,12 @@
                 </tr>
             </thead>
             <tbody>
-                @if ($tuition_arrearDetail)
+                @if ($tuition_arrearDetail->isEmpty())
+                    <tr>
+                        <td scope="row" colspan="4" class="td">
+                            Tidak ada data Tunggakan</td>
+                    </tr>
+                @else
                     @foreach ($tuition_arrearDetail as $detail)
                         <tr>
                             <td scope="row" class="td">
@@ -594,11 +443,6 @@
                                 Rp. {{ number_format($detail->amount, 2, ',', '.') }}</td>
                         </tr>
                     @endforeach
-                @else
-                    <tr>
-                        <td scope="row" colspan="4" class="td">
-                            Tidak ada data Tunggakan</td>
-                    </tr>
                 @endif
             </tbody>
         </table>
@@ -616,7 +460,12 @@
                 </tr>
             </thead>
             <tbody>
-                @if ($guidanceDetail)
+                @if ($guidanceDetail->isEmpty())
+                    <tr>
+                        <td scope="row" colspan="4" class="td">
+                            Tidak ada data bimbingan</td>
+                    </tr>
+                @else
                     @foreach ($guidanceDetail as $detail)
                         <tr>
                             <td scope="row" class="td">
@@ -629,11 +478,6 @@
                                 {{ $detail->solution }}</td>
                         </tr>
                     @endforeach
-                @else
-                    <tr>
-                        <td scope="row" colspan="4" class="td">
-                            Tidak ada data bimbingan</td>
-                    </tr>
                 @endif
 
             </tbody>

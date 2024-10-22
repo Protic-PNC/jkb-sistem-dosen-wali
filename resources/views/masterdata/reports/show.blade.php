@@ -56,43 +56,136 @@
                 }, 200); // Menunggu transisi opacity selesai
             }
         </script>
-        <div class="w-max mb-4 mt-5  bg-white rounded-lg shadow dark:bg-gray-800 p-4 md:p-6">
-            <table class="table-auto text-left text-gray-600 dark:text-gray-400">
-                <tbody>
-                    <tr class="">
-                        <td class="font-semibold ">Nama Dosen Wali</td>
-                        <td class="font-semibold">:</td>
-                        <td class="text-gray-800 dark:text-white">{{ $class->academic_advisor->lecturer_name }}</td>
-                    </tr>
-                    <tr class="">
-                        <td class="font-semibold">Program Studi</td>
-                        <td class="font-semibold">:</td>
-                        <td class="text-gray-800 dark:text-white">
-                            {{ $class->program->degree }}-{{ $class->program->program_name }}</td>
-                    </tr>
-                    <tr class="">
-                        <td class="font-semibold">Nomor SK Dosen Wali</td>
-                        <td class="font-semibold">:</td>
-                        <td class="text-gray-800 dark:text-white">221/PL.43/HK.03.01/2023</td>
-                    </tr>
-                    <tr class="">
-                        <td class="font-semibold">Semester</td>
-                        <td class="font-semibold">:</td>
-                        <td class="text-gray-800 dark:text-white">{{ $semester }}</td>
-                    </tr>
-                    <tr class="">
-                        <td class="font-semibold">Kelas/Angkatan</td>
-                        <td class="font-semibold">:</td>
-                        <td class="text-gray-800 dark:text-white">{{ $class->class_name }}/ {{ $class->academic_year }}</td>
-                    </tr>
-                    <tr class="">
-                        <td class="font-semibold">Semester/Tahun Akademik</td>
-                        <td class="font-semibold">:</td>
-                        <td class="text-gray-800 dark:text-white">{{ $semester }}/ 2022-2023</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+        {{-- <div class="flex">
+            <div class="w-max mb-4 mt-5  bg-white rounded-lg shadow dark:bg-gray-800 p-4 md:p-6">
+                <table class="table-auto text-left text-gray-600 dark:text-gray-400">
+                    <tbody>
+                        <tr class="">
+                            <td class="font-semibold ">Nama Dosen Wali</td>
+                            <td class="font-semibold">:</td>
+                            <td class="text-gray-800 dark:text-white">{{ $class->academic_advisor->lecturer_name }}</td>
+                        </tr>
+                        <tr class="">
+                            <td class="font-semibold">Program Studi</td>
+                            <td class="font-semibold">:</td>
+                            <td class="text-gray-800 dark:text-white">
+                                {{ $class->program->degree }}-{{ $class->program->program_name }}</td>
+                        </tr>
+                        <tr class="">
+                            <td class="font-semibold">Nomor SK Dosen Wali</td>
+                            <td class="font-semibold">:</td>
+                            <td class="text-gray-800 dark:text-white">221/PL.43/HK.03.01/2023</td>
+                        </tr>
+                        <tr class="">
+                            <td class="font-semibold">Semester</td>
+                            <td class="font-semibold">:</td>
+                            <td class="text-gray-800 dark:text-white">{{ $semester }}</td>
+                        </tr>
+                        <tr class="">
+                            <td class="font-semibold">Kelas/Angkatan</td>
+                            <td class="font-semibold">:</td>
+                            <td class="text-gray-800 dark:text-white">{{ $class->class_name }}/ {{ $class->academic_year }}
+                            </td>
+                        </tr>
+                        <tr class="">
+                            <td class="font-semibold">Semester/Tahun Akademik</td>
+                            <td class="font-semibold">:</td>
+                            <td class="text-gray-800 dark:text-white">{{ $semester }}/ 2022-2023</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="w-max mb-4 mt-5 ml-4  bg-white rounded-lg shadow dark:bg-gray-800 p-4 md:p-6">
+
+                <button id="dropdownDefaultButton" data-dropdown-toggle="dropdown"
+                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                    type="button">Dropdown button <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="m1 1 4 4 4-4" />
+                    </svg>
+                </button>
+
+                <!-- Dropdown menu -->
+                <div id="dropdown"
+                    class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
+                    <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
+                        <li>
+                            <a href="#"
+                                class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</a>
+                        </li>
+                        <li>
+                            <a href="#"
+                                class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Settings</a>
+                        </li>
+                        <li>
+                            <a href="#"
+                                class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Earnings</a>
+                        </li>
+                        <li>
+                            <a href="#"
+                                class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Sign
+                                out</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <script>
+                    document.addEventListener('DOMContentLoaded', function () {
+                        const button = document.getElementById('dropdownDefaultButton');
+                        const dropdown = document.getElementById('dropdown');
+                        
+                        button.addEventListener('click', function () {
+                            dropdown.classList.toggle('hidden');
+                        });
+                    });
+                </script>
+                
+
+            </div>
+        </div> --}}
+        <div class="flex">
+            <div class="w-max mb-4 mt-5 bg-white rounded-lg shadow dark:bg-gray-800 p-4 md:p-6 ">
+                <!-- Table content -->
+                <table class="table-auto text-left text-gray-600 dark:text-gray-400">
+                    <tbody>
+                        <tr class="">
+                            <td class="font-semibold ">Nama Dosen Wali</td>
+                            <td class="font-semibold">:</td>
+                            <td class="text-gray-800 dark:text-white">{{ $class->academic_advisor->lecturer_name }}</td>
+                        </tr>
+                        <tr class="">
+                            <td class="font-semibold">Program Studi</td>
+                            <td class="font-semibold">:</td>
+                            <td class="text-gray-800 dark:text-white">
+                                {{ $class->program->degree }}-{{ $class->program->program_name }}</td>
+                        </tr>
+                        <tr class="">
+                            <td class="font-semibold">Nomor SK Dosen Wali</td>
+                            <td class="font-semibold">:</td>
+                            <td class="text-gray-800 dark:text-white">221/PL.43/HK.03.01/2023</td>
+                        </tr>
+                        <tr class="">
+                            <td class="font-semibold">Semester</td>
+                            <td class="font-semibold">:</td>
+                            <td class="text-gray-800 dark:text-white">{{ $semester }}</td>
+                        </tr>
+                        <tr class="">
+                            <td class="font-semibold">Kelas/Angkatan</td>
+                            <td class="font-semibold">:</td>
+                            <td class="text-gray-800 dark:text-white">{{ $class->class_name }}/ {{ $class->academic_year }}
+                            </td>
+                        </tr>
+                        <tr class="">
+                            <td class="font-semibold">Semester/Tahun Akademik</td>
+                            <td class="font-semibold">:</td>
+                            <td class="text-gray-800 dark:text-white">{{ $semester }}/ 2022-2023</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>        
 
         <a href="">
             <button type="button"
@@ -111,39 +204,39 @@
             </button>
         </a>
 
-        {{-- <a href="{{ route('masterdata.reports.exportPdf', $report->report_id) }}" target="_blank"> --}}
-        <button type="button" onclick="exportChartAsImage()"
-            class=" mb-4 hover:text-white text-red-400 bg-white border-red-400 border-2 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 inline-flex items-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
-            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="30"
-                height="30" viewBox="0 0 256 256" xml:space="preserve">
-                <defs>
-                </defs>
-                <g style="stroke: none; stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: none; fill-rule: nonzero; opacity: 1;"
-                    transform="translate(1.4065934065934016 1.4065934065934016) scale(2.81 2.81)">
-                    <path
-                        d="M 19.309 0 C 15.04 0 11.58 3.46 11.58 7.729 v 47.153 v 27.389 c 0 4.269 3.46 7.729 7.729 7.729 h 51.382 c 4.269 0 7.729 -3.46 7.729 -7.729 V 54.882 V 25.82 L 52.601 0 H 19.309 z"
-                        style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(226,38,43); fill-rule: nonzero; opacity: 1;"
-                        transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round" />
-                    <path d="M 78.42 25.82 H 60.159 c -4.175 0 -7.559 -3.384 -7.559 -7.559 V 0 L 78.42 25.82 z"
-                        style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(235,103,106); fill-rule: nonzero; opacity: 1;"
-                        transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round" />
-                    <path
-                        d="M 30.116 46.949 h -5.944 c -0.966 0 -1.75 0.783 -1.75 1.75 v 9.854 v 6.748 c 0 0.967 0.784 1.75 1.75 1.75 s 1.75 -0.783 1.75 -1.75 v -4.998 h 4.194 c 2.53 0 4.588 -2.059 4.588 -4.588 v -4.177 C 34.704 49.008 32.646 46.949 30.116 46.949 z M 31.204 55.715 c 0 0.6 -0.488 1.088 -1.088 1.088 h -4.194 v -6.354 h 4.194 c 0.6 0 1.088 0.488 1.088 1.089 V 55.715 z"
-                        style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(255,255,255); fill-rule: nonzero; opacity: 1;"
-                        transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round" />
-                    <path
-                        d="M 43.703 46.949 h -3.246 c -0.966 0 -1.75 0.783 -1.75 1.75 v 16.602 c 0 0.967 0.784 1.75 1.75 1.75 h 3.246 c 4.018 0 7.286 -3.269 7.286 -7.287 v -5.527 C 50.989 50.218 47.721 46.949 43.703 46.949 z M 47.489 59.764 c 0 2.088 -1.698 3.787 -3.786 3.787 h -1.496 V 50.449 h 1.496 c 2.088 0 3.786 1.699 3.786 3.787 V 59.764 z"
-                        style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(255,255,255); fill-rule: nonzero; opacity: 1;"
-                        transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round" />
-                    <path
-                        d="M 65.828 46.949 h -8.782 c -0.967 0 -1.75 0.783 -1.75 1.75 v 16.602 c 0 0.967 0.783 1.75 1.75 1.75 s 1.75 -0.783 1.75 -1.75 V 58.75 h 4.001 c 0.967 0 1.75 -0.783 1.75 -1.75 s -0.783 -1.75 -1.75 -1.75 h -4.001 v -4.801 h 7.032 c 0.967 0 1.75 -0.783 1.75 -1.75 S 66.795 46.949 65.828 46.949 z"
-                        style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(255,255,255); fill-rule: nonzero; opacity: 1;"
-                        transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round" />
-                </g>
-            </svg>
-            Export Laporan
-        </button>
-        {{-- </a> --}}
+        <a href="{{ route('masterdata.reports.exportPdf', $report->report_id) }}" target="_blank">
+            <button type="button" onclick="exportChartAsImage()"
+                class=" mb-4 hover:text-white text-red-400 bg-white border-red-400 border-2 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 inline-flex items-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"
+                    width="30" height="30" viewBox="0 0 256 256" xml:space="preserve">
+                    <defs>
+                    </defs>
+                    <g style="stroke: none; stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: none; fill-rule: nonzero; opacity: 1;"
+                        transform="translate(1.4065934065934016 1.4065934065934016) scale(2.81 2.81)">
+                        <path
+                            d="M 19.309 0 C 15.04 0 11.58 3.46 11.58 7.729 v 47.153 v 27.389 c 0 4.269 3.46 7.729 7.729 7.729 h 51.382 c 4.269 0 7.729 -3.46 7.729 -7.729 V 54.882 V 25.82 L 52.601 0 H 19.309 z"
+                            style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(226,38,43); fill-rule: nonzero; opacity: 1;"
+                            transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round" />
+                        <path d="M 78.42 25.82 H 60.159 c -4.175 0 -7.559 -3.384 -7.559 -7.559 V 0 L 78.42 25.82 z"
+                            style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(235,103,106); fill-rule: nonzero; opacity: 1;"
+                            transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round" />
+                        <path
+                            d="M 30.116 46.949 h -5.944 c -0.966 0 -1.75 0.783 -1.75 1.75 v 9.854 v 6.748 c 0 0.967 0.784 1.75 1.75 1.75 s 1.75 -0.783 1.75 -1.75 v -4.998 h 4.194 c 2.53 0 4.588 -2.059 4.588 -4.588 v -4.177 C 34.704 49.008 32.646 46.949 30.116 46.949 z M 31.204 55.715 c 0 0.6 -0.488 1.088 -1.088 1.088 h -4.194 v -6.354 h 4.194 c 0.6 0 1.088 0.488 1.088 1.089 V 55.715 z"
+                            style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(255,255,255); fill-rule: nonzero; opacity: 1;"
+                            transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round" />
+                        <path
+                            d="M 43.703 46.949 h -3.246 c -0.966 0 -1.75 0.783 -1.75 1.75 v 16.602 c 0 0.967 0.784 1.75 1.75 1.75 h 3.246 c 4.018 0 7.286 -3.269 7.286 -7.287 v -5.527 C 50.989 50.218 47.721 46.949 43.703 46.949 z M 47.489 59.764 c 0 2.088 -1.698 3.787 -3.786 3.787 h -1.496 V 50.449 h 1.496 c 2.088 0 3.786 1.699 3.786 3.787 V 59.764 z"
+                            style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(255,255,255); fill-rule: nonzero; opacity: 1;"
+                            transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round" />
+                        <path
+                            d="M 65.828 46.949 h -8.782 c -0.967 0 -1.75 0.783 -1.75 1.75 v 16.602 c 0 0.967 0.783 1.75 1.75 1.75 s 1.75 -0.783 1.75 -1.75 V 58.75 h 4.001 c 0.967 0 1.75 -0.783 1.75 -1.75 s -0.783 -1.75 -1.75 -1.75 h -4.001 v -4.801 h 7.032 c 0.967 0 1.75 -0.783 1.75 -1.75 S 66.795 46.949 65.828 46.949 z"
+                            style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(255,255,255); fill-rule: nonzero; opacity: 1;"
+                            transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round" />
+                    </g>
+                </svg>
+                Export Laporan
+            </button>
+        </a>
         <div class="w-full mb-4 bg-white rounded-lg shadow dark:bg-gray-800 p-4 md:p-6">
             <p class="text-2xl font-bold text-gray-700 dark:text-white">Perkembangan Akademis Mahasiswa Perwalian</p>
             <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
@@ -330,7 +423,14 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @if ($student_resignationDetail)
+                    @if ($student_resignationDetail->isEmpty())
+                        <tr
+                            class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                            <td scope="row" colspan="4"
+                                class="px-6 py-4 font-medium text-center text-gray-900 whitespace-nowrap dark:text-white border-b">
+                                Tidak ada data pengunduran diri mahasiswa</td>
+                        </tr>
+                    @else
                         @foreach ($student_resignationDetail as $resignation)
                             <tr
                                 class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
@@ -348,13 +448,6 @@
                                     {{ $resignation->reason }}</td>
                             </tr>
                         @endforeach
-                    @else
-                        <tr
-                            class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                            <td scope="row" colspan="4"
-                                class="px-6 py-4 font-medium text-center text-gray-900 whitespace-nowrap dark:text-white border-b">
-                                Tidak ada data pengunduran diri mahasiswa</td>
-                        </tr>
                     @endif
                 </tbody>
             </table>
@@ -373,7 +466,14 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @if ($scholarshipDetail)
+                    @if ($scholarshipDetail->isEmpty())
+                        <tr
+                            class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                            <td scope="row" colspan="4"
+                                class="px-6 py-4 font-medium text-center text-gray-900 whitespace-nowrap dark:text-white border-b">
+                                Tidak ada data beasiswa</td>
+                        </tr>
+                    @else
                         @foreach ($scholarshipDetail as $detail)
                             <tr
                                 class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
@@ -388,13 +488,6 @@
                                     {{ $detail->scholarship_type }}</td>
                             </tr>
                         @endforeach
-                    @else
-                        <tr
-                            class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                            <td scope="row" colspan="4"
-                                class="px-6 py-4 font-medium text-center text-gray-900 whitespace-nowrap dark:text-white border-b">
-                                Tidak ada data beasiswa</td>
-                        </tr>
                     @endif
                 </tbody>
             </table>
@@ -413,7 +506,14 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @if ($achievementDetail)
+                    @if ($achievementDetail->isEmpty())
+                        <tr
+                            class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                            <td scope="row" colspan="4"
+                                class="px-6 py-4 font-medium text-center text-gray-900 whitespace-nowrap dark:text-white border-b">
+                                Tidak ada data pengunduran diri mahasiswa</td>
+                        </tr>
+                    @else
                         @foreach ($achievementDetail as $detail)
                             <tr
                                 class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
@@ -431,13 +531,7 @@
                                     {{ $detail->level }}</td>
                             </tr>
                         @endforeach
-                    @else
-                        <tr
-                            class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                            <td scope="row" colspan="4"
-                                class="px-6 py-4 font-medium text-center text-gray-900 whitespace-nowrap dark:text-white border-b">
-                                Tidak ada data pengunduran diri mahasiswa</td>
-                        </tr>
+                        
                     @endif
                 </tbody>
             </table>
@@ -456,7 +550,14 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @if ($warningDetail)
+                    @if ($warningDetail->isEmpty())
+                        <tr
+                            class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                            <td scope="row" colspan="4"
+                                class="px-6 py-4 font-medium text-center text-gray-900 whitespace-nowrap dark:text-white border-b">
+                                Tidak ada data peringatan</td>
+                        </tr>
+                    @else
                         @foreach ($warningDetail as $detail)
                             <tr
                                 class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
@@ -474,13 +575,6 @@
                                     {{ $detail->reason }}</td>
                             </tr>
                         @endforeach
-                    @else
-                        <tr
-                            class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                            <td scope="row" colspan="4"
-                                class="px-6 py-4 font-medium text-center text-gray-900 whitespace-nowrap dark:text-white border-b">
-                                Tidak ada data peringatan</td>
-                        </tr>
                     @endif
 
                 </tbody>
@@ -499,7 +593,14 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @if ($tuition_arrearDetail)
+                    @if ($tuition_arrearDetail->isEmpty())
+                        <tr
+                            class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                            <td scope="row" colspan="4"
+                                class="px-6 py-4 font-medium text-center text-gray-900 whitespace-nowrap dark:text-white border-b">
+                                Tidak ada data Tunggakan</td>
+                        </tr>
+                    @else
                         @foreach ($tuition_arrearDetail as $detail)
                             <tr
                                 class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
@@ -514,13 +615,6 @@
                                     Rp. {{ number_format($detail->amount, 2, ',', '.') }}</td>
                             </tr>
                         @endforeach
-                    @else
-                        <tr
-                            class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                            <td scope="row" colspan="4"
-                                class="px-6 py-4 font-medium text-center text-gray-900 whitespace-nowrap dark:text-white border-b">
-                                Tidak ada data Tunggakan</td>
-                        </tr>
                     @endif
                 </tbody>
             </table>
@@ -539,7 +633,14 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @if ($guidanceDetail)
+                    @if ($guidanceDetail->isEmpty())
+                        <tr
+                            class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                            <td scope="row" colspan="4"
+                                class="px-6 py-4 font-medium text-center text-gray-900 whitespace-nowrap dark:text-white border-b">
+                                Tidak ada data pengunduran diri mahasiswa</td>
+                        </tr>
+                    @else
                         @foreach ($guidanceDetail as $detail)
                             <tr
                                 class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
@@ -557,20 +658,13 @@
                                     {{ $detail->solution }}</td>
                             </tr>
                         @endforeach
-                    @else
-                        <tr
-                            class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                            <td scope="row" colspan="4"
-                                class="px-6 py-4 font-medium text-center text-gray-900 whitespace-nowrap dark:text-white border-b">
-                                Tidak ada data pengunduran diri mahasiswa</td>
-                        </tr>
                     @endif
 
                 </tbody>
             </table>
         </div>
 
-        
+
         <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
         <script src="https://cdn.jsdelivr.net/npm/html2canvas"></script>
         <script>
@@ -613,26 +707,26 @@
                 });
             }
 
-            function sendChartImageToServer(chartImage) {
-                const formData = new FormData();
-                formData.append("chartImage", chartImage);
+            // function sendChartImageToServer(chartImage) {
+            //     const formData = new FormData();
+            //     formData.append("chartImage", chartImage);
 
-                // Send POST request to save chart image on server
-                fetch("{{ route('masterdata.reports.saveChartImage', $report->report_id) }}", {
-                    method: "POST",
-                    headers: {
-                        "X-CSRF-TOKEN": "{{ csrf_token() }}"
-                    },
-                    body: formData
-                }).then(response => {
-                    if (response.ok) {
-                        // Open a new tab to preview PDF
-                        window.open("{{ route('masterdata.reports.exportPdf', $report->report_id) }}", "_blank");
-                    } else {
-                        console.error("Failed to create PDF preview.");
-                    }
-                });
-            }
+            //     // Send POST request to save chart image on server
+            //     fetch("{{ route('masterdata.reports.saveChartImage', $report->report_id) }}", {
+            //         method: "POST",
+            //         headers: {
+            //             "X-CSRF-TOKEN": "{{ csrf_token() }}"
+            //         },
+            //         body: formData
+            //     }).then(response => {
+            //         if (response.ok) {
+            //             // Open a new tab to preview PDF
+            //             window.open("{{ route('masterdata.reports.exportPdf', $report->report_id) }}", "_blank");
+            //         } else {
+            //             console.error("Failed to create PDF preview.");
+            //         }
+            //     });
+            // }
         </script>
     @endsection
 </x-app-layout>

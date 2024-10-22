@@ -67,7 +67,7 @@
                                         </div>
                                         <div class="w-full">
                                             <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tahun Akademik</label>
-                                            <input type="number" name="academic_year_select" id="academic_year_select"
+                                            <input type="number" name="entry_year_select" id="entry_year_select"
                                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                                 >
                                         </div>
@@ -112,7 +112,7 @@
                                         </div>
                                         <div class="w-full">
                                             <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tahun Akademik</label>
-                                            <input type="number" name="academic_year_manual" id="academic_year_manual"
+                                            <input type="number" name="entry_year_manual" id="entry_year_manual"
                                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                                 >
                                         </div>
@@ -151,11 +151,11 @@
 
                 // Remove required attribute from generate_class inputs
                 document.getElementById('total_classes').removeAttribute('required');
-                document.getElementById('academic_year_select').removeAttribute('required');
+                document.getElementById('entry_year_select').removeAttribute('required');
 
                 // Add required attribute to add-class-form inputs
                 document.getElementById('class_name').setAttribute('required', '');
-                document.getElementById('academic_year_manual').setAttribute('required', '');
+                document.getElementById('entry_year_manual').setAttribute('required', '');
 
             } else {
                 document.getElementById('add-class-form').style.display = 'none';
@@ -164,11 +164,11 @@
 
                 // Add required attribute back to generate_class inputs
                 document.getElementById('total_classes').setAttribute('required', '');
-                document.getElementById('academic_year_select').setAttribute('required', '');
+                document.getElementById('entry_year_select').setAttribute('required', '');
 
                 // Remove required attribute from add-class-form inputs
                 document.getElementById('class_name').removeAttribute('required');
-                document.getElementById('academic_year_manual').removeAttribute('required');
+                document.getElementById('entry_year_manual').removeAttribute('required');
             }
         }
 

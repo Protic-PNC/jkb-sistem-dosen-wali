@@ -87,17 +87,17 @@
                 <tr class="">
                     <td class="">Semester</td>
                     <td class="">:</td>
-                    <td class="">{{ $semester }}</td>
+                    <td class="">{{ convertToRoman($semester) }}</td>
                 </tr>
                 <tr class="">
                     <td class="">Kelas/Angkatan</td>
                     <td class="">:</td>
-                    <td class="">{{ $class->class_name }}/ {{ $class->academic_year }}</td>
+                    <td class="">{{ $class->class_name }}/{{ $class->entry_year }}</td>
                 </tr>
                 <tr class="">
                     <td class="">Semester/Tahun Akademik</td>
                     <td class="">:</td>
-                    <td class="">{{ $semester }} / 2022-2023</td>
+                    <td class="">{{ convertToRoman($semester) }}/{{ $academicYear }}</td>
                 </tr>
             </tbody>
         </table>
@@ -116,62 +116,63 @@
                 </tr>
                 <tr>
                     @for ($i = 1; $i <= $jumlahSemester; $i++)
-                        <th scope="col" class="th">{{ $i }}</th>
+                        <th scope="col" class="th">{{ convertToRoman($i) }}</th>
                     @endfor
                 </tr>
             </thead>
             <tbody>
                 @if ($students)
-                @foreach ($students as $student)
-                @php
-                    $totalGpa = 0;
-                    $semesterCount = 0;
-                @endphp
-                <tr>
-                    <td scope="row" class="td">
-                        {{ $student->nim }}</td>
-                    <td scope="row" class="td">
-                        {{ $student->student_name }}</td>
-                    @for ($i = 1; $i <= $jumlahSemester; $i++)
-                        <td scope="row" class="td">
-                            {{-- Cek apakah ada nilai semester GPA untuk semester ini --}}
-                            @php
-                                if ($student->gpa_cumulative) {
-                                    $semesterGpa = $student->gpa_cumulative->gpa_semester
-                                        ->where('semester', $i)
-                                        ->first();
+                    @foreach ($students as $student)
+                        @php
+                            $totalGpa = 0;
+                            $semesterCount = 0;
+                        @endphp
+                        <tr>
+                            <td scope="row" class="td">
+                                {{ $student->nim }}</td>
+                            <td scope="row" class="td">
+                                {{ $student->student_name }}</td>
+                            @for ($i = 1; $i <= $jumlahSemester; $i++)
+                                <td scope="row" class="td">
+                                    {{-- Cek apakah ada nilai semester GPA untuk semester ini --}}
+                                    @php
+                                        if ($student->gpa_cumulative) {
+                                            $semesterGpa = $student->gpa_cumulative->gpa_semester
+                                                ->where('semester', $i)
+                                                ->first();
 
-                                    if ($semesterGpa && $semesterGpa->semester_gpa !== null) {
-                                        // Pastikan semesterGpa bukan null
-                                        $semesterGpaValue = $semesterGpa->semester_gpa; // Ambil nilai semester_gpa
-                                        $totalGpa += $semesterGpaValue; // Tambahkan ke totalGpa
-                                        $semesterCount++; // Tambahkan ke semesterCount
-                                    } else {
-                                        $semesterGpaValue = null; // Atur menjadi null jika tidak ada
-                                    }
-                                }
+                                            if ($semesterGpa && $semesterGpa->semester_gpa !== null) {
+                                                // Pastikan semesterGpa bukan null
+                                                $semesterGpaValue = $semesterGpa->semester_gpa; // Ambil nilai semester_gpa
+                                                $totalGpa += $semesterGpaValue; // Tambahkan ke totalGpa
+                                                $semesterCount++; // Tambahkan ke semesterCount
+                                            } else {
+                                                $semesterGpaValue = null; // Atur menjadi null jika tidak ada
+                                            }
+                                        }
+                                    @endphp
+                                    {{ $semesterGpaValue ?? '-' }}
+                                </td>
+                            @endfor
+                            @php
+                                // Hitung rata-rata GPA hanya untuk semester yang ditampilkan
+                                $averageGpa = $semesterCount > 0 ? $totalGpa / $semesterCount : null;
                             @endphp
-                            {{ $semesterGpaValue ?? '-' }}
-                        </td>
-                    @endfor
-                    @php
-                        // Hitung rata-rata GPA hanya untuk semester yang ditampilkan
-                        $averageGpa = $semesterCount > 0 ? $totalGpa / $semesterCount : null;
-                    @endphp
-                    <td scope="row" class="td">
-                        {{ $averageGpa ? number_format($averageGpa, 2) : '-' }}</td>
-                </tr>
-            @endforeach
-            @else
-            <td colspan="{{ 3 + $jumlahSemester }}" scope="row" class="td">
-                Tidak ada data ipk</td>
+                            <td scope="row" class="td">
+                                {{ $averageGpa ? number_format($averageGpa, 2) : '-' }}</td>
+                        </tr>
+                    @endforeach
+                @else
+                    <td colspan="{{ 3 + $jumlahSemester }}" scope="row" class="td">
+                        Tidak ada data ipk</td>
                 @endif
             </tbody>
         </table>
     </div>
 
     <div>
-        <img src="{{ $chartImage }}" style="width: 100%; max-width: 500px; height: auto; align-item: center" alt="chart">
+        <img src="{{ $chartImage }}" style="width: 100%; max-width: 500px; height: auto; align-item: center"
+            alt="chart">
     </div>
 
     <div class="table-container">
@@ -181,23 +182,21 @@
                     <th rowspan="2" scope="col" class="th">
                         Keterangan
                     </th>
-                    <th colspan="{{ $jumlahSemester }}" scope="col"
-                        class="text-center th">
+                    <th colspan="{{ $jumlahSemester }}" scope="col" class="text-center th">
                         Semester
                     </th>
                 </tr>
                 <tr>
                     @for ($i = 0; $i < $jumlahSemester; $i++)
                         <th scope="col" class="th">
-                            {{ $i + 1 }}
+                            {{ convertToRoman($semester) }}
                         </th>
                     @endfor
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <th scope="row"
-                        class="th">
+                    <th scope="row" class="th">
                         IPS Rata-rata
                     </th>
                     @for ($i = 0; $i < $jumlahSemester; $i++)
@@ -205,8 +204,7 @@
                     @endfor
                 </tr>
                 <tr>
-                    <th scope="row"
-                        class="th">
+                    <th scope="row" class="th">
                         IPS Tertinggi
                     </th>
                     @for ($i = 0; $i < $jumlahSemester; $i++)
@@ -214,8 +212,7 @@
                     @endfor
                 </tr>
                 <tr>
-                    <th scope="row"
-                        class="th">
+                    <th scope="row" class="th">
                         IPS Terendah
                     </th>
                     @for ($i = 0; $i < $jumlahSemester; $i++)
@@ -223,31 +220,28 @@
                     @endfor
                 </tr>
                 <tr>
-                    <th scope="row"
-                        class="th">
+                    <th scope="row" class="th">
                         IPS < 3.00 </th>
-                    @for ($i = 0; $i < $jumlahSemester; $i++)
-                        <td class="td">{{ $table_data[$i]['count_below_3'] ?? '-' }}</td>
+                            @for ($i = 0; $i < $jumlahSemester; $i++)
+                    <td class="td">{{ $table_data[$i]['count_below_3'] ?? '-' }}</td>
                     @endfor
                 </tr>
 
                 <tr>
-                    <th scope="row"
-                        class="th">
+                    <th scope="row" class="th">
                         % IPS < 3.00 </th>
-                    @for ($i = 0; $i < $jumlahSemester; $i++)
-                        <td class="td">
-                            @if (isset($table_data[$i]['percentage_below_3']))
-                                {{ $table_data[$i]['percentage_below_3'] }}%
-                            @else
-                                -
-                            @endif
-                        </td>
+                            @for ($i = 0; $i < $jumlahSemester; $i++)
+                    <td class="td">
+                        @if (isset($table_data[$i]['percentage_below_3']))
+                            {{ $table_data[$i]['percentage_below_3'] }}%
+                        @else
+                            -
+                        @endif
+                    </td>
                     @endfor
                 </tr>
                 <tr>
-                    <th scope="row"
-                        class="th">
+                    <th scope="row" class="th">
                         IPS >= 3.00
                     </th>
                     @for ($i = 0; $i < $jumlahSemester; $i++)
@@ -255,8 +249,7 @@
                     @endfor
                 </tr>
                 <tr>
-                    <th scope="row"
-                        class="th">
+                    <th scope="row" class="th">
                         % IPS >= 3.00
                     </th>
                     @for ($i = 0; $i < $jumlahSemester; $i++)
@@ -286,26 +279,33 @@
                 </tr>
             </thead>
             <tbody>
-                @if ($student_resignationDetail->isEmpty())
-                <tr>
-                    <td scope="row" colspan="5" class="td">
-                        Tidak ada data pengunduran diri mahasiswa</td>
-                </tr>
-                @else
-                    @foreach ($student_resignationDetail as $detail)
+                @if ($student_resignationDetail)
+                    @if ($student_resignationDetail->isEmpty())
                         <tr>
-                            <td scope="row" class="td">
-                                {{ $detail->student->nim }}</td>
-                            <td scope="row" class="td">
-                                {{ $detail->student->student_name }}</td>
-                            <td scope="row" class="td">
-                                {{ $detail->resignation_type }}</td>
-                            <td scope="row" class="td">
-                                {{ $detail->decree_number }}</td>
-                            <td scope="row" class="td">
-                                {{ $detail->reason }}</td>
+                            <td scope="row" colspan="5" class="td">
+                                Tidak ada data pengunduran diri mahasiswa</td>
                         </tr>
-                    @endforeach
+                    @else
+                        @foreach ($student_resignationDetail as $detail)
+                            <tr>
+                                <td scope="row" class="td">
+                                    {{ $detail->student->nim }}</td>
+                                <td scope="row" class="td">
+                                    {{ $detail->student->student_name }}</td>
+                                <td scope="row" class="td">
+                                    {{ $detail->resignation_type }}</td>
+                                <td scope="row" class="td">
+                                    {{ $detail->decree_number }}</td>
+                                <td scope="row" class="td">
+                                    {{ $detail->reason }}</td>
+                            </tr>
+                        @endforeach
+                    @endif
+                @else
+                    <tr>
+                        <td scope="row" colspan="5" class="td">
+                            Tidak ada data pengunduran diri mahasiswa</td>
+                    </tr>
                 @endif
             </tbody>
         </table>
@@ -313,8 +313,7 @@
 
 
     <div class="table-container">
-        <p class="section-title">Mahasiswa penerima beasiswa/peninjauan ulangan UKT
-        </p>
+        <p class="section-title">Mahasiswa penerima beasiswa/peninjauan ulangan UKT</p>
         <table class="table">
             <thead>
                 <tr>
@@ -324,22 +323,29 @@
                 </tr>
             </thead>
             <tbody>
-                @if ($student_resignationDetail->isEmpty())
+                @if ($scholarshipDetail)
+                    @if ($scholarshipDetail->isEmpty())
+                        <tr>
+                            <td scope="row" colspan="4" class="td">
+                                Tidak ada data beasiswa</td>
+                        </tr>
+                    @else
+                        @foreach ($scholarshipDetail as $detail)
+                            <tr>
+                                <td scope="row" class="td">
+                                    {{ $detail->student->nim }}</td>
+                                <td scope="row" class="td">
+                                    {{ $detail->student->student_name }}</td>
+                                <td scope="row" class="td">
+                                    {{ $detail->scholarship_type }}</td>
+                            </tr>
+                        @endforeach
+                    @endif
+                @else
                     <tr>
                         <td scope="row" colspan="4" class="td">
                             Tidak ada data beasiswa</td>
                     </tr>
-                @else
-                    @foreach ($scholarshipDetail as $detail)
-                        <tr>
-                            <td scope="row" class="td">
-                                {{ $detail->student->nim }}</td>
-                            <td scope="row" class="td">
-                                {{ $detail->student->student_name }}</td>
-                            <td scope="row" class="td">
-                                {{ $detail->scholarship_type }}</td>
-                        </tr>
-                    @endforeach
                 @endif
             </tbody>
         </table>
@@ -357,24 +363,31 @@
                 </tr>
             </thead>
             <tbody>
-                @if ($achievementDetail->isEmpty())
+                @if ($achievementDetail)
+                    @if ($achievementDetail->isEmpty())
+                        <tr>
+                            <td scope="row" colspan="4" class="td">
+                                Tidak ada data prestasi</td>
+                        </tr>
+                    @else
+                        @foreach ($achievementDetail as $detail)
+                            <tr>
+                                <td scope="row" class="td">
+                                    {{ $detail->student->nim }}</td>
+                                <td scope="row" class="td">
+                                    {{ $detail->student->student_name }}</td>
+                                <td scope="row" class="td">
+                                    {{ $detail->achievement_type }}</td>
+                                <td scope="row" class="td">
+                                    {{ $detail->level }}</td>
+                            </tr>
+                        @endforeach
+                    @endif
+                @else
                     <tr>
                         <td scope="row" colspan="4" class="td">
                             Tidak ada data prestasi</td>
                     </tr>
-                @else
-                    @foreach ($achievementDetail as $detail)
-                        <tr>
-                            <td scope="row" class="td">
-                                {{ $detail->student->nim }}</td>
-                            <td scope="row" class="td">
-                                {{ $detail->student->student_name }}</td>
-                            <td scope="row" class="td">
-                                {{ $detail->achievement_type }}</td>
-                            <td scope="row" class="td">
-                                {{ $detail->level }}</td>
-                        </tr>
-                    @endforeach
                 @endif
             </tbody>
         </table>
@@ -392,24 +405,31 @@
                 </tr>
             </thead>
             <tbody>
-                @if ($warningDetail->isEmpty())
+                @if ($warningDetail)
+                    @if ($warningDetail->isEmpty())
+                        <tr>
+                            <td scope="row" colspan="4" class="td">
+                                Tidak ada data peringatan</td>
+                        </tr>
+                    @else
+                        @foreach ($warningDetail as $detail)
+                            <tr>
+                                <td scope="row" class="td">
+                                    {{ $detail->student->nim }}</td>
+                                <td scope="row" class="td">
+                                    {{ $detail->student->student_name }}</td>
+                                <td scope="row" class="td">
+                                    {{ $detail->warning_type }}</td>
+                                <td scope="row" class="td">
+                                    {{ $detail->reason }}</td>
+                            </tr>
+                        @endforeach
+                    @endif
+                @else
                     <tr>
                         <td scope="row" colspan="4" class="td">
                             Tidak ada data peringatan</td>
                     </tr>
-                @else
-                    @foreach ($warningDetail as $detail)
-                        <tr>
-                            <td scope="row" class="td">
-                                {{ $detail->student->nim }}</td>
-                            <td scope="row" class="td">
-                                {{ $detail->student->student_name }}</td>
-                            <td scope="row" class="td">
-                                {{ $detail->warning_type }}</td>
-                            <td scope="row" class="td">
-                                {{ $detail->reason }}</td>
-                        </tr>
-                    @endforeach
                 @endif
 
             </tbody>
@@ -427,22 +447,29 @@
                 </tr>
             </thead>
             <tbody>
-                @if ($tuition_arrearDetail->isEmpty())
+                @if ($tuition_arrearDetail)
+                    @if ($tuition_arrearDetail->isEmpty())
+                        <tr>
+                            <td scope="row" colspan="4" class="td">
+                                Tidak ada data Tunggakan</td>
+                        </tr>
+                    @else
+                        @foreach ($tuition_arrearDetail as $detail)
+                            <tr>
+                                <td scope="row" class="td">
+                                    {{ $detail->student->nim }}</td>
+                                <td scope="row" class="td">
+                                    {{ $detail->student->student_name }}</td>
+                                <td scope="row" class="td">
+                                    Rp. {{ number_format($detail->amount, 2, ',', '.') }}</td>
+                            </tr>
+                        @endforeach
+                    @endif
+                @else
                     <tr>
                         <td scope="row" colspan="4" class="td">
-                            Tidak ada data Tunggakan</td>
+                            Tidak ada data peringatan</td>
                     </tr>
-                @else
-                    @foreach ($tuition_arrearDetail as $detail)
-                        <tr>
-                            <td scope="row" class="td">
-                                {{ $detail->student->nim }}</td>
-                            <td scope="row" class="td">
-                                {{ $detail->student->student_name }}</td>
-                            <td scope="row" class="td">
-                                Rp. {{ number_format($detail->amount, 2, ',', '.') }}</td>
-                        </tr>
-                    @endforeach
                 @endif
             </tbody>
         </table>
@@ -460,24 +487,31 @@
                 </tr>
             </thead>
             <tbody>
-                @if ($guidanceDetail->isEmpty())
+                @if ($guidanceDetail)
+                    @if ($guidanceDetail->isEmpty())
+                        <tr>
+                            <td scope="row" colspan="4" class="td">
+                                Tidak ada data bimbingan</td>
+                        </tr>
+                    @else
+                        @foreach ($guidanceDetail as $detail)
+                            <tr>
+                                <td scope="row" class="td">
+                                    {{ $detail->student->nim }}</td>
+                                <td scope="row" class="td">
+                                    {{ $detail->student->student_name }}</td>
+                                <td scope="row" class="td">
+                                    {{ $detail->problem }}</td>
+                                <td scope="row" class="td">
+                                    {{ $detail->solution }}</td>
+                            </tr>
+                        @endforeach
+                    @endif
+                @else
                     <tr>
                         <td scope="row" colspan="4" class="td">
                             Tidak ada data bimbingan</td>
                     </tr>
-                @else
-                    @foreach ($guidanceDetail as $detail)
-                        <tr>
-                            <td scope="row" class="td">
-                                {{ $detail->student->nim }}</td>
-                            <td scope="row" class="td">
-                                {{ $detail->student->student_name }}</td>
-                            <td scope="row" class="td">
-                                {{ $detail->problem }}</td>
-                            <td scope="row" class="td">
-                                {{ $detail->solution }}</td>
-                        </tr>
-                    @endforeach
                 @endif
 
             </tbody>

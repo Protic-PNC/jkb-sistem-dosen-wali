@@ -27,9 +27,9 @@ class DashboardController extends Controller
         $reportsCount = Report::count();
 
        // $semester = $request->input('semester');
-        $user = Auth::user();
+        $user = User::find(Auth::user()->id);
         //dd($user->roles->first()->name);
-        if ($user->lecturer->student_classes) {
+        if ($user->hasRole('dosenWali')) {
             $students = Student::with([
                 'student_classes.program',
                 'gpa_cumulative.gpa',

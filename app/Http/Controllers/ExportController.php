@@ -52,6 +52,7 @@ class ExportController extends Controller
 
         $report = Report::find($id);
         $semester = $report->semester;
+        $entryYear = $report->student_class->entry_year;
         $class = StudentClass::find($report->class_id);
 
         //untuk chart
@@ -83,6 +84,18 @@ class ExportController extends Controller
                 '
                 ))
                 ->get();
+
+            //menentukan academic_year
+            if($semester %2 == 1) {
+                $firstYear = $entryYear + ($semester - 1) / 2; 
+            }
+            else
+            {
+                $firstYear = $entryYear + ($semester - 2) / 2;
+            }
+            $secondYear = $firstYear + 1;
+
+            $academicYear = $firstYear . '-' . $secondYear;
 
             
             $table_data = [];
@@ -170,7 +183,7 @@ class ExportController extends Controller
         }
 
         //menentukan tahun berdasarkan $semester
-        $tahun = $report->student_class->academic_year + intdiv($semester, 2);
+        $tahun = $report->student_class->entry_year + intdiv($semester, 2);
 
         // Tentukan rentang bulan dan tahun berdasarkan ganjil/genap
         if ($semester % 2 == 1) {
@@ -268,7 +281,7 @@ class ExportController extends Controller
 
         // dd($student_resignationDetail);
 
-        $pdf = Pdf::loadView('masterdata.reports.pdf', compact('chartImage','studentsChart', 'semester_gpas', 'chart_data', 'gpa_data', 'categories', 'avg_gpas', 'table_data', 'avg_cumulative_gpa','students', 'jumlahSemester', 'class', 'semester', 'warningDetail', 'guidanceDetail', 'scholarshipDetail', 'tuition_arrearDetail', 'student_resignationDetail', 'achievementDetail'));
+        $pdf = Pdf::loadView('masterdata.reports.pdf', compact('academicYear','chartImage','studentsChart', 'semester_gpas', 'chart_data', 'gpa_data', 'categories', 'avg_gpas', 'table_data', 'avg_cumulative_gpa','students', 'jumlahSemester', 'class', 'semester', 'warningDetail', 'guidanceDetail', 'scholarshipDetail', 'tuition_arrearDetail', 'student_resignationDetail', 'achievementDetail'));
          // Return the PDF for download
         return $pdf->stream('report_' . $id . '.pdf');
     }

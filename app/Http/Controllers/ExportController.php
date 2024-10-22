@@ -266,6 +266,8 @@ class ExportController extends Controller
                                     ->get();
         }
 
+        // dd($student_resignationDetail);
+
         $pdf = Pdf::loadView('masterdata.reports.pdf', compact('chartImage','studentsChart', 'semester_gpas', 'chart_data', 'gpa_data', 'categories', 'avg_gpas', 'table_data', 'avg_cumulative_gpa','students', 'jumlahSemester', 'class', 'semester', 'warningDetail', 'guidanceDetail', 'scholarshipDetail', 'tuition_arrearDetail', 'student_resignationDetail', 'achievementDetail'));
          // Return the PDF for download
         return $pdf->stream('report_' . $id . '.pdf');

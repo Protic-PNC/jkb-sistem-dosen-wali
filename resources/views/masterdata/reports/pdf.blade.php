@@ -189,7 +189,7 @@
                 <tr>
                     @for ($i = 0; $i < $jumlahSemester; $i++)
                         <th scope="col" class="th">
-                            {{ convertToRoman($semester) }}
+                            {{ convertToRoman($i+1) }}
                         </th>
                     @endfor
                 </tr>

@@ -15,6 +15,19 @@
     {{-- Tailwind --}}
     <link href="https://cdn.tailwindcss.com" rel="stylesheet">
 
+
+    <!--     Fonts and icons     -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
+    <!-- Font Awesome Icons -->
+    <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+    <!-- Nucleo Icons -->
+    <link href="{{ asset('assets/css/nucleo-icons.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/css/nucleo-svg.css') }}" rel="stylesheet" />
+    <!-- Popper -->
+    <script src="https://unpkg.com/@popperjs/core@2"></script>
+    <!-- Main Styling -->
+    <link href="{{ asset('assets/css/soft-ui-dashboard-tailwind.css?v=1.0.5') }}" rel="stylesheet" />
+
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
@@ -25,15 +38,16 @@
 
 </head>
 
-<body class="font-sans antialiased min-h-screen bg-gray-100" style="background: #edf2f7;">
+<body class="m-0 font-sans antialiased font-normal text-base leading-default bg-gray-50 text-slate-500"
+    style="background: #edf2f7;">
+    @include('components.sidebar')
     <div>
-        <div x-data="{ sidebarOpen: false }" class="flex h-screen bg-gray-100">
+        {{-- <div x-data="{ sidebarOpen: false }" class="flex h-screen bg-gray-100">
             <div :class="sidebarOpen ? 'block' : 'hidden'" @click="sidebarOpen = false"
-                class="fixed inset-0 z-20 transition-opacity bg-black opacity-50 lg:hidden"></div>
+                class="fixed inset-0 z-20 transition-opacity bg-black opacity-50 lg:hidden"></div> --}}
 
-            @include('components.sidebar')
-            <div class="flex flex-col flex-1 overflow-hidden">
-                <header class="flex items-center justify-between px-6 py-4 bg-white border-b-4">
+        {{-- <div class="flex flex-col flex-1 overflow-hidden"> --}}
+        {{-- <header class="flex items-center justify-between px-6 py-4 bg-white border-b-4">
                     <div class="flex items-center">
                         <button @click="sidebarOpen = true" class="text-gray-500 focus:outline-none lg:hidden">
                             <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -59,7 +73,7 @@
                                     <img class="object-cover w-full h-full"
                                         src="{{ asset('images/avatar-default.svg') }}" alt="Your avatar">
                                         @endif --}}
-                                <img class="object-cover w-full h-full"
+        {{-- <img class="object-cover w-full h-full"
                                     src="{{ asset('images/avatar-default.svg') }}" alt="Your avatar">
                             </button>
 
@@ -81,50 +95,36 @@
                             </div>
                         </div>
                     </div>
-                </header>
+                </header> --}}
 
-                <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100">
-                    <div class="container px-6 pt-6 mx-auto">
+        <main class="ease-soft-in-out xl:ml-68.5 relative h-full max-h-screen rounded-xl transition-all duration-200">
+            {{-- <div class="container px-6 pt-6 mx-auto">
                         <div
-                            class="page-header mb-4 flex justify-between items-center bg-white overflow-hidden shadow-sm sm:rounded-lg px-6 py-4">
-                            <nav class="flex" aria-label="Breadcrumb">
-                                <ol class="inline-flex items-center ">
-                                    <li class="inline-flex items-center">
-                                        <a href="{{ route('dashboard.index') }}"
-                                            class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-blue-600 dark:text-gray-400 dark:hover:text-white">
-                                            <svg class="w-3 h-3 me-2.5 text-gray-500" aria-hidden="true"
-                                                xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-                                                viewBox="0 0 20 20">
-                                                <path
-                                                    d="m19.707 9.293-2-2-7-7a1 1 0 0 0-1.414 0l-7 7-2 2a1 1 0 0 0 1.414 1.414L2 10.414V18a2 2 0 0 0 2 2h3a1 1 0 0 0 1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 0 1 1h3a2 2 0 0 0 2-2v-7.586l.293.293a1 1 0 0 0 1.414-1.414Z" />
-                                            </svg>
-                                        </a>
-                                    </li>
-                                    {{-- <li aria-current="page">
-                                        <svg class="w-4 h-4 text-gray-500 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m9 5 7 7-7 7"/>
-                                        </svg>
-                                    </li> --}}
-                                    <li>
-                                        <div class="flex items-center">
-                                            <span
-                                                class=" text-sm font-medium text-gray-500 md:ms-2 dark:text-gray-400 dark:hover:text-white">@yield('descendant_folder')</span>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="flex items-center">
-                                            <span
-                                                class=" text-sm font-medium text-gray-700 md:ms-2 dark:text-gray-400 dark:hover:text-white">@yield('breadcrumb_extra')</span>
-                                        </div>
-                                    </li>
-                                </ol>
-                            </nav>
-                        </div>
-                        @yield('content')
-                    </div>
-                </main>
+                            class="page-header mb-4 flex justify-between items-center bg-white overflow-hidden shadow-sm sm:rounded-lg px-6 py-4"> --}}
+            <nav class="relative flex flex-wrap items-center justify-between px-0 py-2 mx-6 transition-all shadow-none duration-250 ease-soft-in rounded-2xl lg:flex-nowrap lg:justify-start"
+                navbar-main navbar-scroll="true" aria-label="Breadcrumb">
+                <div class="flex items-center justify-between w-full px-4 py-1 mx-auto flex-wrap-inherit">
+                    <nav>
+                        <ol class="flex flex-wrap pt-1 mr-12 bg-transparent rounded-lg sm:mr-16">
+                            <li class="leading-normal text-sm">
+                                <a class="opacity-50 text-slate-700" href="javascript:;">Pages</a>
+                            </li>
+                            <li class="text-sm pl-2 capitalize leading-normal text-slate-700 before:float-left before:pr-2 before:text-gray-600 before:content-['/']"
+                                aria-current="page">Dashboard</li>
+                        </ol>
+                        <h6 class="mb-0 font-bold capitalize">Dashboard</h6>
+                    </nav>
+                </div>
+            </nav>
+            {{-- </div> --}}
+            <div class="w-full px-6 py-6 mx-auto">
+                
+                @yield('content')
             </div>
-        </div>
+            {{-- </div> --}}
+        </main>
+        {{-- </div> --}}
+    </div>
     </div>
     {{-- <footer class=" mt-10 bg-gray-200 dark:bg-gray-800 w-full absolute bottom-0 ">
         <div class="w-full mx-auto max-w-screen-xl p-4 flex items-center justify-end">
@@ -136,5 +136,12 @@
         </div>
     </footer> --}}
 </body>
-
+<!-- plugin for charts  -->
+<script src={{ "asset('assets/js/plugins/chartjs.min.js')" }}async></script>
+<!-- plugin for scrollbar  -->
+<script src={{ "asset('assets/js/plugins/perfect-scrollbar.min.js')" }}async></script>
+<!-- github button -->
+<script async defer src={{ "asset('https://buttons.github.io/buttons.js')" }}></script>
+<!-- main script file  -->
+<script src={{ "asset('assets/js/soft-ui-dashboard-tailwind.js?v=1.0.5')" }}async></script>
 </html>

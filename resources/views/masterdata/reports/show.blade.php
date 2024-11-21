@@ -187,7 +187,7 @@
             </div>
         </div>
 
-        <a href="">
+        <a href="{{ route('masterdata.reports.exportWord', $report->report_id) }}">
             <button type="button"
                 class=" mb-4 hover:text-white text-blue-700 bg-white border-2 border-blue-700 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                 <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="30" height="30" viewBox="0 0 48 48">

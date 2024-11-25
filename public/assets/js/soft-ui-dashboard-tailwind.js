@@ -77,3 +77,18 @@ function loadStylesheet(FILE_URL) {
 
   document.head.appendChild(dynamicStylesheet);
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+  const sidenavTriggers = document.querySelectorAll('[sidenav-trigger]');
+  const sidebar = document.querySelector('[data-sidebar]');
+  
+  sidenavTriggers.forEach(trigger => {
+      trigger.addEventListener('click', () => {
+          if (sidebar) {
+              sidebar.classList.toggle('translate-x-0'); // Menampilkan sidebar
+              sidebar.classList.toggle('-translate-x-full'); // Menyembunyikan sidebar
+          }
+      });
+  });
+});
+

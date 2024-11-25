@@ -56,95 +56,6 @@
                 }, 200); // Menunggu transisi opacity selesai
             }
         </script>
-        {{-- <div class="flex">
-            <div class="w-max mb-4 mt-5  bg-white rounded-lg shadow dark:bg-gray-800 p-4 md:p-6">
-                <table class="table-auto text-left text-gray-600 dark:text-gray-400">
-                    <tbody>
-                        <tr class="">
-                            <td class="font-semibold ">Nama Dosen Wali</td>
-                            <td class="font-semibold">:</td>
-                            <td class="text-gray-800 dark:text-white">{{ $class->academic_advisor->lecturer_name }}</td>
-                        </tr>
-                        <tr class="">
-                            <td class="font-semibold">Program Studi</td>
-                            <td class="font-semibold">:</td>
-                            <td class="text-gray-800 dark:text-white">
-                                {{ $class->program->degree }}-{{ $class->program->program_name }}</td>
-                        </tr>
-                        <tr class="">
-                            <td class="font-semibold">Nomor SK Dosen Wali</td>
-                            <td class="font-semibold">:</td>
-                            <td class="text-gray-800 dark:text-white">221/PL.43/HK.03.01/2023</td>
-                        </tr>
-                        <tr class="">
-                            <td class="font-semibold">Semester</td>
-                            <td class="font-semibold">:</td>
-                            <td class="text-gray-800 dark:text-white">{{ $semester }}</td>
-                        </tr>
-                        <tr class="">
-                            <td class="font-semibold">Kelas/Angkatan</td>
-                            <td class="font-semibold">:</td>
-                            <td class="text-gray-800 dark:text-white">{{ $class->class_name }}/ {{ $class->entry_year }}
-                            </td>
-                        </tr>
-                        <tr class="">
-                            <td class="font-semibold">Semester/Tahun Akademik</td>
-                            <td class="font-semibold">:</td>
-                            <td class="text-gray-800 dark:text-white">{{ $semester }}/ 2022-2023</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="w-max mb-4 mt-5 ml-4  bg-white rounded-lg shadow dark:bg-gray-800 p-4 md:p-6">
-
-                <button id="dropdownDefaultButton" data-dropdown-toggle="dropdown"
-                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                    type="button">Dropdown button <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="m1 1 4 4 4-4" />
-                    </svg>
-                </button>
-
-                <!-- Dropdown menu -->
-                <div id="dropdown"
-                    class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
-                    <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
-                        <li>
-                            <a href="#"
-                                class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</a>
-                        </li>
-                        <li>
-                            <a href="#"
-                                class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Settings</a>
-                        </li>
-                        <li>
-                            <a href="#"
-                                class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Earnings</a>
-                        </li>
-                        <li>
-                            <a href="#"
-                                class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Sign
-                                out</a>
-                        </li>
-                    </ul>
-                </div>
-
-                <script>
-                    document.addEventListener('DOMContentLoaded', function () {
-                        const button = document.getElementById('dropdownDefaultButton');
-                        const dropdown = document.getElementById('dropdown');
-                        
-                        button.addEventListener('click', function () {
-                            dropdown.classList.toggle('hidden');
-                        });
-                    });
-                </script>
-                
-
-            </div>
-        </div> --}}
         <div class="flex">
             <div class="w-max mb-4 mt-5 bg-white rounded-lg shadow dark:bg-gray-800 p-4 md:p-6 ">
                 <!-- Table content -->
@@ -239,170 +150,175 @@
         </a>
         <div class="w-full mb-4 bg-white rounded-lg shadow dark:bg-gray-800 p-4 md:p-6">
             <p class="text-2xl font-bold text-gray-700 dark:text-white">Perkembangan Akademis Mahasiswa Perwalian</p>
-            <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                    <tr
-                        class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                        <th rowspan="2" scope="col" class="px-6 py-3 border-b">NIM</th>
-                        <th rowspan="2" scope="col" class="px-6 py-3 border-b">Nama</th>
-                        <th colspan="{{ $jumlahSemester }}" scope="col" class="px-6 py-3 border-b text-center">
-                            Semester</th>
-                        <th rowspan="2" scope="col" class="px-6 py-3 border-b text-center">IPK</th>
-                    </tr>
-                    <tr
-                        class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                        @for ($i = 1; $i <= $jumlahSemester; $i++)
-                            <th scope="col" class="px-6 py-3 border-b text-center">{{ $i }}</th>
-                        @endfor
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($students as $student)
-                        @php
-                            $totalGpa = 0;
-                            $semesterCount = 0;
-                        @endphp
+            <div class="overflow-x-auto">
+                <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr
                             class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                            <td scope="row"
-                                class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white border-b">
-                                {{ $student->nim }}</td>
-                            <td scope="row"
-                                class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white border-b">
-                                {{ $student->student_name }}</td>
+                            <th rowspan="2" scope="col" class="px-6 py-3 border-b">NIM</th>
+                            <th rowspan="2" scope="col" class="px-6 py-3 border-b">Nama</th>
+                            <th colspan="{{ $jumlahSemester }}" scope="col" class="px-6 py-3 border-b text-center">
+                                Semester</th>
+                            <th rowspan="2" scope="col" class="px-6 py-3 border-b text-center">IPK</th>
+                        </tr>
+                        <tr
+                            class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                             @for ($i = 1; $i <= $jumlahSemester; $i++)
+                                <th scope="col" class="px-6 py-3 border-b text-center">{{ $i }}</th>
+                            @endfor
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($students as $student)
+                            @php
+                                $totalGpa = 0;
+                                $semesterCount = 0;
+                            @endphp
+                            <tr
+                                class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                                 <td scope="row"
                                     class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white border-b">
-                                    {{-- Cek apakah ada nilai semester GPA untuk semester ini --}}
-                                    @php
-                                        if ($student->gpa_cumulative) {
-                                            $semesterGpa = $student->gpa_cumulative->gpa_semester
-                                                ->where('semester', $i)
-                                                ->first();
-
-                                            if ($semesterGpa && $semesterGpa->semester_gpa !== null) {
-                                                // Pastikan semesterGpa bukan null
-                                                $semesterGpaValue = $semesterGpa->semester_gpa; // Ambil nilai semester_gpa
-                                                $totalGpa += $semesterGpaValue; // Tambahkan ke totalGpa
-                                                $semesterCount++; // Tambahkan ke semesterCount
-                                            } else {
-                                                $semesterGpaValue = null; // Atur menjadi null jika tidak ada
+                                    {{ $student->nim }}</td>
+                                <td scope="row"
+                                    class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white border-b">
+                                    {{ $student->student_name }}</td>
+                                @for ($i = 1; $i <= $jumlahSemester; $i++)
+                                    <td scope="row"
+                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white border-b">
+                                        {{-- Cek apakah ada nilai semester GPA untuk semester ini --}}
+                                        @php
+                                            if ($student->gpa_cumulative) {
+                                                $semesterGpa = $student->gpa_cumulative->gpa_semester
+                                                    ->where('semester', $i)
+                                                    ->first();
+    
+                                                if ($semesterGpa && $semesterGpa->semester_gpa !== null) {
+                                                    // Pastikan semesterGpa bukan null
+                                                    $semesterGpaValue = $semesterGpa->semester_gpa; // Ambil nilai semester_gpa
+                                                    $totalGpa += $semesterGpaValue; // Tambahkan ke totalGpa
+                                                    $semesterCount++; // Tambahkan ke semesterCount
+                                                } else {
+                                                    $semesterGpaValue = null; // Atur menjadi null jika tidak ada
+                                                }
                                             }
-                                        }
-                                    @endphp
-                                    {{ $semesterGpaValue ?? '-' }}
-                                </td>
-                            @endfor
-                            @php
-                                // Hitung rata-rata GPA hanya untuk semester yang ditampilkan
-                                $averageGpa = $semesterCount > 0 ? $totalGpa / $semesterCount : null;
-                            @endphp
-                            <td scope="row"
-                                class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white border-b">
-                                {{ $averageGpa ? number_format($averageGpa, 2) : '-' }}</td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
+                                        @endphp
+                                        {{ $semesterGpaValue ?? '-' }}
+                                    </td>
+                                @endfor
+                                @php
+                                    // Hitung rata-rata GPA hanya untuk semester yang ditampilkan
+                                    $averageGpa = $semesterCount > 0 ? $totalGpa / $semesterCount : null;
+                                @endphp
+                                <td scope="row"
+                                    class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white border-b">
+                                    {{ $averageGpa ? number_format($averageGpa, 2) : '-' }}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
         </div>
+
         <div class="w-full mb-4 bg-white rounded-lg shadow dark:bg-gray-800 p-4 md:p-6">
             {{-- <p class="text-2xl font-bold text-gray-700 dark:text-white">Perkembangan Akademis Mahasiswa Perwalian</p> --}}
-            <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                <thead class="text-xs text-gray-700 uppercase dark:text-gray-400">
-                    <tr>
-                        <th rowspan="2" scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800">
-                            Keterangan
-                        </th>
-                        <th colspan="{{ $jumlahSemester }}" scope="col"
-                            class="text-center px-6 py-3 bg-gray-50 dark:bg-gray-800">
-                            Semester
-                        </th>
-                    </tr>
-                    <tr>
-                        @for ($i = 0; $i < $jumlahSemester; $i++)
-                            <th scope="col" class="px-6 py-3">
-                                {{ $i + 1 }}
+            <div class="overflow-x-auto">
+                <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                    <thead class="text-xs text-gray-700 uppercase dark:text-gray-400">
+                        <tr>
+                            <th rowspan="2" scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800">
+                                Keterangan
                             </th>
-                        @endfor
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr class="border-b border-gray-200 dark:border-gray-700">
-                        <th scope="row"
-                            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
-                            IPS Rata-rata
-                        </th>
-                        @for ($i = 0; $i < $jumlahSemester; $i++)
-                            <td class="px-6 py-4">{{ $table_data[$i]['avg_gpa'] ?? '-' }}</td>
-                        @endfor
-                    </tr>
-                    <tr class="border-b border-gray-200 dark:border-gray-700">
-                        <th scope="row"
-                            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
-                            IPS Tertinggi
-                        </th>
-                        @for ($i = 0; $i < $jumlahSemester; $i++)
-                            <td class="px-6 py-4">{{ $table_data[$i]['max_gpa'] ?? '-' }}</td>
-                        @endfor
-                    </tr>
-                    <tr class="border-b border-gray-200 dark:border-gray-700">
-                        <th scope="row"
-                            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
-                            IPS Terendah
-                        </th>
-                        @for ($i = 0; $i < $jumlahSemester; $i++)
-                            <td class="px-6 py-4">{{ $table_data[$i]['min_gpa'] ?? '-' }}</td>
-                        @endfor
-                    </tr>
-                    <tr class="border-b border-gray-200 dark:border-gray-700">
-                        <th scope="row"
-                            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
-                            IPS < 3.00 </th>
-                                @for ($i = 0; $i < $jumlahSemester; $i++)
-                        <td class="px-6 py-4">{{ $table_data[$i]['count_below_3'] ?? '-' }}</td>
-                        @endfor
-                    </tr>
-
-                    <tr>
-                        <th scope="row"
-                            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
-                            % IPS < 3.00 </th>
-                                @for ($i = 0; $i < $jumlahSemester; $i++)
-                        <td class="px-6 py-4">
-                            @if (isset($table_data[$i]['percentage_below_3']))
-                                {{ $table_data[$i]['percentage_below_3'] }}%
-                            @else
-                                -
-                            @endif
-                        </td>
-                        @endfor
-                    </tr>
-                    <tr>
-                        <th scope="row"
-                            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
-                            IPS >= 3.00
-                        </th>
-                        @for ($i = 0; $i < $jumlahSemester; $i++)
-                            <td class="px-6 py-4">{{ $table_data[$i]['count_above_3'] ?? '-' }}</td>
-                        @endfor
-                    </tr>
-                    <tr>
-                        <th scope="row"
-                            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
-                            % IPS >= 3.00
-                        </th>
-                        @for ($i = 0; $i < $jumlahSemester; $i++)
+                            <th colspan="{{ $jumlahSemester }}" scope="col"
+                                class="text-center px-6 py-3 bg-gray-50 dark:bg-gray-800">
+                                Semester
+                            </th>
+                        </tr>
+                        <tr>
+                            @for ($i = 0; $i < $jumlahSemester; $i++)
+                                <th scope="col" class="px-6 py-3">
+                                    {{ $i + 1 }}
+                                </th>
+                            @endfor
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="border-b border-gray-200 dark:border-gray-700">
+                            <th scope="row"
+                                class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                                IPS Rata-rata
+                            </th>
+                            @for ($i = 0; $i < $jumlahSemester; $i++)
+                                <td class="px-6 py-4">{{ $table_data[$i]['avg_gpa'] ?? '-' }}</td>
+                            @endfor
+                        </tr>
+                        <tr class="border-b border-gray-200 dark:border-gray-700">
+                            <th scope="row"
+                                class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                                IPS Tertinggi
+                            </th>
+                            @for ($i = 0; $i < $jumlahSemester; $i++)
+                                <td class="px-6 py-4">{{ $table_data[$i]['max_gpa'] ?? '-' }}</td>
+                            @endfor
+                        </tr>
+                        <tr class="border-b border-gray-200 dark:border-gray-700">
+                            <th scope="row"
+                                class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                                IPS Terendah
+                            </th>
+                            @for ($i = 0; $i < $jumlahSemester; $i++)
+                                <td class="px-6 py-4">{{ $table_data[$i]['min_gpa'] ?? '-' }}</td>
+                            @endfor
+                        </tr>
+                        <tr class="border-b border-gray-200 dark:border-gray-700">
+                            <th scope="row"
+                                class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                                IPS < 3.00 </th>
+                                    @for ($i = 0; $i < $jumlahSemester; $i++)
+                            <td class="px-6 py-4">{{ $table_data[$i]['count_below_3'] ?? '-' }}</td>
+                            @endfor
+                        </tr>
+    
+                        <tr>
+                            <th scope="row"
+                                class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                                % IPS < 3.00 </th>
+                                    @for ($i = 0; $i < $jumlahSemester; $i++)
                             <td class="px-6 py-4">
-                                @if (isset($table_data[$i]['percentage_above_3']))
-                                    {{ $table_data[$i]['percentage_above_3'] }}%
+                                @if (isset($table_data[$i]['percentage_below_3']))
+                                    {{ $table_data[$i]['percentage_below_3'] }}%
                                 @else
                                     -
                                 @endif
                             </td>
-                        @endfor
-                    </tr>
-                </tbody>
-            </table>
+                            @endfor
+                        </tr>
+                        <tr>
+                            <th scope="row"
+                                class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                                IPS >= 3.00
+                            </th>
+                            @for ($i = 0; $i < $jumlahSemester; $i++)
+                                <td class="px-6 py-4">{{ $table_data[$i]['count_above_3'] ?? '-' }}</td>
+                            @endfor
+                        </tr>
+                        <tr>
+                            <th scope="row"
+                                class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                                % IPS >= 3.00
+                            </th>
+                            @for ($i = 0; $i < $jumlahSemester; $i++)
+                                <td class="px-6 py-4">
+                                    @if (isset($table_data[$i]['percentage_above_3']))
+                                        {{ $table_data[$i]['percentage_above_3'] }}%
+                                    @else
+                                        -
+                                    @endif
+                                </td>
+                            @endfor
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
 
         <div class="w-full mb-4 bg-white rounded-lg shadow dark:bg-gray-800 p-4 md:p-6">
@@ -412,310 +328,322 @@
 
         <div class="w-full mb-4 mt-5  bg-white rounded-lg shadow dark:bg-gray-800 p-4 md:p-6">
             <p class="text-2xl font-bold text-gray-700 dark:text-white">Data mahasiswa mengundurkan diri/Drop Out</p>
-            <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                    <tr
-                        class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                        <th rowspan="2" scope="col" class="px-6 py-3 border-b">Nama</th>
-                        <th rowspan="2" scope="col" class="px-6 py-3 border-b">Jenis Undur Diri</th>
-                        <th rowspan="2" scope="col" class="px-6 py-3 border-b">SK Penetapan</th>
-                        <th rowspan="2" scope="col" class="px-6 py-3 border-b">Alasan</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @if ($student_resignationDetail)
-                        @if ($student_resignationDetail->isEmpty())
+            <div class="overflow-x-auto">
+                <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                        <tr
+                            class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                            <th rowspan="2" scope="col" class="px-6 py-3 border-b">Nama</th>
+                            <th rowspan="2" scope="col" class="px-6 py-3 border-b">Jenis Undur Diri</th>
+                            <th rowspan="2" scope="col" class="px-6 py-3 border-b">SK Penetapan</th>
+                            <th rowspan="2" scope="col" class="px-6 py-3 border-b">Alasan</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if ($student_resignationDetail)
+                            @if ($student_resignationDetail->isEmpty())
+                                <tr
+                                    class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                    <td scope="row" colspan="4"
+                                        class="px-6 py-4 font-medium text-center text-gray-900 whitespace-nowrap dark:text-white border-b">
+                                        Tidak ada data pengunduran diri mahasiswa</td>
+                                </tr>
+                            @else
+                                @foreach ($student_resignationDetail as $resignation)
+                                    <tr
+                                        class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                        <td scope="row"
+                                            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white border-b">
+                                            {{ $resignation->student->student_name }}</td>
+                                        <td scope="row"
+                                            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white border-b">
+                                            {{ $resignation->resignation_type }}</td>
+                                        <td scope="row"
+                                            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white border-b">
+                                            {{ $resignation->decree_number }}</td>
+                                        <td scope="row"
+                                            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white border-b">
+                                            {{ $resignation->reason }}</td>
+                                    </tr>
+                                @endforeach
+                            @endif
+                        @else
                             <tr
                                 class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                                 <td scope="row" colspan="4"
                                     class="px-6 py-4 font-medium text-center text-gray-900 whitespace-nowrap dark:text-white border-b">
                                     Tidak ada data pengunduran diri mahasiswa</td>
                             </tr>
-                        @else
-                            @foreach ($student_resignationDetail as $resignation)
-                                <tr
-                                    class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                    <td scope="row"
-                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white border-b">
-                                        {{ $resignation->student->student_name }}</td>
-                                    <td scope="row"
-                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white border-b">
-                                        {{ $resignation->resignation_type }}</td>
-                                    <td scope="row"
-                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white border-b">
-                                        {{ $resignation->decree_number }}</td>
-                                    <td scope="row"
-                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white border-b">
-                                        {{ $resignation->reason }}</td>
-                                </tr>
-                            @endforeach
                         @endif
-                    @else
-                        <tr
-                            class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                            <td scope="row" colspan="4"
-                                class="px-6 py-4 font-medium text-center text-gray-900 whitespace-nowrap dark:text-white border-b">
-                                Tidak ada data pengunduran diri mahasiswa</td>
-                        </tr>
-                    @endif
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            </div>
         </div>
 
         <div class="w-full mb-4 mt-5  bg-white rounded-lg shadow dark:bg-gray-800 p-4 md:p-6">
             <p class="text-2xl font-bold text-gray-700 dark:text-white">Mahasiswa penerima beasiswa/peninjauan ulangan UKT
             </p>
-            <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                    <tr
-                        class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                        <th scope="col" class="px-6 py-3 border-b">NIM</th>
-                        <th scope="col" class="px-6 py-3 border-b">Nama</th>
-                        <th scope="col" class="px-6 py-3 border-b">Jenis Beasiswa</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @if ($scholarshipDetail)
-                        @if ($scholarshipDetail->isEmpty())
+            <div class="overflow-x-auto">
+                <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                        <tr
+                            class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                            <th scope="col" class="px-6 py-3 border-b">NIM</th>
+                            <th scope="col" class="px-6 py-3 border-b">Nama</th>
+                            <th scope="col" class="px-6 py-3 border-b">Jenis Beasiswa</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if ($scholarshipDetail)
+                            @if ($scholarshipDetail->isEmpty())
+                                <tr
+                                    class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                    <td scope="row" colspan="4"
+                                        class="px-6 py-4 font-medium text-center text-gray-900 whitespace-nowrap dark:text-white border-b">
+                                        Tidak ada data beasiswa</td>
+                                </tr>
+                            @else
+                                @foreach ($scholarshipDetail as $detail)
+                                    <tr
+                                        class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                        <td scope="row"
+                                            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white border-b">
+                                            {{ $detail->student->nim }}</td>
+                                        <td scope="row"
+                                            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white border-b">
+                                            {{ $detail->student->student_name }}</td>
+                                        <td scope="row"
+                                            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white border-b">
+                                            {{ $detail->scholarship_type }}</td>
+                                    </tr>
+                                @endforeach
+                            @endif
+                        @else
                             <tr
                                 class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                                 <td scope="row" colspan="4"
                                     class="px-6 py-4 font-medium text-center text-gray-900 whitespace-nowrap dark:text-white border-b">
                                     Tidak ada data beasiswa</td>
                             </tr>
-                        @else
-                            @foreach ($scholarshipDetail as $detail)
-                                <tr
-                                    class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                    <td scope="row"
-                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white border-b">
-                                        {{ $detail->student->nim }}</td>
-                                    <td scope="row"
-                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white border-b">
-                                        {{ $detail->student->student_name }}</td>
-                                    <td scope="row"
-                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white border-b">
-                                        {{ $detail->scholarship_type }}</td>
-                                </tr>
-                            @endforeach
                         @endif
-                    @else
-                        <tr
-                            class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                            <td scope="row" colspan="4"
-                                class="px-6 py-4 font-medium text-center text-gray-900 whitespace-nowrap dark:text-white border-b">
-                                Tidak ada data beasiswa</td>
-                        </tr>
-                    @endif
-
-                </tbody>
-            </table>
+    
+                    </tbody>
+                </table>
+            </div>
         </div>
 
         <div class="w-full mb-4 mt-5  bg-white rounded-lg shadow dark:bg-gray-800 p-4 md:p-6">
             <p class="text-2xl font-bold text-gray-700 dark:text-white">Mahasiswa Berprestasi dan Keaktifan Organisasi</p>
-            <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                    <tr
-                        class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                        <th rowspan="2" scope="col" class="px-6 py-3 border-b">NPM</th>
-                        <th rowspan="2" scope="col" class="px-6 py-3 border-b">Nama</th>
-                        <th rowspan="2" scope="col" class="px-6 py-3 border-b">Jenis Prestasi/Organisasi</th>
-                        <th rowspan="2" scope="col" class="px-6 py-3 border-b">Tingkat</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @if ($achievementDetail)
-                        @if ($achievementDetail->isEmpty())
+            <div class="overflow-x-auto">
+                <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                        <tr
+                            class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                            <th rowspan="2" scope="col" class="px-6 py-3 border-b">NPM</th>
+                            <th rowspan="2" scope="col" class="px-6 py-3 border-b">Nama</th>
+                            <th rowspan="2" scope="col" class="px-6 py-3 border-b">Jenis Prestasi/Organisasi</th>
+                            <th rowspan="2" scope="col" class="px-6 py-3 border-b">Tingkat</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if ($achievementDetail)
+                            @if ($achievementDetail->isEmpty())
+                                <tr
+                                    class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                    <td scope="row" colspan="4"
+                                        class="px-6 py-4 font-medium text-center text-gray-900 whitespace-nowrap dark:text-white border-b">
+                                        Tidak ada data pengunduran diri mahasiswa</td>
+                                </tr>
+                            @else
+                                @foreach ($achievementDetail as $detail)
+                                    <tr
+                                        class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                        <td scope="row"
+                                            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white border-b">
+                                            {{ $detail->student->nim }}</td>
+                                        <td scope="row"
+                                            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white border-b">
+                                            {{ $detail->student->student_name }}</td>
+                                        <td scope="row"
+                                            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white border-b">
+                                            {{ $detail->achievement_type }}</td>
+                                        <td scope="row"
+                                            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white border-b">
+                                            {{ $detail->level }}</td>
+                                    </tr>
+                                @endforeach
+                            @endif
+                        @else
                             <tr
                                 class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                                 <td scope="row" colspan="4"
                                     class="px-6 py-4 font-medium text-center text-gray-900 whitespace-nowrap dark:text-white border-b">
                                     Tidak ada data pengunduran diri mahasiswa</td>
                             </tr>
-                        @else
-                            @foreach ($achievementDetail as $detail)
-                                <tr
-                                    class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                    <td scope="row"
-                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white border-b">
-                                        {{ $detail->student->nim }}</td>
-                                    <td scope="row"
-                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white border-b">
-                                        {{ $detail->student->student_name }}</td>
-                                    <td scope="row"
-                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white border-b">
-                                        {{ $detail->achievement_type }}</td>
-                                    <td scope="row"
-                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white border-b">
-                                        {{ $detail->level }}</td>
-                                </tr>
-                            @endforeach
                         @endif
-                    @else
-                        <tr
-                            class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                            <td scope="row" colspan="4"
-                                class="px-6 py-4 font-medium text-center text-gray-900 whitespace-nowrap dark:text-white border-b">
-                                Tidak ada data pengunduran diri mahasiswa</td>
-                        </tr>
-                    @endif
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            </div>
         </div>
 
         <div class="w-full mb-4 mt-5  bg-white rounded-lg shadow dark:bg-gray-800 p-4 md:p-6">
             <p class="text-2xl font-bold text-gray-700 dark:text-white">Surat Peringatan</p>
-            <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                    <tr
-                        class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                        <th rowspan="2" scope="col" class="px-6 py-3 border-b">NIM</th>
-                        <th rowspan="2" scope="col" class="px-6 py-3 border-b">Nama</th>
-                        <th rowspan="2" scope="col" class="px-6 py-3 border-b">Jenis Peringatan</th>
-                        <th rowspan="2" scope="col" class="px-6 py-3 border-b">Alasan</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @if ($warningDetail)
-                        @if ($warningDetail->isEmpty())
+            <div class="overflow-x-auto">
+                <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                        <tr
+                            class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                            <th rowspan="2" scope="col" class="px-6 py-3 border-b">NIM</th>
+                            <th rowspan="2" scope="col" class="px-6 py-3 border-b">Nama</th>
+                            <th rowspan="2" scope="col" class="px-6 py-3 border-b">Jenis Peringatan</th>
+                            <th rowspan="2" scope="col" class="px-6 py-3 border-b">Alasan</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if ($warningDetail)
+                            @if ($warningDetail->isEmpty())
+                                <tr
+                                    class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                    <td scope="row" colspan="4"
+                                        class="px-6 py-4 font-medium text-center text-gray-900 whitespace-nowrap dark:text-white border-b">
+                                        Tidak ada data peringatan</td>
+                                </tr>
+                            @else
+                                @foreach ($warningDetail as $detail)
+                                    <tr
+                                        class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                        <td scope="row"
+                                            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white border-b">
+                                            {{ $detail->student->nim }}</td>
+                                        <td scope="row"
+                                            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white border-b">
+                                            {{ $detail->student->student_name }}</td>
+                                        <td scope="row"
+                                            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white border-b">
+                                            {{ $detail->warning_type }}</td>
+                                        <td scope="row"
+                                            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white border-b">
+                                            {{ $detail->reason }}</td>
+                                    </tr>
+                                @endforeach
+                            @endif
+                        @else
                             <tr
                                 class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                                 <td scope="row" colspan="4"
                                     class="px-6 py-4 font-medium text-center text-gray-900 whitespace-nowrap dark:text-white border-b">
                                     Tidak ada data peringatan</td>
                             </tr>
-                        @else
-                            @foreach ($warningDetail as $detail)
-                                <tr
-                                    class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                    <td scope="row"
-                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white border-b">
-                                        {{ $detail->student->nim }}</td>
-                                    <td scope="row"
-                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white border-b">
-                                        {{ $detail->student->student_name }}</td>
-                                    <td scope="row"
-                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white border-b">
-                                        {{ $detail->warning_type }}</td>
-                                    <td scope="row"
-                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white border-b">
-                                        {{ $detail->reason }}</td>
-                                </tr>
-                            @endforeach
                         @endif
-                    @else
-                        <tr
-                            class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                            <td scope="row" colspan="4"
-                                class="px-6 py-4 font-medium text-center text-gray-900 whitespace-nowrap dark:text-white border-b">
-                                Tidak ada data peringatan</td>
-                        </tr>
-                    @endif
-
-                </tbody>
-            </table>
+    
+                    </tbody>
+                </table>
+            </div>
         </div>
 
         <div class="w-full mb-4 mt-5  bg-white rounded-lg shadow dark:bg-gray-800 p-4 md:p-6">
             <p class="text-2xl font-bold text-gray-700 dark:text-white">Tunggakan UKT</p>
-            <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                    <tr
-                        class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                        <th rowspan="2" scope="col" class="px-6 py-3 border-b">NPM</th>
-                        <th rowspan="2" scope="col" class="px-6 py-3 border-b">Nama</th>
-                        <th rowspan="2" scope="col" class="px-6 py-3 border-b">Jumlah Tunggakan</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @if ($tuition_arrearDetail)
-                        @if ($tuition_arrearDetail->isEmpty())
+            <div class="overflow-x-auto">
+                <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                        <tr
+                            class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                            <th rowspan="2" scope="col" class="px-6 py-3 border-b">NPM</th>
+                            <th rowspan="2" scope="col" class="px-6 py-3 border-b">Nama</th>
+                            <th rowspan="2" scope="col" class="px-6 py-3 border-b">Jumlah Tunggakan</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if ($tuition_arrearDetail)
+                            @if ($tuition_arrearDetail->isEmpty())
+                                <tr
+                                    class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                    <td scope="row" colspan="4"
+                                        class="px-6 py-4 font-medium text-center text-gray-900 whitespace-nowrap dark:text-white border-b">
+                                        Tidak ada data Tunggakan</td>
+                                </tr>
+                            @else
+                                @foreach ($tuition_arrearDetail as $detail)
+                                    <tr
+                                        class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                        <td scope="row"
+                                            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white border-b">
+                                            {{ $detail->student->nim }}</td>
+                                        <td scope="row"
+                                            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white border-b">
+                                            {{ $detail->student->student_name }}</td>
+                                        <td scope="row"
+                                            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white border-b">
+                                            Rp. {{ number_format($detail->amount, 2, ',', '.') }}</td>
+                                    </tr>
+                                @endforeach
+                            @endif
+                        @else
                             <tr
                                 class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                                 <td scope="row" colspan="4"
                                     class="px-6 py-4 font-medium text-center text-gray-900 whitespace-nowrap dark:text-white border-b">
                                     Tidak ada data Tunggakan</td>
                             </tr>
-                        @else
-                            @foreach ($tuition_arrearDetail as $detail)
-                                <tr
-                                    class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                    <td scope="row"
-                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white border-b">
-                                        {{ $detail->student->nim }}</td>
-                                    <td scope="row"
-                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white border-b">
-                                        {{ $detail->student->student_name }}</td>
-                                    <td scope="row"
-                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white border-b">
-                                        Rp. {{ number_format($detail->amount, 2, ',', '.') }}</td>
-                                </tr>
-                            @endforeach
                         @endif
-                    @else
-                        <tr
-                            class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                            <td scope="row" colspan="4"
-                                class="px-6 py-4 font-medium text-center text-gray-900 whitespace-nowrap dark:text-white border-b">
-                                Tidak ada data Tunggakan</td>
-                        </tr>
-                    @endif
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            </div>
         </div>
 
         <div class="w-full mb-4 mt-5  bg-white rounded-lg shadow dark:bg-gray-800 p-4 md:p-6">
             <p class="text-2xl font-bold text-gray-700 dark:text-white">Bimbingan Perwalian</p>
-            <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                    <tr
-                        class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                        <th rowspan="2" scope="col" class="px-6 py-3 border-b">NPM</th>
-                        <th rowspan="2" scope="col" class="px-6 py-3 border-b">Nama</th>
-                        <th rowspan="2" scope="col" class="px-6 py-3 border-b">Permasalahan</th>
-                        <th rowspan="2" scope="col" class="px-6 py-3 border-b">Solusi</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @if ($guidanceDetail)
-                        @if ($guidanceDetail->isEmpty())
+            <div class="overflow-x-auto">
+                <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                        <tr
+                            class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                            <th rowspan="2" scope="col" class="px-6 py-3 border-b">NPM</th>
+                            <th rowspan="2" scope="col" class="px-6 py-3 border-b">Nama</th>
+                            <th rowspan="2" scope="col" class="px-6 py-3 border-b">Permasalahan</th>
+                            <th rowspan="2" scope="col" class="px-6 py-3 border-b">Solusi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if ($guidanceDetail)
+                            @if ($guidanceDetail->isEmpty())
+                                <tr
+                                    class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                    <td scope="row" colspan="4"
+                                        class="px-6 py-4 font-medium text-center text-gray-900 whitespace-nowrap dark:text-white border-b">
+                                        Tidak ada data pengunduran diri mahasiswa</td>
+                                </tr>
+                            @else
+                                @foreach ($guidanceDetail as $detail)
+                                    <tr
+                                        class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                        <td scope="row"
+                                            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white border-b">
+                                            {{ $detail->student->nim }}</td>
+                                        <td scope="row"
+                                            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white border-b">
+                                            {{ $detail->student->student_name }}</td>
+                                        <td scope="row"
+                                            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white border-b">
+                                            {{ $detail->problem }}</td>
+                                        <td scope="row"
+                                            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white border-b">
+                                            {{ $detail->solution }}</td>
+                                    </tr>
+                                @endforeach
+                            @endif
+                        @else
                             <tr
                                 class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                                 <td scope="row" colspan="4"
                                     class="px-6 py-4 font-medium text-center text-gray-900 whitespace-nowrap dark:text-white border-b">
                                     Tidak ada data pengunduran diri mahasiswa</td>
                             </tr>
-                        @else
-                            @foreach ($guidanceDetail as $detail)
-                                <tr
-                                    class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                    <td scope="row"
-                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white border-b">
-                                        {{ $detail->student->nim }}</td>
-                                    <td scope="row"
-                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white border-b">
-                                        {{ $detail->student->student_name }}</td>
-                                    <td scope="row"
-                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white border-b">
-                                        {{ $detail->problem }}</td>
-                                    <td scope="row"
-                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white border-b">
-                                        {{ $detail->solution }}</td>
-                                </tr>
-                            @endforeach
                         @endif
-                    @else
-                        <tr
-                            class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                            <td scope="row" colspan="4"
-                                class="px-6 py-4 font-medium text-center text-gray-900 whitespace-nowrap dark:text-white border-b">
-                                Tidak ada data pengunduran diri mahasiswa</td>
-                        </tr>
-                    @endif
-
-                </tbody>
-            </table>
+    
+                    </tbody>
+                </table>
+            </div>
         </div>
 
 

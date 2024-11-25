@@ -2,104 +2,136 @@
 
 
     @section('content')
+    @section('breadcrumb', 'Dashboard')
     <div class="flex flex-wrap -mx-3">
-        <!-- card1 -->
-        <div class="w-full max-w-full px-3 mb-6 sm:w-1/2 sm:flex-none xl:mb-0 xl:w-1/4">
-          <div class="relative flex flex-col min-w-0 break-words bg-white shadow-soft-xl rounded-2xl bg-clip-border">
-            <div class="flex-auto p-4">
-              <div class="flex flex-row -mx-3">
-                <div class="flex-none w-2/3 max-w-full px-3">
-                  <div>
-                    <p class="mb-0 font-sans font-semibold leading-normal text-sm">Today's Money</p>
-                    <h5 class="mb-0 font-bold">
-                      $53,000
-                      <span class="leading-normal text-sm font-weight-bolder text-lime-500">+55%</span>
-                    </h5>
-                  </div>
+        @role('admin')
+            <!-- card1 -->
+            <div class="w-full max-w-full px-3 mb-6 sm:w-1/2 sm:flex-none xl:mb-0 xl:w-1/4">
+                <div class="relative flex flex-col min-w-0 break-words bg-white shadow-soft-xl rounded-2xl bg-clip-border">
+                    <div class="flex-auto p-4">
+                        <div class="flex flex-row -mx-3">
+                            <div class="flex-none w-2/3 max-w-full px-3">
+                                <div>
+                                    <p class="mb-0 font-sans font-semibold leading-normal text-sm">Users</p>
+                                    <h5 class="mb-0 font-bold">
+                                        {{ $usersCount }}
+                                        {{-- <span class="leading-normal text-sm font-weight-bolder text-lime-500">+3%</span> --}}
+                                    </h5>
+                                </div>
+                            </div>
+                            <div class="px-3 text-right basis-1/3">
+                                <div
+                                    class="inline-block w-12 h-12 text-center rounded-lg bg-gradient-to-tl from-purple-700 to-pink-500">
+                                    <i class="ni leading-none ni-world text-lg relative top-3.5 text-white"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="px-3 text-right basis-1/3">
-                  <div class="inline-block w-12 h-12 text-center rounded-lg bg-gradient-to-tl from-purple-700 to-pink-500">
-                    <i class="ni leading-none ni-money-coins text-lg relative top-3.5 text-white"></i>
-                  </div>
-                </div>
-              </div>
             </div>
-          </div>
-        </div>
 
-        <!-- card2 -->
-        <div class="w-full max-w-full px-3 mb-6 sm:w-1/2 sm:flex-none xl:mb-0 xl:w-1/4">
-          <div class="relative flex flex-col min-w-0 break-words bg-white shadow-soft-xl rounded-2xl bg-clip-border">
-            <div class="flex-auto p-4">
-              <div class="flex flex-row -mx-3">
-                <div class="flex-none w-2/3 max-w-full px-3">
-                  <div>
-                    <p class="mb-0 font-sans font-semibold leading-normal text-sm">Today's Users</p>
-                    <h5 class="mb-0 font-bold">
-                      2,300
-                      <span class="leading-normal text-sm font-weight-bolder text-lime-500">+3%</span>
-                    </h5>
-                  </div>
+            <!-- card2 -->
+            <div class="w-full max-w-full px-3 mb-6 sm:w-1/2 sm:flex-none xl:mb-0 xl:w-1/4">
+                <div class="relative flex flex-col min-w-0 break-words bg-white shadow-soft-xl rounded-2xl bg-clip-border">
+                    <div class="flex-auto p-4">
+                        <div class="flex flex-row -mx-3">
+                            <div class="flex-none w-2/3 max-w-full px-3">
+                                <div>
+                                    <p class="mb-0 font-sans font-semibold leading-normal text-sm">Students</p>
+                                    <h5 class="mb-0 font-bold">
+                                        {{ $studentsCount }}
+                                        {{-- <span class="leading-normal text-sm font-weight-bolder text-lime-500">+55%</span> --}}
+                                    </h5>
+                                </div>
+                            </div>
+                            <div class="px-3 text-right basis-1/3">
+                                <div
+                                    class="inline-block w-12 h-12 text-center rounded-lg bg-gradient-to-tl from-purple-700 to-pink-500">
+                                    <i class="ni leading-none ni-money-coins text-lg relative top-3.5 text-white"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="px-3 text-right basis-1/3">
-                  <div class="inline-block w-12 h-12 text-center rounded-lg bg-gradient-to-tl from-purple-700 to-pink-500">
-                    <i class="ni leading-none ni-world text-lg relative top-3.5 text-white"></i>
-                  </div>
-                </div>
-              </div>
             </div>
-          </div>
-        </div>
 
-        <!-- card3 -->
-        <div class="w-full max-w-full px-3 mb-6 sm:w-1/2 sm:flex-none xl:mb-0 xl:w-1/4">
-          <div class="relative flex flex-col min-w-0 break-words bg-white shadow-soft-xl rounded-2xl bg-clip-border">
-            <div class="flex-auto p-4">
-              <div class="flex flex-row -mx-3">
-                <div class="flex-none w-2/3 max-w-full px-3">
-                  <div>
-                    <p class="mb-0 font-sans font-semibold leading-normal text-sm">New Clients</p>
-                    <h5 class="mb-0 font-bold">
-                      +3,462
-                      <span class="leading-normal text-red-600 text-sm font-weight-bolder">-2%</span>
-                    </h5>
-                  </div>
+            <!-- card3 -->
+            <div class="w-full max-w-full px-3 mb-6 sm:w-1/2 sm:flex-none xl:mb-0 xl:w-1/4">
+                <div class="relative flex flex-col min-w-0 break-words bg-white shadow-soft-xl rounded-2xl bg-clip-border">
+                    <div class="flex-auto p-4">
+                        <div class="flex flex-row -mx-3">
+                            <div class="flex-none w-2/3 max-w-full px-3">
+                                <div>
+                                    <p class="mb-0 font-sans font-semibold leading-normal text-sm">Class</p>
+                                    <h5 class="mb-0 font-bold">
+                                        {{ $student_classesCount }}
+                                        {{-- <span class="leading-normal text-red-600 text-sm font-weight-bolder">-2%</span> --}}
+                                    </h5>
+                                </div>
+                            </div>
+                            <div class="px-3 text-right basis-1/3">
+                                <div
+                                    class="inline-block w-12 h-12 text-center rounded-lg bg-gradient-to-tl from-purple-700 to-pink-500">
+                                    <i class="ni leading-none ni-paper-diploma text-lg relative top-3.5 text-white"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="px-3 text-right basis-1/3">
-                  <div class="inline-block w-12 h-12 text-center rounded-lg bg-gradient-to-tl from-purple-700 to-pink-500">
-                    <i class="ni leading-none ni-paper-diploma text-lg relative top-3.5 text-white"></i>
-                  </div>
-                </div>
-              </div>
             </div>
-          </div>
-        </div>
 
-        <!-- card4 -->
-        <div class="w-full max-w-full px-3 sm:w-1/2 sm:flex-none xl:w-1/4">
-          <div class="relative flex flex-col min-w-0 break-words bg-white shadow-soft-xl rounded-2xl bg-clip-border">
-            <div class="flex-auto p-4">
-              <div class="flex flex-row -mx-3">
-                <div class="flex-none w-2/3 max-w-full px-3">
-                  <div>
-                    <p class="mb-0 font-sans font-semibold leading-normal text-sm">Sales</p>
-                    <h5 class="mb-0 font-bold">
-                      $103,430
-                      <span class="leading-normal text-sm font-weight-bolder text-lime-500">+5%</span>
-                    </h5>
-                  </div>
+            <!-- card4 -->
+            <div class="w-full max-w-full px-3 sm:w-1/2 sm:flex-none xl:w-1/4">
+                <div class="relative flex flex-col min-w-0 break-words bg-white shadow-soft-xl rounded-2xl bg-clip-border">
+                    <div class="flex-auto p-4">
+                        <div class="flex flex-row -mx-3">
+                            <div class="flex-none w-2/3 max-w-full px-3">
+                                <div>
+                                    <p class="mb-0 font-sans font-semibold leading-normal text-sm">Dosen</p>
+                                    <h5 class="mb-0 font-bold">
+                                        {{ $lecturersCount }}
+                                        {{-- <span class="leading-normal text-sm font-weight-bolder text-lime-500">+5%</span> --}}
+                                    </h5>
+                                </div>
+                            </div>
+                            <div class="px-3 text-right basis-1/3">
+                                <div
+                                    class="inline-block w-12 h-12 text-center rounded-lg bg-gradient-to-tl from-purple-700 to-pink-500">
+                                    <i class="ni leading-none ni-cart text-lg relative top-3.5 text-white"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="px-3 text-right basis-1/3">
-                  <div class="inline-block w-12 h-12 text-center rounded-lg bg-gradient-to-tl from-purple-700 to-pink-500">
-                    <i class="ni leading-none ni-cart text-lg relative top-3.5 text-white"></i>
-                  </div>
-                </div>
-              </div>
             </div>
-          </div>
+
+            <!-- card5 -->
+            <div class="w-full max-w-full px-3 my-6 sm:w-1/2 sm:flex-none xl:w-1/4">
+                <div class="relative flex flex-col min-w-0 break-words bg-white shadow-soft-xl rounded-2xl bg-clip-border">
+                    <div class="flex-auto p-4">
+                        <div class="flex flex-row -mx-3">
+                            <div class="flex-none w-2/3 max-w-full px-3">
+                                <div>
+                                    <p class="mb-0 font-sans font-semibold leading-normal text-sm">Laporan</p>
+                                    <h5 class="mb-0 font-bold">
+                                        {{ $reportsCount }}
+                                        {{-- <span class="leading-normal text-sm font-weight-bolder text-lime-500">+5%</span> --}}
+                                    </h5>
+                                </div>
+                            </div>
+                            <div class="px-3 text-right basis-1/3">
+                                <div
+                                    class="inline-block w-12 h-12 text-center rounded-lg bg-gradient-to-tl from-purple-700 to-pink-500">
+                                    <i class="ni leading-none ni-cart text-lg relative top-3.5 text-white"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-        {{-- @role('admin')
+    @endrole
+    {{-- @role('admin')
             <div class="py-12">
                 <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
@@ -172,203 +204,208 @@
                     });
                 });
             </script>
-        @endrole
-
-        @role('dosenWali')
-            <div class="max-w-sm text-bold text-center mt-5 w-full bg-white rounded-lg shadow dark:bg-gray-800 p-4 md:p-6">
-                Kelas {{ Auth::user()->lecturer->student_classes->class_name }}
-            </div>
-            <div class="flex">
-                <div class="mr-2 mt-5 w-full bg-white rounded-lg shadow dark:bg-gray-800 p-4 md:p-6">
-                    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                        <thead class="text-xs text-gray-700 uppercase dark:text-gray-400">
-                            <tr>
-                                <th rowspan="2" scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800">
-                                    Keterangan
-                                </th>
-                                <th colspan="{{ $jumlahSemester }}" scope="col"
-                                    class="text-center px-6 py-3 bg-gray-50 dark:bg-gray-800">
-                                    Semester
-                                </th>
-                            </tr>
-                            <tr>
-                                @for ($i = 0; $i < $jumlahSemester; $i++)
-                                    <th scope="col" class="px-6 py-3">
-                                        {{ $i + 1 }}
-                                    </th>
-                                @endfor
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr class="border-b border-gray-200 dark:border-gray-700">
-                                <th scope="row"
-                                    class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
-                                    IPS Rata-rata
-                                </th>
-                                @for ($i = 0; $i < $jumlahSemester; $i++)
-                                    <td class="px-6 py-4">{{ $table_data[$i]['avg_gpa'] ?? '-' }}</td>
-                                @endfor
-                            </tr>
-                            <tr class="border-b border-gray-200 dark:border-gray-700">
-                                <th scope="row"
-                                    class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
-                                    IPS Tertinggi
-                                </th>
-                                @for ($i = 0; $i < $jumlahSemester; $i++)
-                                    <td class="px-6 py-4">{{ $table_data[$i]['max_gpa'] ?? '-' }}</td>
-                                @endfor
-                            </tr>
-                            <tr class="border-b border-gray-200 dark:border-gray-700">
-                                <th scope="row"
-                                    class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
-                                    IPS Terendah
-                                </th>
-                                @for ($i = 0; $i < $jumlahSemester; $i++)
-                                    <td class="px-6 py-4">{{ $table_data[$i]['min_gpa'] ?? '-' }}</td>
-                                @endfor
-                            </tr>
-                            <tr class="border-b border-gray-200 dark:border-gray-700">
-                                <th scope="row"
-                                    class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
-                                    IPS < 3.00 </th>
-                                @for ($i = 0; $i < $jumlahSemester; $i++)
-                                    <td class="px-6 py-4">{{ $table_data[$i]['count_below_3'] ?? '-' }}</td>
-                                @endfor
-                            </tr>
-
-                            <tr>
-                                <th scope="row"
-                                    class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
-                                    % IPS < 3.00 </th>
-                                @for ($i = 0; $i < $jumlahSemester; $i++)
-                                    <td class="px-6 py-4">
-                                        @if (isset($table_data[$i]['percentage_below_3']))
-                                            {{ $table_data[$i]['percentage_below_3'] }}%
-                                        @else
-                                            -
-                                        @endif
-                                    </td>
-                                @endfor
-                            </tr>
-                            <tr>
-                                <th scope="row"
-                                    class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
-                                    IPS >= 3.00
-                                </th>
-                                @for ($i = 0; $i < $jumlahSemester; $i++)
-                                    <td class="px-6 py-4">{{ $table_data[$i]['count_above_3'] ?? '-' }}</td>
-                                @endfor
-                            </tr>
-                            <tr>
-                                <th scope="row"
-                                    class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
-                                    % IPS >= 3.00
-                                </th>
-                                @for ($i = 0; $i < $jumlahSemester; $i++)
-                                    <td class="px-6 py-4">
-                                        @if (isset($table_data[$i]['percentage_above_3']))
-                                            {{ $table_data[$i]['percentage_above_3'] }}%
-                                        @else
-                                            -
-                                        @endif
-                                    </td>
-                                @endfor
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="max-w-sm mt-5 w-full bg-white rounded-lg shadow dark:bg-gray-800 p-4 md:p-6">
-                    <div class="flex justify-between pb-4 mb-4 border-b border-gray-200 dark:border-gray-700">
-                        <div class="flex items-center">
-                            <div
-                                class="w-12 h-12 rounded-lg bg-gray-100 dark:bg-gray-700 flex items-center justify-center me-3">
-                                <svg class="w-6 h-6 text-gray-500 dark:text-gray-400" aria-hidden="true"
-                                    xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 19">
-                                    <path
-                                        d="M14.5 0A3.987 3.987 0 0 0 11 2.1a4.977 4.977 0 0 1 3.9 5.858A3.989 3.989 0 0 0 14.5 0ZM9 13h2a4 4 0 0 1 4 4v2H5v-2a4 4 0 0 1 4-4Z" />
-                                    <path
-                                        d="M5 19h10v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2ZM5 7a5.008 5.008 0 0 1 4-4.9 3.988 3.988 0 1 0-3.9 5.859A4.974 4.974 0 0 1 5 7Zm5 3a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm5-1h-.424a5.016 5.016 0 0 1-1.942 2.232A6.007 6.007 0 0 1 17 17h2a1 1 0 0 0 1-1v-2a5.006 5.006 0 0 0-5-5ZM5.424 9H5a5.006 5.006 0 0 0-5 5v2a1 1 0 0 0 1 1h2a6.007 6.007 0 0 1 4.366-5.768A5.016 5.016 0 0 1 5.424 9Z" />
-                                </svg>
-                            </div>
-                            <div>
-                                <h5 class="leading-none text-2xl font-bold text-gray-900 dark:text-white pb-1">
-                                    {{ $students->count() }}</h5>
-                                <p class="text-sm font-normal text-gray-500 dark:text-gray-400">Mahasiswa kelas
-                                    {{ $students->first()->student_classes->class_name }}</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="grid grid-cols-2">
-                        <dl class="flex items-center">
-                            <dt class="text-gray-500 dark:text-gray-400 text-sm font-normal me-1">Rata-rata IPK:</dt>
-                            <dd class="text-gray-900 text-sm dark:text-white font-semibold">{{ $avg_gpas }}</dd>
-                        </dl>
-                    </div>
-
-                    <div id="column-chart"></div>
-                </div>
-            </div>
-            <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-            <script>
-                const options = {
-                    colors: ["#1A56DB"],
-                    series: [{
-                        name: "Rata-rata IPS",
-                        color: "#1A56DB",
-                        data: @json($chart_data),
-                    }],
-                    chart: {
-                        type: "bar",
-                        height: "320px",
-                    },
-                    plotOptions: {
-                        bar: {
-                            horizontal: false,
-                            columnWidth: "70%",
-                            borderRadius: 8,
-                            borderRadiusApplication: "end",
-                        },
-                    },
-                    xaxis: {
-                        labels: {
-                            style: {
-                                fontFamily: "Inter, sans-serif",
-                                cssClass: 'text-xs font-normal fill-gray-500'
-                            }
-                        },
-                    },
-                }
-
-                const chart = new ApexCharts(document.getElementById("column-chart"), options);
-                chart.render();
-            </script>
-        @endrole
-
-        @role('mahasiswa')
-            <div class="py-12">
-                <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                    <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                        <div class="p-6 text-gray-900">
-                            {{ __('Role Mahasiswa') }}
-                        </div>
-                    </div>
-                </div>
-            </div>
-        @endrole
-
-        @role('kaprodi')
-            <div class="py-12">
-                <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                    <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                        <div class="p-6 text-gray-900">
-                            {{ __('Role kaprodi') }}
-                        </div>
-                    </div>
-                </div>
-            </div>
         @endrole --}}
-    @endsection
+
+    @role('dosenWali')
+        <div class="max-w-sm text-bold text-center mb-4 mt-5 w-full bg-white rounded-lg shadow dark:bg-gray-800 p-4 md:p-6">
+            Kelas {{ Auth::user()->lecturer->student_classes->class_name }}
+        </div>
+
+        <div class="w-full mb-4 bg-white rounded-lg shadow dark:bg-gray-800 p-4 md:p-6">
+            {{-- <p class="text-2xl font-bold text-gray-700 dark:text-white">Perkembangan Akademis Mahasiswa Perwalian</p> --}}
+            <div class="overflow-x-auto">
+                <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                    <thead class="text-xs text-gray-700 uppercase dark:text-gray-400">
+                        <tr>
+                            <th rowspan="2" scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800">
+                                Keterangan
+                            </th>
+                            <th colspan="{{ $jumlahSemester }}" scope="col"
+                                class="text-center px-6 py-3 bg-gray-50 dark:bg-gray-800">
+                                Semester
+                            </th>
+                        </tr>
+                        <tr>
+                            @for ($i = 0; $i < $jumlahSemester; $i++)
+                                <th scope="col" class="px-6 py-3">
+                                    {{ $i + 1 }}
+                                </th>
+                            @endfor
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="border-b border-gray-200 dark:border-gray-700">
+                            <th scope="row"
+                                class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                                IPS Rata-rata
+                            </th>
+                            @for ($i = 0; $i < $jumlahSemester; $i++)
+                                <td class="px-6 py-4">{{ $table_data[$i]['avg_gpa'] ?? '-' }}</td>
+                            @endfor
+                        </tr>
+                        <tr class="border-b border-gray-200 dark:border-gray-700">
+                            <th scope="row"
+                                class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                                IPS Tertinggi
+                            </th>
+                            @for ($i = 0; $i < $jumlahSemester; $i++)
+                                <td class="px-6 py-4">{{ $table_data[$i]['max_gpa'] ?? '-' }}</td>
+                            @endfor
+                        </tr>
+                        <tr class="border-b border-gray-200 dark:border-gray-700">
+                            <th scope="row"
+                                class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                                IPS Terendah
+                            </th>
+                            @for ($i = 0; $i < $jumlahSemester; $i++)
+                                <td class="px-6 py-4">{{ $table_data[$i]['min_gpa'] ?? '-' }}</td>
+                            @endfor
+                        </tr>
+                        <tr class="border-b border-gray-200 dark:border-gray-700">
+                            <th scope="row"
+                                class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                                IPS < 3.00 </th>
+                                    @for ($i = 0; $i < $jumlahSemester; $i++)
+                            <td class="px-6 py-4">{{ $table_data[$i]['count_below_3'] ?? '-' }}</td>
+                            @endfor
+                        </tr>
+    
+                        <tr>
+                            <th scope="row"
+                                class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                                % IPS < 3.00 </th>
+                                    @for ($i = 0; $i < $jumlahSemester; $i++)
+                            <td class="px-6 py-4">
+                                @if (isset($table_data[$i]['percentage_below_3']))
+                                    {{ $table_data[$i]['percentage_below_3'] }}%
+                                @else
+                                    -
+                                @endif
+                            </td>
+                            @endfor
+                        </tr>
+                        <tr>
+                            <th scope="row"
+                                class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                                IPS >= 3.00
+                            </th>
+                            @for ($i = 0; $i < $jumlahSemester; $i++)
+                                <td class="px-6 py-4">{{ $table_data[$i]['count_above_3'] ?? '-' }}</td>
+                            @endfor
+                        </tr>
+                        <tr>
+                            <th scope="row"
+                                class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                                % IPS >= 3.00
+                            </th>
+                            @for ($i = 0; $i < $jumlahSemester; $i++)
+                                <td class="px-6 py-4">
+                                    @if (isset($table_data[$i]['percentage_above_3']))
+                                        {{ $table_data[$i]['percentage_above_3'] }}%
+                                    @else
+                                        -
+                                    @endif
+                                </td>
+                            @endfor
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        {{-- <div class="flex flex-col md:flex-row gap-4"> --}}
+
+            <div class="max-w-sm w-full bg-white rounded-lg shadow dark:bg-gray-800 p-4 md:p-6">
+                <div class="flex justify-between pb-4 mb-4 border-b border-gray-200 dark:border-gray-700">
+                    <div class="flex items-center">
+                        <div
+                            class="w-12 h-12 rounded-lg bg-gray-100 dark:bg-gray-700 flex items-center justify-center me-3">
+                            <svg class="w-6 h-6 text-gray-500 dark:text-gray-400" aria-hidden="true"
+                                xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 19">
+                                <path
+                                    d="M14.5 0A3.987 3.987 0 0 0 11 2.1a4.977 4.977 0 0 1 3.9 5.858A3.989 3.989 0 0 0 14.5 0ZM9 13h2a4 4 0 0 1 4 4v2H5v-2a4 4 0 0 1 4-4Z" />
+                            </svg>
+                        </div>
+                        <div>
+                            <h5 class="leading-none text-2xl font-bold text-gray-900 dark:text-white pb-1">
+                                {{ $students->count() }}</h5>
+                            <p class="text-sm font-normal text-gray-500 dark:text-gray-400">Mahasiswa kelas
+                                {{ $students->first()->student_classes->class_name }}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <dl class="flex items-center">
+                        <dt class="text-gray-500 dark:text-gray-400 text-sm font-normal me-1">Rata-rata IPK:</dt>
+                        <dd class="text-gray-900 text-sm dark:text-white font-semibold">{{ $avg_gpas }}</dd>
+                    </dl>
+                </div>
+
+                <div id="column-chart"></div>
+            </div>
+        {{-- </div> --}}
+
+        <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+        <script>
+            const options = {
+                colors: ["#1A56DB"],
+                series: [{
+                    name: "Rata-rata IPS",
+                    color: "#1A56DB",
+                    data: @json($chart_data),
+                }],
+                chart: {
+                    type: "bar",
+                    height: "320px",
+                },
+                plotOptions: {
+                    bar: {
+                        horizontal: false,
+                        columnWidth: "70%",
+                        borderRadius: 8,
+                        borderRadiusApplication: "end",
+                    },
+                },
+                xaxis: {
+                    labels: {
+                        style: {
+                            fontFamily: "Inter, sans-serif",
+                            cssClass: 'text-xs font-normal fill-gray-500'
+                        }
+                    },
+                },
+            }
+
+            const chart = new ApexCharts(document.getElementById("column-chart"), options);
+            chart.render();
+        </script>
+    @endrole
+
+
+    @role('mahasiswa')
+        <div class="py-12">
+            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                    <div class="p-6 text-gray-900">
+                        {{ __('Role Mahasiswa') }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endrole
+
+    @role('kaprodi')
+        <div class="py-12">
+            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                    <div class="p-6 text-gray-900">
+                        {{ __('Role kaprodi') }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endrole
+@endsection
 
 
 

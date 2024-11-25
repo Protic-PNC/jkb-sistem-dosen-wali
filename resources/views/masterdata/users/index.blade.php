@@ -1,9 +1,5 @@
 <x-app-layout>
-
-    @section('descendant_folder')
-        > &nbsp;&nbsp;User
-    @endsection
-
+    @section('breadcrumb', 'User')
     @section('content')
         <style>
             #success-message {
@@ -206,7 +202,6 @@
                 document.getElementById('deleteModal').classList.add('hidden');
             }
         </script>
-
-
     @endsection
+    {{-- <script src="{{ asset('assets/js/sidenav-burger.js') }}" defer></script> --}}
 </x-app-layout>

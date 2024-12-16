@@ -19,7 +19,7 @@ class StudentClassSeeder extends Seeder
         $class1 = StudentClass::create([
             'class_name' => 'TI-3A',
             'program_id' => 1,
-            'academic_year' => 2022,
+            'entry_year' => 2022,
             'academic_advisor_id' => $lecturerId
         ]);
     }

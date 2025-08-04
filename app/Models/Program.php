@@ -9,8 +9,6 @@ class Program extends Model
 {
     use HasFactory;
 
-    protected $primaryKey = 'program_id';
-
     protected $fillable = [
         'program_name',
         'degree',
@@ -19,11 +17,16 @@ class Program extends Model
 
     public function head_of_program()
     {
-        return $this->belongsTo(Lecturer::class, 'head_of_program_id', 'lecturer_id');
+        return $this->belongsTo(Lecturer::class, 'head_of_program_id');
     }
 
-    public function classes()
+    public function student_class()
     {
-        return $this->hasMany(StudentClass::class, 'program_id', 'program_id');
+        return $this->hasMany(StudentClass::class);
+    }
+
+    public function krs_format()
+    {
+        return $this->hasMany(KrsFormat::class);
     }
 }

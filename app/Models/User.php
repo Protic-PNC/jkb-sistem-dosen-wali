@@ -10,24 +10,25 @@ use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
+    /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable, HasRoles;
 
     /**
      * The attributes that are mass assignable.
      *
-     * @var array<int, string>
+     * @var list<string>
      */
     protected $fillable = [
         'name',
         'email',
-        'avatar',
         'password',
     ];
+
 
     /**
      * The attributes that should be hidden for serialization.
      *
-     * @var array<int, string>
+     * @var list<string>
      */
     protected $hidden = [
         'password',
@@ -46,15 +47,18 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+    
+    // public function hasRole($role)
+    // {
+    //     return $this->hasRole($role); // Ambil role dari Spatie
+    // }
 
-    public function lecturer()
-    {
-        return $this->hasOne(Lecturer::class, 'user_id', 'id');
+    public function lecturer() {
+        return $this->hasOne(Lecturer::class);
+    }
+    public function student() {
+        return $this->hasOne(Student::class);
     }
 
-    public function student()
-    {
-        return $this->hasOne(Student::class, 'user_id', 'id');
-    }
-
+    
 }

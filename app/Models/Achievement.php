@@ -10,16 +10,16 @@ class Achievement extends Model
     use HasFactory;
 
     protected $fillable = [
-        'class_id'
+        'student_id',
+        'achievement_type',
+        'level',
+        'semester',
+        'class_name',
+        'entry_year'
     ];
 
-    public function student_class()
+    public function student()
     {
-        return $this->belongsTo(StudentClass::class, 'class_id', 'class_id');
-    }
-
-    public function achievement_detail()
-    {
-        return $this->hasMany(AchievementDetail::class, 'achievement_id', 'achievement_id');
+        return $this->belongsTo(Student::class);
     }
 }

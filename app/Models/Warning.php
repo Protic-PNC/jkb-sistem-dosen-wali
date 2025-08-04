@@ -9,23 +9,17 @@ class Warning extends Model
 {
     use HasFactory;
 
-    protected $primaryKey = 'warning_id';
     protected $fillable = [
-        'class_id'
+        'student_id',
+        'warning_type',
+        'reason',
+        'date',
+        'class_name',
+        'entry_year'
     ];
 
-    public function student_class()
+    public function student()
     {
-        return $this->belongsTo(StudentClass::class, 'class_id', 'class_id');
+        return $this->belongsTo(Student::class);
     }
-
-    public function warning_detail()
-    {
-        return $this->hasMany(WarningDetail::class, 'warning_id', 'warning_id');
-    }
-
-    // public function report()
-    // {
-    //     return $this->hasOne(Report::class);
-    // }
 }

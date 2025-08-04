@@ -9,25 +9,19 @@ class GpaCumulative extends Model
 {
     use HasFactory;
 
-    protected $primaryKey = 'gpa_cumulative_id';
     protected $fillable = [
         'gpa_id',
         'student_id',
         'cumulative_gpa',
     ];
 
-    public function gpa()
-    {
-        return $this->belongsTo(Gpa::class, 'gpa_id', 'gpa_id');
-    }
-
     public function student()
     {
-        return $this->belongsTo(Student::class, 'student_id', 'student_id');
+        return $this->belongsTo(Student::class);
     }
 
     public function gpa_semester()
     {
-        return $this->hasMany(GpaSemester::class, 'gpa_cumulative_id', 'gpa_cumulative_id');
+        return $this->hasMany(GpaSemester::class);
     }
 }

@@ -12,10 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('khs', function (Blueprint $table) {
-            $table->id()->primary();
-            $table->foreignId('student_id');
-            $table->foreign('student_id')->references('student_id')->on('students');
-            $table->integer('tahun');
+            $table->id();
+            $table->foreignId('student_id')->constrained()->cascadeOnDelete();
+            //$table->integer('tahun');
             $table->integer('semester');
             $table->string('file');
             $table->timestamps();

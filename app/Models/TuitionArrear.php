@@ -9,18 +9,16 @@ class TuitionArrear extends Model
 {
     use HasFactory;
 
-    protected $primaryKey = 'tuition_arrear_id';
     protected $fillable = [
-        'class_id'
+        'student_id',
+        'amount',
+        'semester',
+        'class_name',
+        'entry_year'
     ];
 
-    public function student_class()
+    public function student()
     {
-        return $this->belongsTo(StudentClass::class, 'class_id', 'class_id');
-    }
-
-    public function tuition_arrear_detail()
-    {
-        return $this->hasMany(TuitionArrearDetail::class, 'tuition_arrear_id', 'tuition_arrear_id');
+        return $this->belongsTo(Student::class);
     }
 }

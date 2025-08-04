@@ -12,12 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('programs', function (Blueprint $table) {
-            $table->id('program_id')->primary();
-            $table->string('program_name');
-            $table->string('degree');
+            $table->id();
+            $table->string('program_name', 100);
+            $table->enum('degree', ['D3', 'D4']);
             $table->timestamps();
-            $table->foreignId('head_of_program_id')->nullable();
-            $table->foreign('head_of_program_id')->references('lecturer_id')->on('lecturers');
+            $table->foreignId('head_of_program_id')->nullable()->constrained('lecturers')->onDelete('set null');
         });
     }
 

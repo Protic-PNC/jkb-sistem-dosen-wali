@@ -12,18 +12,16 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('students', function (Blueprint $table) {
-            $table->id('student_id')->primary();
-            $table->foreignId('user_id')->nullable();
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->foreignId('class_id')->nullable();
-            $table->foreign('class_id')->references('class_id')->on('classes');
-            $table->string('student_phone_number');
-            $table->char('nim');
-            $table->string('student_name');
+            $table->id();
+            $table->foreignId('user_id')->nullable()->constrained()->cascadeOnDelete();
+            $table->foreignId('student_class_id')->nullable()->constrained()->onDelete('set null');
+            $table->string('student_phone_number', 20);
+            $table->char('nim', 9)->unique();
             $table->string('student_address')->nullable();
-            $table->string('student_signature')->nullable();
-            $table->enum('status', ['active', 'non-active'])->default('active');
+            // $table->string('student_signature')->nullable();
+            $table->enum('status', ['active', 'graduated', 'dropout', 'resign', 'academic_leave'])->default('active');
             $table->date('inactive_at')->nullable();
+            $table->integer('active_at_semester');
             $table->timestamps();
         });
     }

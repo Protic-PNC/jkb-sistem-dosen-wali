@@ -12,11 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('krs', function (Blueprint $table) {
-            $table->id()->primary();
-            $table->foreignId('student_id');
-            $table->foreign('student_id')->references('student_id')->on('students');
-            $table->integer('tahun');
-            $table->integer('semester');
+            $table->id();
+            $table->foreignId('student_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('krs_format_id')->constrained()->cascadeOnDelete();
             $table->string('file');
             $table->timestamps();
         });

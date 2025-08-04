@@ -1,138 +1,274 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+        <title>{{ $title ?? config('app.name', 'Siwali') }}</title>
+        <link rel="icon" href="{{ asset('tefa.png') }}" type="image/png" sizes="16">  
 
-    <title>{{ config('app.name', 'siwali') }}</title>
+        <!-- Fonts -->
+        <link rel="preconnect" href="https://fonts.bunny.net">
+        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-
-    {{-- Tailwind --}}
-    <link href="https://cdn.tailwindcss.com" rel="stylesheet">
-
-
-    <!--     Fonts and icons     -->
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
-    <!-- Font Awesome Icons -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
-    <!-- Nucleo Icons -->
-    <link href="{{ asset('assets/css/nucleo-icons.css') }}" rel="stylesheet" />
-    <link href="{{ asset('assets/css/nucleo-svg.css') }}" rel="stylesheet" />
-    <!-- Popper -->
-    <script src="https://unpkg.com/@popperjs/core@2"></script>
-    <!-- Main Styling -->
-    <link href="{{ asset('assets/css/soft-ui-dashboard-tailwind.css?v=1.0.5') }}" rel="stylesheet" />
-
-    <!-- Scripts -->
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@9.0.3"></script>
-    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+        <!-- Scripts -->
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
+        
+        {{-- <style>
+            [wire\:cloak] {
+                display: none !important;
+            }
+        </style> --}}
+        {{-- <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script> --}}
+    </head>
 
 
-</head>
-<body class="font-sans antialiased min-h-screen bg-gray-100" style="background: #edf2f7;">
-    <div>
-        <div x-data="{ sidebarOpen: false }" class="flex h-screen bg-gray-100">
-            <div :class="sidebarOpen ? 'block' : 'hidden'" @click="sidebarOpen = false"
-                class="fixed inset-0 z-20 transition-opacity bg-black opacity-50 lg:hidden"></div>
-            @include('components.sidebar')
-            <div class="flex flex-col flex-1 overflow-hidden">
-                <header class="flex items-center justify-between px-6 py-4 bg-white border-b-4">
-                    <div class="flex items-center">
-                        <button @click="sidebarOpen = true" class="text-gray-500 focus:outline-none lg:hidden">
-                            <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M4 6H20M4 12H20M4 18H11" stroke="currentColor" stroke-width="2"
-                                    stroke-linecap="round" stroke-linejoin="round"></path>
-                            </svg>
-                        </button>
-                    </div>
-                    <div class="flex">
-                        <div class="flex mr-5">
-                            <span class="text-lg font-regular text-gray-500 dark:text-gray-400">Selamat datang,
-                                <b>{{ Auth::user()->name }}!</b></span>
-                        </div>
-                        <div x-data="{ dropdownOpen: false }" class="relative">
-                            <button @click="dropdownOpen = ! dropdownOpen"
-                                class="relative block w-8 h-8 overflow-hidden rounded-full shadow focus:outline-none">
-                                <img class="object-cover w-full h-full" src="{{ asset('images/avatar-default.svg') }}"
-                                    alt="Your avatar">
-                            </button>
-                            <div x-show="dropdownOpen" @click="dropdownOpen = false"
-                                class="fixed inset-0 z-10 w-full h-full" style="display: none;"></div>
-                            <div x-show="dropdownOpen"
-                                class="absolute right-0 z-10 w-48 mt-2 overflow-hidden bg-white rounded-md shadow-xl"
-                                style="display: none;">
-                                <a href="{{ route('profile.edit') }}"
-                                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-600 hover:text-white">Profile</a>
-                                <form method="POST" action="{{ route('logout') }}">
-                                    <button type="submit"
-                                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-600 hover:text-white w-full text-left">Logout</button>
-                                    @csrf
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </header>
-                <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100">
-                    <div class="container px-6 pt-6 mx-auto">
-                        <div
-                            class="page-header mb-4 flex justify-between items-center bg-white overflow-hidden shadow-sm sm:rounded-lg px-6 py-4">
-                            <nav class="flex" aria-label="Breadcrumb">
-                                <ol class="inline-flex items-center ">
-                                    <li class="inline-flex items-center">
-                                        <a href="{{ route('dashboard.index') }}"
-                                            class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-blue-600 dark:text-gray-400 dark:hover:text-white">
-                                            <svg class="w-3 h-3 me-2.5 text-gray-500" aria-hidden="true"
-                                                xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-                                                viewBox="0 0 20 20">
+
+    <body
+        x-data="{ sidebarToggle: false }"
+        x-init="
+            ['saved', 'deleted', 'error', 'savedTb1', 'savedTb2', 'deletedTb1', 'deletedTb2'].forEach(eventName => {
+                window.addEventListener(eventName, event => {
+                    const config = {
+                        saved:   { icon: 'success', title: 'Sukses!' },
+                        savedTb1:   { icon: 'success', title: 'Sukses!' },
+                        savedTb2:   { icon: 'success', title: 'Sukses!' },
+                        deleted: { icon: 'success', title: 'Dihapus!' },
+                        deletedTb1: { icon: 'success', title: 'Dihapus!' },
+                        deletedTb2: { icon: 'success', title: 'Dihapus!' },
+                        error:   { icon: 'error',   title: 'Gagal!' }
+                    }[eventName];
+
+                    Swal.fire({
+                        toast: true,
+                        position: 'top-end',
+                        icon: config.icon,
+                        title: config.title + ' - ' + (event.detail.message ?? 'Operasi berhasil.'),
+                        showConfirmButton: false,
+                        timer: 2000,
+                        timerProgressBar: false,
+                        didOpen: (toast) => {
+                            toast.addEventListener('mouseenter', Swal.stopTimer);
+                            toast.addEventListener('mouseleave', Swal.resumeTimer);
+                        }
+                    });
+                });
+            });
+        "
+        class="font-sans antialiased">
+        <div class="flex h-screen overflow-hidden">
+            
+            <livewire:layout.sidebar>
+
+            <div class="flex flex-col flex-1 overflow-x-hidden">
+
+                <livewire:layout.navigation />
+
+                <main class="flex-1 overflow-y-auto">
+                    <div class="p-4 mx-auto max-w-(--breakpoint-2xl) md:p-6 ">
+                        <div class="mb-6 flex flex-wrap items-center justify-between gap-3">
+                            <nav>
+                              <ol class="flex items-center gap-1.5 text-sm text-gray-500 ">
+                                <li>
+                                  <a
+                                    class="@yield('addClass') inline-flex items-center gap-1.5"
+                                    href="{{ route('dashboard') }}" wire:navigate>
+                                    Dashboard
+                                    <svg
+                                      class="stroke-current"
+                                      width="17"
+                                      height="16"
+                                      viewBox="0 0 17 16"
+                                      fill="none"
+                                      xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                      <path
+                                        d="M6.0765 12.667L10.2432 8.50033L6.0765 4.33366"
+                                        stroke=""
+                                        stroke-width="1.2"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                      />
+                                    </svg>
+                                  </a>
+                                </li>
+                                @if(View::hasSection('main_folder'))
+                                    <li @if (View::hasSection('sub_folder')) class="inline-flex items-center gap-1.5" @endif>
+                                        @if(View::hasSection('main_folder-link'))
+                                            <a href="@yield('main_folder-link')" wire:navigate.hover>@yield('main_folder')</a>
+                                        @else
+                                            @yield('main_folder')
+                                        @endif
+
+                                        @if (View::hasSection ('sub_folder'))
+                                            <svg
+                                            class="stroke-current"
+                                            width="17"
+                                            height="16"
+                                            viewBox="0 0 17 16"
+                                            fill="none"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                                >
                                                 <path
-                                                    d="m19.707 9.293-2-2-7-7a1 1 0 0 0-1.414 0l-7 7-2 2a1 1 0 0 0 1.414 1.414L2 10.414V18a2 2 0 0 0 2 2h3a1 1 0 0 0 1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 0 1 1h3a2 2 0 0 0 2-2v-7.586l.293.293a1 1 0 0 0 1.414-1.414Z" />
+                                                    d="M6.0765 12.667L10.2432 8.50033L6.0765 4.33366"
+                                                    stroke=""
+                                                    stroke-width="1.2"
+                                                    stroke-linecap="round"
+                                                    stroke-linejoin="round"
+                                                />
                                             </svg>
-                                        </a>
+                                        @endif
                                     </li>
                                     <li>
-                                        <div class="flex items-center">
-                                            <span
-                                                class=" text-sm font-medium text-gray-500 md:ms-2 dark:text-gray-400 dark:hover:text-white">@yield('descendant_folder')</span>
-                                        </div>
+                                        @yield('sub_folder')    
                                     </li>
-                                    <li>
-                                        <div class="flex items-center">
-                                            <span
-                                                class=" text-sm font-medium text-gray-700 md:ms-2 dark:text-gray-400 dark:hover:text-white">@yield('breadcrumb_extra')</span>
-                                        </div>
-                                    </li>
-                                </ol>
+                                @endif
+                              </ol>
                             </nav>
                         </div>
-                        <div class="mb-4">
-                            @yield('content')
-                        </div>
+                        @if (!request()->routeIs('dashboard'))  
+                            <div class="flex justify-between items-center w-full mb-2">
+                                <div class="text-yellow-500 font-bold text-3xl">
+                                    @yield('title-page')
+                                </div>
+                                <div>
+                                    <button
+                                        onclick="Livewire.dispatch('refresh')"
+                                        class="p-2 border rounded hover:bg-gray-200 flex justify-between items-center gap-2">
+                                        <span class="text-sm">Refresh tabel</span>
+                                        <svg class="size-4 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.651 7.65a7.131 7.131 0 0 0-12.68 3.15M18.001 4v4h-4m-7.652 8.35a7.13 7.13 0 0 0 12.68-3.15M6 20v-4h4"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        @endif
+                        {{ $slot }}
                     </div>
                 </main>
             </div>
-        </div>
-    </div>
-</body>
-<!-- plugin for charts  -->
-<script src="{{ asset('assets/js/plugins/chartjs.min.js') }}" async></script>
-<!-- plugin for scrollbar  -->
-{{-- <script src="{{ asset('assets/js/plugins/perfect-scrollbar.min.js') }}" async></script> --}}
-<!-- github button -->
-<script async defer src="{{ asset('https://buttons.github.io/buttons.js') }}"></script>
-<!-- main script file  -->
-{{-- <script src="{{ asset('assets/js/soft-ui-dashboard-tailwind.js?v=1.0.5') }}" async></script> --}}
+</div>
 
-<link rel="stylesheet" href="{{ asset('assets/css/perfect-scrollbar.css') }}">
-{{-- <script src="{{ asset('assets/js/perfect-scrollbar.js') }}" defer></script> --}}
-<script src="{{ asset('assets/js/sidenav-burger.js') }}" defer></script>
-<script src="{{ asset('assets/js/navbar-sticky.js') }}" defer></script>
+        @livewireScripts
+        @stack('scripts')
 
+        {{-- sidebar script --}}
+        <script>
+            function toggleDropdown() {
+                const dropdown = document.getElementById('dropdown-pages');
+                const arrowIcon = document.getElementById('arrowIcon');
+
+                dropdown.classList.toggle('hidden');
+                arrowIcon.classList.toggle('rotate-180');
+            }
+            
+            function toggleReportDropdown() {
+                const dropdown = document.getElementById('dropdown-report-pages');
+                const arrowIcon = document.getElementById('arrowReportIcon');
+
+                dropdown.classList.toggle('hidden');
+                arrowIcon.classList.toggle('rotate-180');
+            }
+        </script>
+
+        <script>
+            // Target sidebar
+            const sidebar = document.getElementById('sidebar');
+
+            // Simpan posisi scroll sebelum berpindah halaman
+            document.addEventListener('livewire:navigating', () => {
+                if (sidebar) {
+                    localStorage.setItem('sidebar-scroll', sidebar.scrollTop);
+                }
+            });
+
+            // Kembalikan posisi scroll setelah halaman selesai dimuat
+            document.addEventListener('livewire:navigated', () => {
+                if (sidebar) {
+                    const scroll = localStorage.getItem('sidebar-scroll');
+                    if (scroll !== null) {
+                        sidebar.scrollTop = scroll;
+                    }
+                }
+            });
+        </script>
+        
+        <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script>
+            function registerDeleteHandler() {
+                document.removeEventListener('click', handleDeleteClick); // Bersihkan handler ganda
+                document.addEventListener('click', handleDeleteClick);
+            }
+
+            function handleDeleteClick(e) {
+                const button = e.target.closest('button[data-confirm-delete]');
+                if (button) {
+                    e.preventDefault();
+
+                    const id = button.getAttribute('data-id');
+                    const event = button.getAttribute('data-event');
+                    const title = button.getAttribute('data-title') || 'Yakin ingin menghapus?';
+                    const text = button.getAttribute('data-text') || 'Data akan dihapus secara permanen.';
+
+                    Swal.fire({
+                        title: title,
+                        text: text,
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#d33',
+                        cancelButtonColor: '#3085d6',
+                        confirmButtonText: 'Ya, hapus!',
+                        cancelButtonText: 'Batal'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            Livewire.dispatch(event, { id: id });
+                        }
+                    });
+                }
+            }
+
+            // Saat DOM pertama kali dimuat
+            document.addEventListener('DOMContentLoaded', registerDeleteHandler);
+
+            // Saat Livewire selesai navigasi atau render ulang
+            document.addEventListener('livewire:load', registerDeleteHandler);
+            document.addEventListener('livewire:navigated', registerDeleteHandler);
+        </script>
+
+        <script>
+            document.addEventListener("livewire:navigated", () => {
+                // Reset toggle jika diperlukan
+                if (Alpine?.store('sidebar')) {
+                    Alpine.store('sidebar').open = false;
+                }
+            });
+        </script>
+
+        <script>
+              document.addEventListener('alpine:init', () => {
+                  Alpine.store('sidebar', {
+                      open: false,
+                      toggle() {
+                          this.open = !this.open;
+                      }
+                  });
+              });
+        </script>
+
+        <script>
+            Livewire.on('saved', ({ message }) => {
+                Swal.fire({
+                    toast: true,
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'Sukses! - ' + (message ?? 'Operasi berhasil.'),
+                    showConfirmButton: false,
+                    timer: 2000,
+                    timerProgressBar: false,
+                });
+            });
+        </script>
+    </body>
 </html>

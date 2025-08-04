@@ -8,65 +8,62 @@ use Illuminate\Database\Eloquent\Model;
 class Student extends Model
 {
     use HasFactory;
-    protected $primaryKey = 'student_id';
-    protected $table = 'students';
 
     protected $fillable=[
         'user_id',
-        'class_id',
+        'student_class_id',
         'student_phone_number',
         'nim',
-        'student_name',
         'student_address',
-        'student_signature',
         'status',
         'inactive_at',
+        'active_at_semester',
     ];
 
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'user_id', 'id');
+        return $this->belongsTo(User::class);
     }    
 
-    public function student_classes()
+    public function student_class()
     {
-        return $this->belongsTo(StudentClass::class, 'class_id', 'class_id');
+        return $this->belongsTo(StudentClass::class);
     }
 
     public function gpa_cumulative()
     {
-        return $this->hasOne(GpaCumulative::class, 'student_id', 'student_id');
+        return $this->hasOne(GpaCumulative::class);
     }
 
-    public function achievement_detail()
+    public function achievement()
     {
-        return $this->hasMany(AchievementDetail::class, 'student_id', 'student_id');
+        return $this->hasMany(Achievement::class);
     }
     
-    public function warning_detail()
+    public function warning()
     {
-        return $this->hasMany(WarningDetail::class, 'student_id', 'student_id');
+        return $this->hasMany(Warning::class);
     }
     
-    public function scholarship_detail()
+    public function scholarship()
     {
-        return $this->hasMany(ScholarshipDetail::class, 'student_id', 'student_id');
+        return $this->hasMany(Scholarship::class);
     }
     
-    public function tuition_arrear_detail()
+    public function tuition_arrear()
     {
-        return $this->hasMany(TuitionArrearDetail::class, 'student_id', 'student_id');
+        return $this->hasMany(TuitionArrear::class);
     }
     
-    public function student_resignation_detail()
+    public function student_resignation()
     {
-        return $this->hasMany(StudentResignationDetail::class, 'student_id', 'student_id');
+        return $this->hasOne(StudentResignation::class);
     }
     
-    public function guidance_detail()
+    public function guidance()
     {
-        return $this->hasOne(GuidanceDetail::class, 'student_id', 'student_id');
+        return $this->hasMany(Guidance::class);
     }
     
 }

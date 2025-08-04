@@ -12,9 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('gpa_semesters', function (Blueprint $table) {
-            $table->id('gpa_semesters_id')->primary();
-            $table->foreignId('gpa_cumulative_id');
-            $table->foreign('gpa_cumulative_id')->references('gpa_cumulative_id')->on('gpa_cumulatives');
+            $table->id();
+            $table->foreignId('gpa_cumulative_id')->constrained()->cascadeOnDelete();
             $table->integer('semester');
             $table->decimal('semester_gpa', 3, 2)->nullable();
             $table->timestamps();

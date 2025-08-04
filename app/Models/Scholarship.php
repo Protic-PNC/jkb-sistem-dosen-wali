@@ -9,18 +9,16 @@ class Scholarship extends Model
 {
     use HasFactory;
 
-    protected $primaryKey = 'sholarship_id';
     protected $fillable = [
-        'class_id'
+        'student_id',
+        'scholarship_type',
+        'semester',
+        'class_name',
+        'entry_year'
     ];
 
-    public function student_classes()
+    public function student()
     {
-        return $this->belongsTo(StudentClass::class, 'class_id', 'class_id');
-    }
-
-    public function scholarship_detail()
-    {
-        return $this->hasMany(ScholarshipDetail::class, 'scholarship_id', 'scholarship_id');
+        return $this->belongsTo(Student::class);
     }
 }

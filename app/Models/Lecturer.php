@@ -8,37 +8,30 @@ use Illuminate\Database\Eloquent\Model;
 class Lecturer extends Model
 {
     use HasFactory;
-    
-    protected $primaryKey = 'lecturer_id';
+
     protected $fillable = [
         'nidn',
         'nip',
-        'lecturer_name',
         'lecturer_phone_number',
         'lecturer_address',
         'lecturer_signature',
-        'position_id',
+        // 'lecturer_qr_signature',
         'user_id'
     ];
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'user_id', 'id');
-    }
-
-    public function position()
-    {
-        return $this->belongsTo(Position::class, 'position_id', 'position_id');
+        return $this->belongsTo(User::class);
     }
 
     public function program()
     {
-        return $this->hasOne(Program::class, 'head_of_program_id', 'lecturer_id');
+        return $this->hasOne(Program::class, 'head_of_program_id');
     }
 
-    public function student_classes()
+    public function student_class()
     {
-        return $this->hasOne(StudentClass::class, 'academic_advisor_id', 'lecturer_id');
+        return $this->hasMany(StudentClass::class, 'academic_advisor_id');
     }
     
 }

@@ -4,16 +4,17 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 
 class StudentClass extends Model
 {
     use HasFactory;
-
-    protected $table = 'classes';
-    protected $primaryKey = 'class_id';
+    
     protected $fillable = [
+        'id',
         'program_id',
         'academic_advisor_id',
+        'academic_advisor_decree',
         'class_name',
         'entry_year',
         'status',
@@ -22,58 +23,75 @@ class StudentClass extends Model
 
     public function program()
     {
-        return $this->belongsTo(Program::class, 'program_id', 'program_id');
+        return $this->belongsTo(Program::class);
     }
 
-    public function academic_advisor()
+    public function lecturer()
     {
-        return $this->belongsTo(Lecturer::class,'academic_advisor_id', 'lecturer_id');
+        return $this->belongsTo(Lecturer::class,'academic_advisor_id');
     }
 
     public function student()
     {
-        return $this->hasMany(Student::class, 'class_id', 'class_id');
+        return $this->hasMany(Student::class);
     }
 
-    
-
-    public function gpa()
+    public function gpa_cumulative()
     {
-        return $this->hasOne(Gpa::class, 'class_id', 'class_id');
+        return $this->hasOne(GpaCumulative::class);
     }
 
     public function guidance()
     {
-        return $this->hasOne(Guidance::class, 'class_id', 'class_id');
+        return $this->hasOne(Guidance::class);
     }
 
     public function warning()
     {
-        return $this->hasOne(Warning::class, 'class_id', 'class_id');
+        return $this->hasOne(Warning::class);
     }
 
     public function scholarship()
     {
-        return $this->hasOne(Scholarship::class, 'class_id', 'class_id');
+        return $this->hasOne(Scholarship::class);
     }
 
     public function tuition_arrear()
     {
-        return $this->hasOne(TuitionArrear::class, 'class_id', 'class_id');
+        return $this->hasOne(TuitionArrear::class);
     }
 
     public function student_resignation()
     {
-        return $this->hasOne(StudentResignation::class, 'class_id', 'class_id');
+        return $this->hasOne(StudentResignation::class);
     }
     
     public function achievement()
     {
-        return $this->hasOne(Achievement::class, 'class_id', 'class_id');
+        return $this->hasOne(Achievement::class);
     }
 
     public function report()
     {
-        return $this->hasMany(Report::class, 'class_id', 'class_id');
+        return $this->hasMany(Report::class);
+    }
+
+
+    public function getCurrentSemesterAttribute()
+    {
+        return self::calculateCurrentSemester($this->entry_year);
+    }
+
+    public static function calculateCurrentSemester($entryYear)
+    {
+        $now = Carbon::now();
+        $yearDiff = $now->year - $entryYear;
+
+        if ($now->month >= 8) {
+            $yearDiff++;
+            return ($yearDiff * 2) - 1;
+        }
+
+        return $yearDiff * 2;
     }
 }

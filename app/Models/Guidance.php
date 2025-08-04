@@ -9,18 +9,21 @@ class Guidance extends Model
 {
     use HasFactory;
 
-    protected $primaryKey = 'guidance_id';
     protected $fillable = [
-        'class_id'
+        'student_id',
+        'problem',
+        'solution',
+        'problem_date',
+        'solution_date',
+        'is_validated',
+        'validation_note',
+        'created_by',
+        'class_name',
+        'entry_year',
     ];
 
-    public function student_class()
+    public function student()
     {
-        return $this->belongsTo(StudentClass::class, 'class_id', 'class_id');
-    }
-
-    public function guidance_detail()
-    {
-        return $this->hasMany(GuidanceDetail::class, 'guidance_id', 'guidance_id');
+        return $this->belongsTo(Student::class);
     }
 }

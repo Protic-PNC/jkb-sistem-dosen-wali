@@ -5,6 +5,7 @@ namespace App\Livewire;
 use App\Models\User;
 use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\DB;
 use PowerComponents\LivewirePowerGrid\Button;
 use PowerComponents\LivewirePowerGrid\Column;
 use PowerComponents\LivewirePowerGrid\Facades\Filter;
@@ -33,9 +34,67 @@ final class UserTable extends PowerGridComponent
 
     public function datasource(): Builder
     {
-        return User::query()->whereDoesntHave('roles', function($query) {
-            return $query->where('name', 'admin');
-        })->with('roles')->latest();
+        // $query = User::query()
+        //     ->whereDoesntHave('roles', function($query) {
+        //         $query->where('name', 'admin');
+        //     })
+        //     ->with('roles');
+
+        // // Tambahkan sort dinamis dari frontend (Livewire, DataTables, dst)
+        // if (request()->has('sort_by') && request()->has('direction')) {
+        //     $query->orderBy(request('sort_by'), request('direction'));
+        // }
+
+        // // Jika tidak ada sorting, kamu bisa kasih default
+        // else {
+        //     $query->orderBy('name', 'asc'); // atau apapun default kamu
+        // }
+
+        // return $query;
+
+        // $filters = $this->filters;
+
+        return User::query()
+            ->whereDoesntHave('roles', function($query) {
+                $query->where('name', 'admin');
+            })
+            // ->when($filters['role_names'] ?? false, function ($query) use ($filters) {
+            //     $query->whereHas('roles', function ($q) use ($filters) {
+            //         $q->where('name', $filters['role']);
+            //     });
+            // })
+            ->with('roles');
+
+        
+        // return User::query()
+        //     // ->whereDoesntHave('roles', function($query) {
+        //     //     return $query->where('name', 'admin');
+        //     // })
+        //     ->with('roles')
+        //     ->leftJoin('model_has_roles', function ($join) {
+        //         $join->on('users.id', '=', 'model_has_roles.model_id')
+        //             ->where('model_has_roles.model_type', '=', User::class);
+        //     })
+        //     ->leftJoin('roles', 'model_has_roles.role_id', '=', 'roles.id')
+        //     ->select('users.*', DB::raw('GROUP_CONCAT(roles.name SEPARATOR ", ") as role_names'))
+        //     ->groupBy('users.id')
+        //     ->latest();
+        // return User::query()
+        //     ->with('roles')
+        //     ->leftJoin('model_has_roles', function ($join) {
+        //         $join->on('users.id', '=', 'model_has_roles.model_id')
+        //             ->where('model_has_roles.model_type', '=', User::class);
+        //     })
+        //     ->leftJoin('roles', 'model_has_roles.role_id', '=', 'roles.id')
+        //     ->select([
+        //         'users.id',
+        //         'users.name',
+        //         'users.email',
+        //         'users.created_at',
+        //         DB::raw('GROUP_CONCAT(roles.name SEPARATOR ", ") as role_names'),
+        //     ])
+        //     ->groupBy('users.id', 'users.name', 'users.email', 'users.created_at')
+        //     ->orderBy('users.created_at', 'desc');
     }
 
     public function relationSearch(): array
@@ -63,12 +122,16 @@ final class UserTable extends PowerGridComponent
                 ->sortable()
                 ->searchable(),
 
+            Column::make('Created At', 'created_at')
+                ->sortable()
+                ->searchable(),
+
             Column::make('Email', 'email')
                 ->sortable()
                 ->searchable(),
 
             Column::make('Role', 'role_names')
-                ->sortable()
+                // ->sortable()
                 ->searchable(),
 
             Column::action('Action')
@@ -78,6 +141,16 @@ final class UserTable extends PowerGridComponent
     public function filters(): array
     {
         return [
+            // Filter::selectRelation('roles', 'name', 'Role')
+            //     ->dataSource(collect([
+            //         ['value' => 'mahasiswa', 'label' => 'Mahasiswa'],
+            //         ['value' => 'dosenWali', 'label' => 'Dosen Wali'],
+            //         ['value' => 'kaprodi', 'label' => 'Kaprodi'],
+            //         ['value' => 'kajur', 'label' => 'Kajur'],
+            //     ]))
+            //     ->optionValue('value')
+            //     ->optionLabel('label')
+
         ];
     }
 

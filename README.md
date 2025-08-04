@@ -67,6 +67,10 @@ The system supports five primary roles:
 
 ![ERD](https://github.com/user-attachments/assets/4c60402f-5eaf-4b55-a0f3-0ac677d2aeb1)
 
+### Database
+
+Download the SQL file here: [siwali_db.sql](./database/si_perwalian.sql)
+
 ### Entities and Relationships
 
 Refer to the full list in the documentation for:

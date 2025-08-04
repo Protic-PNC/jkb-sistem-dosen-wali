@@ -65,7 +65,7 @@ The system supports five primary roles:
 
 ### ERD
 
-![ERD](https://github.com/user-attachments/assets/bb486ce5-e599-4724-8a68-bce120fd455d)
+![ERD](https://github.com/user-attachments/assets/4c60402f-5eaf-4b55-a0f3-0ac677d2aeb1)
 
 ### Entities and Relationships
 

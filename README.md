@@ -1,8 +1,8 @@
-# SIWALI JKB - Academic Advising Information System
+# SIWALI JKB - Academic Advisor Information System
 
 ## Overview
 
-**SIWALI JKB (Sistem Informasi Bimbingan Akademik JKB)** is a comprehensive academic advising information system developed to manage and streamline academic supervision processes at higher education institutions. It supports the tracking and management of student performance, counseling, achievements, tuition arrears, and more.
+**SIWALI JKB (Sistem Informasi Dosen Wali JKB)** is a comprehensive academic advisor information system developed to manage and streamline academic supervision processes at higher education institutions. It supports the tracking and management of student performance, counseling, achievements, tuition arrears, and more.
 
 ---
 
@@ -121,8 +121,8 @@ graph TD;
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/Protic-PNC/jkb-sistem-perwalian.git
-cd jkb-sistem-perwalian
+git clone https://github.com/Protic-PNC/jkb-sistem-dosen-wali.git
+cd jkb-sistem-dosen-wali
 ```
 
 2. Install dependencies:

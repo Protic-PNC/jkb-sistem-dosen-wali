@@ -1,271 +1,192 @@
-# JKB Academic Advising Information System
+# SIWALI JKB - Academic Advising Information System
 
 ## Overview
 
-JKB Academic Advising Information System (SIWALI JKB) is a comprehensive academic advising management system designed to streamline the process of managing student performance, counseling, and other academic data for higher education institutions.
+**SIWALI JKB (Sistem Informasi Bimbingan Akademik JKB)** is a comprehensive academic advising information system developed to manage and streamline academic supervision processes at higher education institutions. It supports the tracking and management of student performance, counseling, achievements, tuition arrears, and more.
+
+---
 
 ## Features
 
 ### User Roles
 
-The system supports four distinct user roles:
+The system supports five primary roles:
 
-1. Admin
-2. Dosen Wali (Academic Advisor)
-3. Koordinator Program Studi (Program Coordinator)
-4. Mahasiswa (Student)
+1. **Administrator**
+2. **Dosen Wali (Academic Advisor)**
+3. **Mahasiswa (Student)**
+4. **Koordinator Program Studi (Program Coordinator)**
+5. **Jurusan (Department)**
 
-### Role-specific Functionalities
+### Role-based Functionalities
 
-#### 1. Admin
+#### 1. Administrator
+- Login
+- Manage user data (create/edit/delete)
+- Manage academic programs, classes, lecturers, and their roles
+- Handle KHS and KRS documents
+- View and print Dosen Wali Reports
+- Logout
 
-- Can manage all data within the system, except for student performance records and counseling sessions.
-- Responsible for user management, including:
-  - Creating new user accounts
-  - Assigning roles (Dosen Wali, Koordinator Program Studi, or Mahasiswa) to users
+#### 2. Dosen Wali
+- Login
+- Manage semester GPA (IPS)
+- Input student warnings
+- Record student resignations
+- Input student achievements and organization activities
+- Manage academic counseling records
+- Input scholarship data
+- Track UKT arrears
+- View/download KHS
+- Manage and print Dosen Wali Reports
+- Logout
 
-#### 2. Dosen Wali (Academic Advisor)
+#### 3. Mahasiswa
+- Login
+- Input organization and achievement records
+- Participate in counseling sessions
+- View IPS
+- Logout
 
-- Manage and input students' semester GPA (IPS)
-- Record students who have withdrawn (dropout) or are recipients of scholarships/revised tuition (UKT) reviews
-- Document student achievements and organizational activities
-- Manage records of students who have been issued warning letters
-- Track tuition arrears
-- Conduct online academic counseling (bimbingan perwalian)
+#### 4. Koordinator Program Studi
+- Login
+- View and validate Dosen Wali Reports
+- Print reports
+- Logout
 
-#### 3. Koordinator Program Studi (Program Coordinator)
+#### 5. Jurusan
+- Login
+- View and print validated Dosen Wali Reports
+- Logout
 
-- Approve or reject reports submitted by Dosen Wali
+---
 
-#### 4. Mahasiswa (Student)
+## Database Design
 
-- View their semester GPA (IPS) and cumulative GPA (IPK)
-- Input student achievements and organizational activities
-- Participate in online academic counseling (bimbingan perwalian)
+### ERD
 
-## ERD
+![ERD](https://github.com/user-attachments/assets/bb486ce5-e599-4724-8a68-bce120fd455d)
 
-![erd siwali(normalized) (1)](https://github.com/user-attachments/assets/bb486ce5-e599-4724-8a68-bce120fd455d)
+### Entities and Relationships
 
+Refer to the full list in the documentation for:
+- `users`, `students`, `lecturers`, `programs`, `classes`, `positions`
+- GPA structures: `gpas`, `gpas_cumulative`, `gpas_semester`
+- Achievements, scholarships, guidances, warnings, arrears, resignations, and reports
 
-## Entities
+Relationships include one-to-one and one-to-many mappings between students, advisors, classes, and various records for performance, achievements, and counseling.
 
-1. **users**:Stores user account information, including email, avatar, and password.
-2. **programs**: Represents different academic programs offered, including program code, name, degree (D3/D4), and the head of the program.
-3. **classes**: Represents classes or cohorts of students, including the academic year, program ID, and academic advisor ID.
-4. **positions**: Stores different positions within the institution, such as Academic Advisor and Program Coordinator, including their decree.
-5. **students**: Stores information about individual students, including student number, name, contact information, and their class ID.
-6. **lecturers**: Contains data about faculty members, including NIDN, NIP, contact information, position ID, and their user ID.
-7. **gpas**: Stores GPA information for classes.
-8. **gpas_cumulative**: Stores cumulative GPA for individual students, linked to a specific GPA record.
-9. **gpas_semester**: Detailed GPA information per semester for each student.
-10. **achievements**: Records student achievements.
-11. **achievement_details**: Detailed records of individual student achievements, including the type and level of achievement.
-12. **scholarships**: Manages information on student scholarships.
-13. **scholarship_details**: Detailed records of individual student scholarships, including the type of scholarship.
-14. **guidances**: Manages student counseling records.
-15. **guidance_details**: Detailed records of individual student counseling sessions, including the problem and solution.
-16. **warnings**: Documents warnings issued to students.
-17. **warning_details**:Detailed records of individual warnings issued to students, including the type of warning and reason.
-18. **tuition_arrears**: Manages records of unpaid tuition fees.
-19. **tuition_arrear_details**: Detailed records of individual student tuition arrears, including the amount.
-20. **student_resignations**: Manages records of students who have withdrawn from the program within a specific class.
-21. **student_resignation_detail**: Detailed records of individual student resignations, including the type of resignation, decree number, and reason.
-22. **reports**: Represents reports generated by lecturers, including report date, status, and approval flags from academic advisors and heads of programs.
+---
 
-    
-## Relationships
+## Flowcharts
 
-1. **users - students/lecturers**: One-to-one relationship. Each user account is associated with either a student or a lecturer.                                      
-
-2. ***programs - classes**: One-to-many relationship. A program can have multiple classes.
-
-3. **classes - academic_advisors**: One-to-one relationship. Each class is assigned one academic advisor who is a lecturer.
-
-4. **programs - head_of_program**: One-to-one relationship. Each program is headed by one lecturer who serves as the head of the program.
-
-5. **positions - lecturers**: One-to-many relationship. Each position can be held by multiple lecturers.
-
-6. **classes - students**: One-to-many relationship. Each class can have multiple students.
-
-7. **gpas - classes**: One-to-one relationship. Each class has one GPA record.
-
-8. **gpas_cumulative** - students: One-to-one relationship. Each student has one cumulative GPA record.
-
-9. **gpas_cumulative - gpas**: One-to-many relationship. Each GPA record can have multiple cumulative GPA entries.
-
-10. **gpas_semester - gpas_cumulative**: One-to-many relationship. Each cumulative GPA record can have multiple semester GPA entries.
-
-11. **achievements - classes**: One-to-one relationship. Each class can have one achievements.
-
-12. **achievement_details - achievements**: One-to-many relationship. Each achievement can have multiple detailed records for different students.
-
-13. **students - achievement_details**: One-to-many relationship. Each student can have multiple achievement.
-
-14. **scholarships - classes**: One-to-one relationship. Each class can have one scholarships.
-
-15. **scholarship_details - scholarships**: One-to-many relationship. Each scholarship can have multiple detailed records for different students.
-
-16. **students - scholarship_details**: One-to-many relationship. Each student can have multiple scholarship_details.
-
-17. **guidances - classes**: One-to-one relationship. Each class can have one guidance sessions.
-
-18. **guidance_details - guidances**: One-to-many relationship. Each guidance session can have multiple detailed records for different students.
-
-19. **students - guidance_details**: One-to-many relationship. Each student can have multiple guidance_details.
-
-20. **warnings - classes**: One-to-one relationship. Each class can have one warnings issued.
-
-21. **warning_details - warnings**: One-to-many relationship. Each warning can have multiple detailed records for different students.
-
-22. **students - warnings**: One-to-many relationship. Each student can have multiple warnings.
-
-23. **tuition_arrears - classes**: One-to-one relationship. Each class can have one tuition arrears records.
-
-24. **tuition_arrears_details - tuition_arrears**: One-to-many relationship. Each tuition arrears record can have multiple detailed entries for different students.
-
-25. **students - tuition_arrears**: One-to-many relationship. Each student can have multiple tuition_arrears.
-    
-26. **student_resignations - classes**: One-to-one relationship. Each class can have one student resignations.
-
-27. **student_resignation_details - student_resignations**: One-to-many relationship. Each student resignation can have multiple detailed records.
-
-28. **students - student_resignation_details**: One-to-one relationship. Each student have one student_resignation_details.
-
-29. **reports - classes**: One-to-many relationship. Each class can have multiple reports.
-
-- The system supports soft deletes (deleted_at column) for most entities, allowing for data recovery and historical tracking.
-- Timestamps (created_at, updated_at) are used across all tables for auditing purposes.
-- The structure supports complex relationships between courses, lecturers, and students, allowing for flexible academic management.
-- GPA, achievements, scholarships, and counseling systems are tightly integrated with the student management aspects of the database.
-
-## Flowchart
-
-### Admin Flowchart
+### Admin
 ```mermaid
 graph TD;
-    %% Admin Flowchart
-    A[Login as Admin] --> B[Manage User Accounts]
-    B --> C[Create New User]
-    B --> D[Assign Roles]
-    C --> E[Assign Role: Dosen Wali]
-    C --> F[Assign Role: Mahasiswa]
-    C --> G[Assign Role: Koordinator Program Studi]
-    D --> E
-    D --> F
-    D --> G
-    A --> H[Manage System Data]
-    H --> I[Create/Edit/Delete Programs]
-    H --> J[Create/Edit/Delete Student Classes]
+    A[Login as Admin] --> B[Manage Users & Roles]
+    B --> C[Create & Assign Roles]
+    A --> D[Manage Academic Structures]
+    D --> E[Programs, Classes, Lecturers]
 ```
-### Dosen wali (Academic Advisor) Flowchart
+
+### Dosen Wali
 ```mermaid
 graph TD;
-    %% Dosen Wali (Academic Advisor) Flowchart
-    L[Login as Dosen Wali] --> M[Manage Student GPA]
-    M --> N[Input Semester GPA]
-    M --> O[Record Student resignations]
-    M --> P[Document Student Achievements]
-    M --> Q[Manage Scholarships]
-    M --> R[Manage Counseling Sessions]
-    M --> S[Manage Warnings]
-    M --> T[Track Tuition Arrears]
+    L[Login as Dosen Wali] --> M[Input IPS, Warnings, Achievements]
+    M --> N[Manage Scholarships, UKT Arrears, Counseling]
+    N --> O[Generate and Submit Reports]
 ```
-### Koordinator Program Studi (Program Coordinator) Flowchart
+
+### Koordinator Program Studi
 ```mermaid
 graph TD;
-    %% Koordinator Program Studi (Program Coordinator) Flowchart
-    U[Login as Koordinator Program Studi] --> V[Approve/Reject Dosen Wali Reports]
-    V --> W[Review Student GPA Reports]
-    V --> X[Review Counseling Sessions]
-    V --> Y[Review Scholarships and Warnings]
+    U[Login] --> V[Review & Approve Reports]
 ```
-### Mahasiswa (Student) Flowchart
+
+### Mahasiswa
 ```mermaid
 graph TD;
-    %% Mahasiswa (Student) Flowchart
-    Z[Login as Mahasiswa] --> AA[View GPA Records]
-    AA --> AB[View IPS and IPK]
-    Z --> AC[Input Achievements and Activities]
-    Z --> AD[Participate in Counseling Sessions]
+    Z[Login] --> AA[View IPS, Submit Achievements, Counseling]
 ```
+
+### Jurusan
+```mermaid
+graph TD;
+    JJ[Login] --> KK[View & Print Validated Reports]
+```
+
+---
 
 ## Installation
 
 1. Clone the repository:
-```
+```bash
 git clone https://github.com/Protic-PNC/jkb-sistem-perwalian.git
 cd jkb-sistem-perwalian
 ```
+
 2. Install dependencies:
-```
+```bash
 composer install
 npm install
 npm run dev
 ```
-3. Set up the environment:
 
-Copy the .env.example file to .env and update the necessary environment variables.
-```
+3. Configure environment:
+```bash
 cp .env.example .env
 php artisan key:generate
 ```
-4. Run database migrations:
+
+4. Run migrations and seeders:
+```bash
+php artisan migrate --seed
 ```
-php artisan migrate
-```
-5. Seed the database:
-```
-php artisan db:seed
-```
-6. Start the development server:
-```
+
+5. Start development server:
+```bash
 php artisan serve
 ```
 
+---
+
 ## Usage
 
-After completing the installation steps, you can access the application by navigating to http://localhost:8000 in your web browser. Log in with the credentials created during the seeding process.
+Visit `http://localhost:8000` in your browser.
 
-The application uses Laravel Breeze for authentication. You can log in with the default super admin credentials:
-
+Login with seeded credentials (see `DatabaseSeeder.php`):
 - Email: -
 - Password: -
 
+---
 
 ## Contributing
 
-We welcome contributions to this project! Please follow these steps to contribute:
-
-Fork the repository:
-
-1. Click the "Fork" button at the top right corner of this page to create a copy of this repository under your GitHub account.
-
-2. Clone your forked repository:
-```
+1. Fork and clone the repository
+```bash
 git clone https://github.com/your-username/jkb-sistem-perwalian.git
 cd jkb-sistem-perwalian
-```
-3. Create a new branch:
-```
 git checkout -b feature/your-feature-name
 ```
-4. Make your changes and commit them:
-```
+
+2. Make your changes
+```bash
 git add .
-git commit -m "Add a detailed description of your changes"
-```
-5. Push to your forked repository:
-```
+git commit -m "feat: add your feature description"
 git push origin feature/your-feature-name
 ```
-6. Create a pull request:
 
-Open your forked repository on GitHub, select the new branch you created, and click "New pull request." Provide a clear description of your changes.
+3. Open a Pull Request on GitHub
+
+---
 
 ## Contact
-For any questions or concerns, please contact the project maintainers at:
 
-Email: afrizalfajri23@gmail.com
-<br>
-GitHub: Protic-PNC
+📧 Email: afrizalfajri23@gmail.com  
+💻 GitHub: [Protic-PNC](https://github.com/Protic-PNC)
+
+---
+
+## License
+
+This project is open-source and available under the [MIT License](LICENSE).

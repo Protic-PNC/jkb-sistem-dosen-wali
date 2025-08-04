@@ -30,6 +30,9 @@ class WarningController extends Controller
 
         return view('masterdata.warnings.index', compact('warning'));
     }
+    /*
+    $warning = Warning::where('')
+     */
 
     /**
      * Show the form for creating a new resource.

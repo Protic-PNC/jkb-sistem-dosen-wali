@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Program;
+use App\Models\Lecturer;
 
 class ProgramSeeder extends Seeder
 {
@@ -13,6 +14,8 @@ class ProgramSeeder extends Seeder
      */
     public function run(): void
     {
+        //$kaprodiTI = Lecturer::where('name', 'vika')->first();
+
         $program1 = Program::create([
             'program_name' => 'Teknik Informatika',
             'degree' => 'D3',

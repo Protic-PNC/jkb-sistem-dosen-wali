@@ -20,6 +20,8 @@ use App\Http\Controllers\ScholarshipController;
 use App\Http\Controllers\TuitionArrearController;
 use App\Http\Controllers\StudentResignationController;
 use App\Http\Controllers\ExportController;
+use App\Http\Controllers\khsController;
+use App\Http\Controllers\krsController;
 
 Route::get('/', function () {
     if (Auth::check()) {
@@ -130,6 +132,9 @@ Route::middleware('auth')->group(function () {
         Route::get('/reports/exportWord/{id}', [ExportController::class, 'exportWord'])->name('reports.exportWord');
         Route::post('/reports/saveChartImage/{id}', [ExportController::class, 'saveChartImage'])->name('reports.saveChartImage');
 
+        Route::get('/khs/index', [khsController::class, 'index'])->name('khs.index');
+        
+        Route::get('/krs/index', [krsController::class, 'index'])->name('krs.index');
     });
 });
 

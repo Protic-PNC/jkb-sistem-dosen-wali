@@ -151,7 +151,6 @@ class ReportController extends Controller
         $entryYear = $report->student_class->entry_year;
         $class = StudentClass::find($report->class_id);
 
-
         if ($class->program->degree == 'D3') {
             $jumlahSemester = 6;
         } else {

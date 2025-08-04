@@ -35,7 +35,7 @@ class ProgramController extends Controller
             'position',
             'program'
         ])->whereHas('position', function($query) {
-            $query->where('position_name', 'kaprodi');
+            $query->where('position_name', 'Koordinator Program Studi');
         })
         ->whereDoesntHave('program')
         ->get();
@@ -80,7 +80,7 @@ class ProgramController extends Controller
             'program'
         ])
         ->whereHas('position', function($query) {
-            $query->where('position_name', 'kaprodi');
+            $query->where('position_name', 'Koordinator Program Studi');
         })
         // Filter agar dosen tidak memiliki relasi dengan program lain kecuali program yang sedang diedit
         ->whereDoesntHave('program', function($query) use ($program) {

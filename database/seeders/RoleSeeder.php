@@ -57,11 +57,21 @@ class RoleSeeder extends Seeder
             'password' => bcrypt('123'),
         ]);
 
+        $userKajur = User::create([
+            'name' => 'novi',
+            'email' => 'novi@gmail.com',
+            'avatar' => 'images/avatar-default.svg',
+            'password' => bcrypt('123'),
+        ]);
+
+
+
         //assign role each user
         $userAdmin->assignRole($adminRole);
         // $userMahasiswa->assignRole($mahasiswaRole);
         $userDosenWali->assignRole($dosenWaliRole);
         $userKaprodi->assignRole($kaprodiRole);
+        $userKajur->assignRole($kajurRole);
 
         //add debug information
         Log::info('User created with ID: ' . $userAdmin->id);

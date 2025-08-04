@@ -66,7 +66,7 @@
 <body>
     <div class="content-text">
         <p class="subtitle bold">LAPORAN DOSEN WALI</p>
-        <table border="0">
+        <table>
             <tbody>
                 <tr class="">
                     <td>Nama Dosen Wali</td>
@@ -110,7 +110,7 @@
                 <tr>
                     <th rowspan="2" scope="col" class="th">NIM</th>
                     <th rowspan="2" scope="col" class="th">Nama</th>
-                    <th colspan="{{ $jumlahSemester }}" scope="col" class="th text-center">
+                    <th colspan="{{ $jumlahSemester }}" scope="col" class="th text-center" style="text-align: center">
                         Semester</th>
                     <th rowspan="2" scope="col" class="th text-center">IPK</th>
                 </tr>

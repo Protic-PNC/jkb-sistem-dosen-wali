@@ -12,6 +12,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\StudentImport;
 use App\Imports\StudentsImport;
 use Illuminate\Support\Facades\Auth;
+// use RealRashid\SweetAlert\Facades\Alert;
 
 
 class StudentController extends Controller
@@ -65,14 +66,14 @@ class StudentController extends Controller
         try
         {
             Excel::import(new StudentsImport, $request->file('file'));
-            return redirect()->route('masterdata.students.index')->with('success', 'Mahasiswa berhasil diimport');
-
+            toast('Berhasil import data mahasiswa!', 'success');
+            return redirect()->route('masterdata.students.index');
         } catch (\Exception $e)
         {
+            toast('Gagal import data mahasiswa!', 'error');
             return redirect()
                 ->route('masterdata.students.index')
-                ->withInput()
-                ->with('error', 'System error: ' . $e->getMessage());
+                ->withInput();
         }
         
     }

@@ -149,7 +149,6 @@
             </div>
         </div>
         <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-
             <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
@@ -254,7 +253,7 @@
                 </tbody>
             </table>
         </div>
-
+        
         <!-- Modal Konfirmasi Delete -->
         <div id="deleteModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
             <div id="alert-additional-content-2"
@@ -279,11 +278,9 @@
                         @method('DELETE')
                         <button type="submit"
                             class="text-white bg-red-800 hover:bg-red-900 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-xs px-3 py-1.5 me-2 text-center inline-flex items-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
-                            <svg class="me-2 h-3 w-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                fill="currentColor" viewBox="0 0 20 14">
-                                <path
-                                    d="M10 0C4.612 0 0 5.336 0 7c0 1.742 3.546 7 10 7 6.454 0 10-5.258 10-7 0-1.664-4.612-7-10-7Zm0 10a3 3 0 1 1 0-6 3 3 0 0 1 0 6Z" />
-                            </svg>
+                            <svg class="w-5 h-5 text-white dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z"/>
+                              </svg>                              
                             Delete
                         </button>
                     </form>
@@ -308,15 +305,6 @@
                 // Sembunyikan modal
                 document.getElementById('deleteModal').classList.add('hidden');
             }
-
-            // document.getElementById('importBtn').addEventListener('click', function() {
-            //     document.getElementById('importModal').classList.remove('hidden');
-            // });
-
-            // document.getElementById('closeModal').addEventListener('click', function() {
-            //     document.getElementById('importModal').classList.add('hidden');
-            // });
         </script>
-
     @endsection
 </x-app-layout>

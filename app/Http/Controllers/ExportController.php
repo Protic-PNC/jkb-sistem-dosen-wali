@@ -68,6 +68,18 @@ class ExportController extends Controller
                 $query->where('academic_advisor_id', $lecturer->lecturer_id);
             })->get();
 
+            //menentukan academic_year
+            if($semester %2 == 1) {
+                $firstYear = $entryYear + ($semester - 1) / 2; 
+            }
+            else
+            {
+                $firstYear = $entryYear + ($semester - 2) / 2;
+            }
+            $secondYear = $firstYear + 1;
+
+            $academicYear = $firstYear . '-' . $secondYear;
+
             $semester_gpas = DB::table('gpa_semesters')
                 ->join('gpa_cumulatives', 'gpa_cumulatives.gpa_cumulative_id', '=', 'gpa_semesters.gpa_cumulative_id')
                 ->join('students', 'students.student_id', '=', 'gpa_cumulatives.student_id')
@@ -86,19 +98,6 @@ class ExportController extends Controller
                 '
                 ))
                 ->get();
-
-            //menentukan academic_year
-            if($semester %2 == 1) {
-                $firstYear = $entryYear + ($semester - 1) / 2; 
-            }
-            else
-            {
-                $firstYear = $entryYear + ($semester - 2) / 2;
-            }
-            $secondYear = $firstYear + 1;
-
-            $academicYear = $firstYear . '-' . $secondYear;
-
             
             $table_data = [];
             foreach ($semester_gpas as $gpa) {
